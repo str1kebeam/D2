@@ -1,8 +1,8 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
-validOperations=["*","+","-","/","**"]
+validOperations=["*","+","-","/","**", "(",")"]
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
-    Right now, has support for: basic 4 functions
+    Right now, has support for: basic 4 functions, x, numbers, parentheses
     Needs to follow the systems of: 
         *only uses the variable x
         *everything is separated by spaces
@@ -32,3 +32,23 @@ def stringToSympy(answer):
         return sympy.sympify(working)
     else:
         return "Something very bad happened!"
+def checkAnswer(guess, answer):
+    '''Checks if guess is equivalent to answer.
+    Note that this currently simplyies guess, so they could just put in the question in
+        some cases.'''
+    if type(guess) in [int, float]:
+        if type(answer) in [int, float]:
+            return guess==answer#pretty much, don't go through a lot of work if the
+                                  #answer is 5
+        else:
+            return False
+    usable=stringToSympy(guess)
+    if type(usable)==str:#"Something very bad happened!"
+        return False #and glare at the user
+    if type(answer) in [int, float]:
+        #The answer was 5 and they gave x
+        return False
+    else:
+        eq=usable-answer
+        check=sympy.simplify(eq)
+        return check==0
