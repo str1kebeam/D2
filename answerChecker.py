@@ -64,7 +64,11 @@ def spacifyEntry(entry):
     #I have no idea how to code this
     parts = re.findall('(\-?)([0-9.]+|x)\s*(\+|\(|\)|/|\*+|^|.?)', entry)
     #finds all of the numbers or x terms, and finds the operators (the .? is there for the last term, sigh...)
-    
-    #for part in parts:
+    newEntry=""
+    if type(parts[0])==tuple:#It got multiple groupings
+        for part in parts:
+            newEntry+=" ".join(part)#put together the parts of the tuple
+    else:
+        newEntry=" ".join(parts)#put together the parts of the list
         
-    return parts
+    return newEntry
