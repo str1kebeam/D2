@@ -11,7 +11,9 @@ def stringToSympy(answer):
     Also, sympy has support for most stuff, we just need to make it formatted correctly
         (and block anything evil, so I'm just doing a whitelist)
     '''
-    x = sympy.symbols("x")
+    answer=spacifyEntry(answer)
+    x = sympy.symbols("x")#No, this is not a typo, it is needed for sympy to work
+                            #This lines means that 'x' is a variable name in the expression
     parts=answer.split(" ")
     valid=True
     for part in parts:#this converts ^ to **, etc. Also checks that it doesn't try
@@ -70,5 +72,4 @@ def spacifyEntry(entry):
             newEntry+=" ".join(part)#put together the parts of the tuple
     else:
         newEntry=" ".join(parts)#put together the parts of the list
-        
     return newEntry
