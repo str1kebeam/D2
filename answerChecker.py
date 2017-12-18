@@ -1,6 +1,6 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
 import re
-validOperations=["*","+","-","/","**", "(",")"]
+validOperations=["*","+","-","/","**"]
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
@@ -16,7 +16,7 @@ def stringToSympy(answer):
                             #This lines means that 'x' is a variable name in the expression
     parts=answer.split(" ")
     valid=True
-    for part in parts:#this converts ^ to **, etc. Also checks that it doesn't try
+    for i,part in enumerate(parts):#this converts ^ to **, etc. Also checks that it doesn't try
                         #to do anything evil
         if part=="":#If there were two spaces in a row, not sure if this is even needed
             continue
@@ -29,6 +29,28 @@ def stringToSympy(answer):
             continue
         elif part in validOperations:
             continue
+        elif part =="(":
+            if parts[i-1] in validOperations and (parts[i+1].isdigit() or parts[i+1]=="x"):#is the braket actually correct?
+                continue
+            else:
+                valid=False
+                print("Someone just tried to break it!")
+                break
+        elif part ==")":
+            if len(parts)>i+1:
+                if parts[i+1] in validOperations and (parts[i-1].isdigit() or parts[i-1]=="x"):#is the braket actually correct?
+                    continue
+                else:
+                    valid=False
+                    print("Someone just tried to break it!")
+                    break
+            else:
+                if parts[i-1].isdigit() or parts[i-1]=="x":#is the braket actually correct?
+                    continue
+                else:
+                    valid=False
+                    print("Someone just tried to break it!")
+                    break
         else:
             valid = False
             print("Someone just tried to break it!")
