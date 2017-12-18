@@ -1,4 +1,5 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
+import re
 validOperations=["*","+","-","/","**", "(",")"]
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
@@ -57,3 +58,13 @@ def checkAnswer(guess, answer, simplify=True):
         eq=usable-answer
         check=sympy.simplify(eq)
         return check==0
+def spacifyEntry(entry):
+    '''Goal of this is to make something that will make it have spaces where needed
+    for the stringToSympy() function.'''
+    #I have no idea how to code this
+    parts = re.findall('(\-?)([0-9.]+|x)\s*(\+|\(|\)|/|\*+|^|.?)', entry)
+    #finds all of the numbers or x terms, and finds the operators (the .? is there for the last term, sigh...)
+    
+    #for part in parts:
+        
+    return parts
