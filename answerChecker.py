@@ -145,3 +145,5 @@ def testProblems():
     print(checkAnswer(ans2, "(x-1)*(x+1)",simplify = False)[0])
     ans3 = raw_input("Type in something that is equivalent to x^2 - 1. ")
     print(checkAnswer(ans3, "x ^ 2 - 1", simplify= True)[0])
+    ans4 = raw_input("What does tan(x) expand to? ")
+    print(checkAnswer(ans4, "sin(x)/cos(x)", simplify=False)[0])
