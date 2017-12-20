@@ -134,10 +134,13 @@ def newSpacifyEntry(entry):
             openParens+=1
         if entry[i]==")":
             closeParens+=1
-        if closeParens>openParens:
+        if closeParens>openParens:#mismatched parentheses?
             return False
         lastChar= entry[i]
         lastWasNum=entry[i].isdigit()
+    if openParens>closeParens:#unclosed parentheses?
+        missing=openParens-closeParens
+        newEntry+=(" )"*missing)#instead of giving a syntax error, will just append parentheses
     return newEntry
 def testProblems():
     ans1 = raw_input("What is 1 + 1? ")
