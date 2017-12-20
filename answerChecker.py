@@ -1,6 +1,6 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
 import re
-validOperations=["*","+","-","/","**", "(",")",]
+validOperations=["*","+","-","/","**", "(",")","sin("]
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
@@ -14,6 +14,8 @@ def stringToSympy(answer):
     answer=newSpacifyEntry(answer)
     x = sympy.symbols("x")#No, this is not a typo, it is needed for sympy to work
                             #This lines means that 'x' is a variable name in the expression
+    if answer==False:
+        return False
     parts=answer.split(" ")
     valid=True
     for part in parts:#this converts ^ to **, etc. Also checks that it doesn't try
@@ -31,7 +33,7 @@ def stringToSympy(answer):
             continue
         else:
             valid = False
-            print("Someone just tried to break it!")
+            #print("Someone just tried to break it!")
             break
     working="".join(parts)
     if valid:
@@ -105,6 +107,7 @@ def spacifyEntry(entry):
     else:
         newEntry=" ".join(parts)#put together the parts of the list
     return newEntry
+wordParts=["s","si","sin","sin(","*","**"]
 def newSpacifyEntry(entry):
     '''Adds in spaces so that stringToSympy can check for evil stuff. Also does a bit of syntax checking'''
     if len(entry)==0:
@@ -114,22 +117,34 @@ def newSpacifyEntry(entry):
     lastChar=newEntry
     openParens=newEntry.find("(")
     closeParens=newEntry.find(")")
+    currentWord=newEntry
     if len(entry)==1:
         return newEntry#so it doesn't break on a single character
     for i in range(1, len(entry)):
+        endWord=False
         if lastWasNum:
             if entry[i].isdigit():
-                newEntry+=entry[i]
+                endWord=False
             else:
-                newEntry+=" "+entry[i]
+                endWord=True
         else:
-            if entry[i] == lastChar:
+            if currentWord+entry[i] in wordParts:
+                endWord=False
+            else:
+                endWord=True
+            '''if entry[i] == lastChar:
                 if entry[i]*2 in validOperations:#right now, is it a *
                     newEntry+=entry[i]
                 else:
                     newEntry+=" "+entry[i]
             else:
-                newEntry+=" "+entry[i]
+                newEntry+=" "+entry[i]'''
+        if endWord:
+            newEntry+=" "+entry[i]
+            currentWord=entry[i]
+        else:
+            newEntry+=entry[i]
+            currentWord+=entry[i]
         if entry[i]=="(":
             openParens+=1
         if entry[i]==")":
