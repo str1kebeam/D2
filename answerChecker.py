@@ -1,5 +1,4 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
-import re
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot("]
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
