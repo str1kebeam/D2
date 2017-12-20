@@ -94,20 +94,6 @@ def checkAnswer(guess, answer, simplify=True):
         eq=usable-answer
         check=sympy.simplify(eq)
         return check==0'''
-def spacifyEntry(entry):
-    '''Goal of this is to make something that will make it have spaces where needed
-    for the stringToSympy() function.'''
-    #I have no idea how to code this
-    parts = re.findall('(\-?)([0-9.]+|x)\s*(\+|\(|\)|/|\*+|^|.?)', entry)
-    #finds all of the numbers or x terms, and finds the operators (the .? is there for the last term, sigh...)
-    newEntry=""
-    if type(parts[0])==tuple:#It got multiple groupings
-        for part in parts:
-            newEntry+=" ".join(part)#put together the parts of the tuple
-    else:
-        newEntry=" ".join(parts)#put together the parts of the list
-    return newEntry
-
 def newSpacifyEntry(entry):
     '''Adds in spaces so that stringToSympy can check for evil stuff. Also does a bit of syntax checking'''
     if len(entry)==0:
@@ -134,13 +120,6 @@ def newSpacifyEntry(entry):
                 endWord=False               #checks for it being part of a valid operation
             else:
                 endWord=True
-            '''if entry[i] == lastChar:
-                if entry[i]*2 in validOperations:#right now, is it a *
-                    newEntry+=entry[i]
-                else:
-                    newEntry+=" "+entry[i]
-            else:
-                newEntry+=" "+entry[i]'''
         if endWord:
             newEntry+=" "+entry[i]
             currentWord=entry[i]
