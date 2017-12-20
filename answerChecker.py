@@ -106,6 +106,7 @@ def spacifyEntry(entry):
         newEntry=" ".join(parts)#put together the parts of the list
     return newEntry
 def newSpacifyEntry(entry):
+    '''Adds in spaces so that stringToSympy can check for evil stuff. Also does a bit of syntax checking'''
     if len(entry)==0:
         return "0" #makes it not break on an empty string
     newEntry = entry[0]
