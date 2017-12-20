@@ -1,6 +1,6 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
 import re
-validOperations=["*","+","-","/","**", "(",")"]
+validOperations=["*","+","-","/","**", "(",")",]
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
@@ -11,7 +11,7 @@ def stringToSympy(answer):
     Also, sympy has support for most stuff, we just need to make it formatted correctly
         (and block anything evil, so I'm just doing a whitelist)
     '''
-    #answer=spacifyEntry(answer)
+    answer=newSpacifyEntry(answer)
     x = sympy.symbols("x")#No, this is not a typo, it is needed for sympy to work
                             #This lines means that 'x' is a variable name in the expression
     parts=answer.split(" ")
@@ -105,10 +105,43 @@ def spacifyEntry(entry):
     else:
         newEntry=" ".join(parts)#put together the parts of the list
     return newEntry
+def newSpacifyEntry(entry):
+    if len(entry)==0:
+        return "0" #makes it not break on an empty string
+    newEntry = entry[0]
+    lastWasNum = newEntry.isdigit()
+    lastChar=newEntry
+    openParens=newEntry.find("(")
+    closeParens=newEntry.find(")")
+    if len(entry)==1:
+        return newEntry#so it doesn't break on a single character
+    for i in range(1, len(entry)):
+        if lastWasNum:
+            if entry[i].isdigit():
+                newEntry+=entry[i]
+            else:
+                newEntry+=" "+entry[i]
+        else:
+            if entry[i] == lastChar:
+                if entry[i]*2 in validOperations:#right now, is it a *
+                    newEntry+=entry[i]
+                else:
+                    newEntry+=" "+entry[i]
+            else:
+                newEntry+=" "+entry[i]
+        if entry[i]=="(":
+            openParens+=1
+        if entry[i]==")":
+            closeParens+=1
+        if closeParens>openParens:
+            return False
+        lastChar= entry[i]
+        lastWasNum=entry[i].isdigit()
+    return newEntry
 def testProblems():
     ans1 = raw_input("What is 1 + 1? ")
     print(checkAnswer(ans1, 2)[0])
     ans2 = raw_input("Factor x^2 - 1. ")
-    print(checkAnswer(ans2, "( x - 1 ) * ( x + 1 )",simplify = False)[0])
+    print(checkAnswer(ans2, "(x-1)*(x+1)",simplify = False)[0])
     ans3 = raw_input("Type in something that is equivalent to x^2 - 1. ")
     print(checkAnswer(ans3, "x ^ 2 - 1", simplify= True)[0])
