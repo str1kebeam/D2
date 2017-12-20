@@ -11,7 +11,7 @@ def stringToSympy(answer):
     Also, sympy has support for most stuff, we just need to make it formatted correctly
         (and block anything evil, so I'm just doing a whitelist)
     '''
-    answer=spacifyEntry(answer)
+    #answer=spacifyEntry(answer)
     x = sympy.symbols("x")#No, this is not a typo, it is needed for sympy to work
                             #This lines means that 'x' is a variable name in the expression
     parts=answer.split(" ")
@@ -37,12 +37,44 @@ def stringToSympy(answer):
     if valid:
         return sympy.sympify(working)
     else:
-        return "Something very bad happened!"
+        return False
 def checkAnswer(guess, answer, simplify=True):
-    '''Checks if guess is equivalent to answer.
-    Note that this currently simplyies guess, so they could just put in the question in
-        some cases.'''
-    if type(guess) in [int, float]:
+    '''Checks if the guess is a equivalent to answer. Give straight int or 
+        float for a numeric answer, and a string for an expression (to be made sympy).
+        The guess will be turned from a string to either a float or a sympy depending on
+        which one answer was.
+        Returns if they gave a correct answer, and then a string with other information
+            (e.g. They gave 5x when the answer was 5, it will complain about a non-numeric answer.)'''
+    if type(answer) in [int, float]:#the answer is a number
+        try:
+            return (float(guess)==float(answer)), ""
+        except ValueError:#it wasn't a number that they gave
+            return False, "A numeric answer was wanted"
+    if type(answer) == str:#it is a string, to be made into a sympy
+        sanswer = stringToSympy(answer)
+        if sanswer == False:#it was caught by my code
+            raise(TypeError)#It's an invalid string to be made to sympy for this code
+        try:
+            sguess = stringToSympy(guess)
+            if sguess == False:
+                return False, "Unable to interpret your answer"
+            eq=sanswer-sguess
+            check = sympy.simplify(eq)
+            if simplify:
+                return check==0, ""
+            else:
+                if sguess == sanswer:
+                    return True, ""
+                else:
+                    if check==0:
+                        return False, "Simplification is needed"
+                    else:
+                        return False, ""
+        except TypeError:
+            return False, "Unable to interpret your answer"
+        
+    
+    '''if type(guess) in [int, float]:
         if type(answer) in [int, float]:
             return guess==answer#pretty much, don't go through a lot of work if the
                                   #answer is 5
@@ -59,7 +91,7 @@ def checkAnswer(guess, answer, simplify=True):
     else:
         eq=usable-answer
         check=sympy.simplify(eq)
-        return check==0
+        return check==0'''
 def spacifyEntry(entry):
     '''Goal of this is to make something that will make it have spaces where needed
     for the stringToSympy() function.'''
@@ -73,3 +105,10 @@ def spacifyEntry(entry):
     else:
         newEntry=" ".join(parts)#put together the parts of the list
     return newEntry
+def testProblems():
+    ans1 = raw_input("What is 1 + 1? ")
+    print(checkAnswer(ans1, 2)[0])
+    ans2 = raw_input("Factor x^2 - 1. ")
+    print(checkAnswer(ans2, "( x - 1 ) * ( x + 1 )",simplify = False)[0])
+    ans3 = raw_input("Type in something that is equivalent to x^2 - 1. ")
+    print(checkAnswer(ans3, "x ^ 2 - 1", simplify= True)[0])
