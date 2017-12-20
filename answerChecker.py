@@ -1,6 +1,6 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
 import re
-validOperations=["*","+","-","/","**", "(",")","sin("]
+validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot("]
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
@@ -107,20 +107,22 @@ def spacifyEntry(entry):
     else:
         newEntry=" ".join(parts)#put together the parts of the list
     return newEntry
-wordParts=["s","si","sin","sin(","*","**"]
+
 def newSpacifyEntry(entry):
     '''Adds in spaces so that stringToSympy can check for evil stuff. Also does a bit of syntax checking'''
     if len(entry)==0:
         return "0" #makes it not break on an empty string
     newEntry = entry[0]
     lastWasNum = newEntry.isdigit()
-    lastChar=newEntry
+    #lastChar=newEntry
     openParens=newEntry.find("(")
     closeParens=newEntry.find(")")
     currentWord=newEntry
     if len(entry)==1:
         return newEntry#so it doesn't break on a single character
     for i in range(1, len(entry)):
+        if entry[i]==" ":#remove their spaces
+            continue
         endWord=False
         if lastWasNum:
             if entry[i].isdigit():
@@ -128,8 +130,8 @@ def newSpacifyEntry(entry):
             else:
                 endWord=True
         else:
-            if currentWord+entry[i] in wordParts:
-                endWord=False
+            if currentWord+entry[i] in " ".join(validOperations):#only works because they can't have spaces actualy read
+                endWord=False               #checks for it being part of a valid operation
             else:
                 endWord=True
             '''if entry[i] == lastChar:
@@ -151,7 +153,7 @@ def newSpacifyEntry(entry):
             closeParens+=1
         if closeParens>openParens:#mismatched parentheses?
             return False
-        lastChar= entry[i]
+        #lastChar= entry[i] #depreciated
         lastWasNum=entry[i].isdigit()
     if openParens>closeParens:#unclosed parentheses?
         missing=openParens-closeParens
