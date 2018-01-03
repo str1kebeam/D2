@@ -59,22 +59,22 @@ def checkAnswer(guess, answer, simplify=True):
             sguess = stringToSympy(guess)
             if sguess == False:
                 return False, "Unable to interpret your answer"
-            eq=sanswer-sguess
+            eq=sanswer-sguess#this is how sympy's documentation suggests doing it: subtract one expression from another and then check that it is equal to 0
             check = sympy.simplify(eq)
             if simplify:
                 return check==0, ""
             else:
-                if sguess == sanswer:
+                if sguess == sanswer:#checks if they are identical
                     return True, ""
                 else:
-                    if check==0:
-                        return False, "Simplification is needed"
+                    if check==0: #they gave an equivalent answer, but they didn't give what we wanted
+                        return False, "Your answer is equivalent, but not correct."
                     else:
                         return False, ""
         except TypeError:
             return False, "Unable to interpret your answer"
         
-    
+    #an old system that in hind sight didn't make as much sense
     '''if type(guess) in [int, float]:
         if type(answer) in [int, float]:
             return guess==answer#pretty much, don't go through a lot of work if the
