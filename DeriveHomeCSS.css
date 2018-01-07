@@ -49,6 +49,9 @@ button {
 	background-color: blue;
 	/* background-color: rgb(106,165,35); /* Green 4 */
 }
+#header-menu button:hover .dropdown {
+	display: blocks;
+}
 
 #body-div {
 	color: black;
@@ -60,6 +63,15 @@ button {
 	color: rgb(4,48,34); /* Blue 6 */
 
 	font: 32px "Trebuchet MS", monospace;
+}
+
+.dropdown {
+	display: none;
+	position: absolute;
+	box-shadow: 0px 10px 20px 2px rgba(0,0,0,.2);
+
+	background-color: blue;
+
 }
 
 p {
