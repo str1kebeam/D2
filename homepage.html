@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Derive</title>
+	<link rel="stylesheet" type="text/css" href="DeriveHomeCSS.css">
+</head>
+<body>
+	<div id="body-div">
+		<div id="header">
+			<div id="header-logo">
+				<a href=""><img src="DeriveLogo.v2.png" title="Welcome to Derive!"></a>
+
+			</div>
+			<div id="header-menu">
+
+				<a href="" title="Home"><button type="button" id="home-button">Home</button></a>
+				<a href="http://www.ddg.gg" target="_self" title="Learn A Topic"><button type="button">Learn</button></a>
+				<a href="http://www.ddg.gg" target="_blank"><button type="button" title="Practice Your Skills">Practice</button></a>
+				<a href="" target="_blank" title="About Us"><button type="button" id="aboutus-button">About Us</button></a>
+				
+
+			</div>
+			<div id="body-div">
+				
+				<h1 id="body-title">
+					Welcome to Derive!
+				</h1>
+				<div id="body-text">
+					<p class="body-description">Derive is an interactive learning program designed to teach you Calculus concepts with ease.</p>
+					<p class="body-description">Charts and graphs will change the way you understand Calculus concepts, turning words into diagrams and pictures to easily understand these Calculus concepts.</p>
+					<p class="body-description">Unlimited practice problems allow you to strengthen your skills as a mathematician and continue on your path to Calculus mastery.</p>
+					<p class="body-description">Start learning <a href="" class="inline-link">here</a>.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		menuButtonEls = document.querySelectorAll("#header-menu button");
+		menuButtonSep = window.innerWidth/menuButtonEls.length - 10;
+		for(var i = 0; i < menuButtonEls.length; i++) {
+			buttonEl = menuButtonEls[i].style;
+			buttonEl.width = menuButtonSep + "px";			
+		};
+		window.onresize = function(e) {
+			menuButtonSep = window.innerWidth/menuButtonEls.length - 10;
+			for(var i = 0; i < menuButtonEls.length; i++) {
+				buttonEl = menuButtonEls[i].style;
+				buttonEl.width = menuButtonSep + "px";			
+			};
+		}
+		/*
+		var mouseOverButton = function(e) {
+			e.target.myParam.style.backgroundColor = "#DDDDDD";
+		};
+		var mouseOutButton = function(e) {
+			e.target.myParam.style.backgroundColor = "#3F3F3F";
+			console.log("Attempt to change 'background-color' of " + e.target.myParam);
+		}
+		
+		for(var i = 0; i < menuButtonEls.length; i++) {
+			menuButtonEls[i].addEventListener("mousemove", mouseOverButton);
+			menuButtonEls[i].addEventListener("mousemout", mouseOutButton);
+			menuButtonEls[i].myParam = menuButtonEls[i];
+		};
+		*/
+	</script>
+</body>
+</html>
