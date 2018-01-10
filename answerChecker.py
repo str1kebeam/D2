@@ -2,7 +2,6 @@ import sympy #right now, assuming that later on I will be able to install it on 
 import re
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
                 ]#,"Derivative(y(x), x)"] this one caused problems, but they shouldn't be typing it anyway
-multiInputFunctions = {'log(':2}#for stuff like log
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
