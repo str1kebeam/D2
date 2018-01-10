@@ -131,6 +131,8 @@ def newSpacifyEntry(entry):
             else:
                 endWord=True
         if endWord:
+            if newEntry[-1]==")" and entry[i]=="(":
+                newEntry+=" *"
             newEntry+=" "+entry[i]
             currentWord=entry[i]
         else:
