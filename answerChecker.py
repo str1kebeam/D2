@@ -1,6 +1,8 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
 import re
-validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot("]
+validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
+                ]#,"Derivative(y(x), x)"] this one caused problems, but they shouldn't be typing it anyway
+multiInputFunctions = {'log(':2}#for stuff like log
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
@@ -14,11 +16,13 @@ def stringToSympy(answer):
     answer=newSpacifyEntry(answer)
     x = sympy.symbols("x")#No, this is not a typo, it is needed for sympy to work
                             #This lines means that 'x' is a variable name in the expression
+    y = sympy.Function('y')(x)
+    y_ = sympy.Derivative(y, x)
     if answer==False:
         return False
     parts=answer.split(" ")
     valid=True
-    for part in parts:#this converts ^ to **, etc. Also checks that it doesn't try
+    for i, part in enumerate(parts):#this converts ^ to **, etc. Also checks that it doesn't try
                         #to do anything evil
         if part=="":#If there were two spaces in a row, not sure if this is even needed
             continue
@@ -27,7 +31,12 @@ def stringToSympy(answer):
         elif part.isdigit():
             continue
         elif part=="^":
-            part="**"
+            parts[i]="**"
+            #print "But this works?"
+            continue
+        elif part=="y'":
+            parts[i]="Derivative(y(x), x)"
+            #print "It should have happened"
             continue
         elif part in validOperations:
             continue
@@ -36,6 +45,7 @@ def stringToSympy(answer):
             #print("Someone just tried to break it!")
             break
     working="".join(parts)
+    #print working
     if valid:
         return sympy.sympify(working)
     else:
@@ -145,6 +155,8 @@ def testProblems():
     printCorrectNicely(checkAnswer(ans2, "(x-1)*(x+1)",simplify = False))
     ans3 = raw_input("Type in something that is equivalent to x^2 - 1. ")
     printCorrectNicely(checkAnswer(ans3, "x ^ 2 - 1", simplify= True))
+    ans4 = raw_input("What is the derivative of y with respect to x? ")
+    printCorrectNicely(checkAnswer(ans4, "y'"))
 def printCorrectNicely(data):
     '''Just makes a better response than 'True'. 
     data[0] corresponds to right/wrong, data[1] corresponds to the reason
