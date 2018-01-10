@@ -166,3 +166,4 @@ def printCorrectNicely(data):
         print 'Correct!'
     else:
         print 'Wrong. '+data[1]
+    return data[0]
