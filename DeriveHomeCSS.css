@@ -14,6 +14,12 @@ button {
 	text-align: center;
 }
 
+latex-eqn {
+	font-size: 24px;
+	display: inline;
+	color: inherit;
+}
+
 #header-logo {
 	width: 100%;
 	height: 100px;
@@ -72,6 +78,16 @@ button {
 
 	background-color: blue;
 
+}
+
+
+input {
+	
+	background-color: inherit;
+	border-color: rgb(77,130,11); /* Green 5 */
+	font: inherit;
+
+	margin: 0px auto 0px auto;
 }
 
 p {
