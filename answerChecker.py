@@ -1,4 +1,5 @@
 import sympy #right now, assuming that later on I will be able to install it on the computer
+import re
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot("]
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
@@ -139,10 +140,16 @@ def newSpacifyEntry(entry):
     return newEntry
 def testProblems():
     ans1 = raw_input("What is 1 + 1? ")
-    print(checkAnswer(ans1, 2)[0])
+    printCorrectNicely(checkAnswer(ans1, 2))
     ans2 = raw_input("Factor x^2 - 1. ")
-    print(checkAnswer(ans2, "(x-1)*(x+1)",simplify = False)[0])
+    printCorrectNicely(checkAnswer(ans2, "(x-1)*(x+1)",simplify = False))
     ans3 = raw_input("Type in something that is equivalent to x^2 - 1. ")
-    print(checkAnswer(ans3, "x ^ 2 - 1", simplify= True)[0])
-    ans4 = raw_input("What does tan(x) expand to? ")
-    print(checkAnswer(ans4, "sin(x)/cos(x)", simplify=False)[0])
+    printCorrectNicely(checkAnswer(ans3, "x ^ 2 - 1", simplify= True))
+def printCorrectNicely(data):
+    '''Just makes a better response than 'True'. 
+    data[0] corresponds to right/wrong, data[1] corresponds to the reason
+    Meant to just be fed the output from checkAnswer()'''
+    if data[0]:
+        print 'Correct!'
+    else:
+        print 'Wrong. '+data[1]
