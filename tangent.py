@@ -11,6 +11,8 @@ def draw_tangent(i,dx):
     plt.plot(x,y,'black')
     plt.plot(x,dy,'chartreuse')
     plt.plot(x,dx,'r')
+    plt.axhline(0, color='black')
+    plt.axvline(0, color='black')
     plt.show()
 def shade(n,i):
     plt.plot(x,y,'black')
