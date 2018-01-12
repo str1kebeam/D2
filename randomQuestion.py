@@ -27,8 +27,44 @@ def randomAddition(difficulty=1):
         question+=" + "+str(b)
     question+="?"
     return question, ans, False
-problemTypes = {"addition":randomAddition}
-validDifficulties = {"addition":(0,1,2,3,4,5)}
+def randomTangent(difficulty=1):
+    '''Makes a random tangent line problem.'''
+    if difficulty==0:
+        a = random.randint(-10, 10)
+        b = random.randint(-10, 10)
+        x = random.randint(-10, 10)
+        answer=a
+        question="What is the slope of the tangent line of y=%sx + %s at x=%s?"%(a,b,x)
+        return question, answer, False
+    elif difficulty==1:
+        a = random.randint(-10, 10)
+        b = random.randint(-10, 10)
+        c = random.randint(-10, 10)
+        x = random.randint(-10, 10)
+        answer = (a*x*2)+b
+        question = "What is the slope of the tangent line of y = %sx^2 + %sx + %s at x=%s?"%(a, b, c, x)
+        return question, answer, False
+    elif difficulty==2:
+        a = random.randint(-10, 10)
+        b = random.randint(1, 4) #exponent here
+        c = random.randint(-10, 10)
+        d = random.randint(1, 4)
+        while d==b:
+            d=random.randint(1, 4)
+        e = random.randint(-10, 10)
+        x = random.randint(-10, 10)
+        answer = (a*b*(x**(b-1)))+(c*d*(x**(d-1)))
+        strb = ""
+        if b!=1:
+            strb="^"+str(b)
+        strd = ""
+        if d!=1:
+            strd="^"+str(d)
+        question = "What is the slope of the tangent line of y = %sx%s + %sx%s + %s at x=%s?"%(a, strb, c, strd, e, x)
+        return question, answer, False
+    return "(Just type in 0 for now)", 0, False
+problemTypes = {"addition":randomAddition, "tangent line":randomTangent}
+validDifficulties = {"addition":(0,1,2,3,4,5), "tangent line":(0,1,2)}
 def testLoop():
     cont=True
     while cont:
@@ -57,4 +93,8 @@ def testLoop():
                     contDifficulty=False
         question, answer, simplify=problemTypes[ansProblems](ansDifficulty)
         askAQuestion(question, answer, simplify)
-        break
+        cont = raw_input("Do you want another question? y/N ")
+        if (cont.strip()).lower()=="y":
+            cont=True
+        else:
+            cont=False
