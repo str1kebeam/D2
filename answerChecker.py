@@ -1,5 +1,4 @@
-import sympy #right now, assuming that later on I will be able to install it on the computer
-import re
+import sympy #Sympy's documentation can be found here: http://docs.sympy.org/latest/index.html          Going to work on getting it on the repository, after I find out if I need to do that
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
                 ]#,"Derivative(y(x), x)"] this one caused problems, but they shouldn't be typing it anyway
 #that is a list of things that it will allow without any edits
