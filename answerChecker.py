@@ -22,6 +22,11 @@ def stringToSympy(answer):
     valid=True
     for i, part in enumerate(parts):#this converts ^ to **, etc. Also checks that it doesn't try
                         #to do anything evil
+        try:
+            float(part) #a bit of bad form, but works for now. I'll write a regex-using check later and remove this one
+            continue
+        except ValueError:
+            pass
         if part=="":#If there were two spaces in a row, not sure if this is even needed
             continue
         elif part=="x": #let x be entered
@@ -107,7 +112,7 @@ def newSpacifyEntry(entry):
     if len(entry)==0:
         return "0" #makes it not break on an empty string
     newEntry = entry[0]
-    lastWasNum = newEntry.isdigit()
+    lastWasNum = newEntry.isdigit() or newEntry == "."
     #lastChar=newEntry
     openParens=newEntry.find("(")
     closeParens=newEntry.find(")")
@@ -119,7 +124,7 @@ def newSpacifyEntry(entry):
             continue
         endWord=False
         if lastWasNum:
-            if entry[i].isdigit():
+            if entry[i].isdigit() or entry[i]==".":
                 endWord=False
             else:
                 endWord=True
@@ -143,7 +148,7 @@ def newSpacifyEntry(entry):
         if closeParens>openParens:#mismatched parentheses?
             return False
         #lastChar= entry[i] #depreciated
-        lastWasNum=entry[i].isdigit()
+        lastWasNum=entry[i].isdigit() or entry[i]=="."
     if openParens>closeParens:#unclosed parentheses?
         missing=openParens-closeParens
         newEntry+=(" )"*missing)#instead of giving a syntax error, will just append parentheses
