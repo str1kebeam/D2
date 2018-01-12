@@ -1,4 +1,4 @@
-import sympy #Sympy's documentation can be found here: http://docs.sympy.org/latest/index.html          Going to work on getting it on the repository, after I find out if I need to do that
+import sympy #Sympy's documentation can be found here: http://docs.sympy.org/latest/index.html
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
                 ]#,"Derivative(y(x), x)"] this one caused problems, but they shouldn't be typing it anyway
 #that is a list of things that it will allow without any edits
@@ -14,31 +14,31 @@ def stringToSympy(answer):
     answer=newSpacifyEntry(answer)
     x = sympy.symbols("x")#No, this is not a typo, it is needed for sympy to work
                             #This lines means that 'x' is a variable name in the expression
-    y = sympy.Function('y')(x)
-    y_ = sympy.Derivative(y, x)
-    if answer==False:
+    y = sympy.Function('y')(x) #y is a function of x now
+    y_ = sympy.Derivative(y, x) #y' is the derivative of y(x). Variable is y_ because you can't have ' in variable names. The user still just types in y'
+    if answer==False: #spacify didn't work
         return False
-    parts=answer.split(" ")
+    parts=answer.split(" ") #splits it into parts
     valid=True
     for i, part in enumerate(parts):#this converts ^ to **, etc. Also checks that it doesn't try
                         #to do anything evil
         if part=="":#If there were two spaces in a row, not sure if this is even needed
             continue
-        elif part=="x":
+        elif part=="x": #let x be entered
             continue
-        elif part.isdigit():
+        elif part.isdigit(): #any number is ok
             continue
-        elif part=="^":
+        elif part=="^": #replaces ^ with **, even though sympy apparently turns ^ to **. Took awhile to find out that it didn't work
             parts[i]="**"
             #print "But this works?"
             continue
-        elif part=="y'":
+        elif part=="y'": #replaces y' with the sympy code
             parts[i]="Derivative(y(x), x)"
             #print "It should have happened"
             continue
-        elif part in validOperations:
+        elif part in validOperations: #if it is in the above list, it is fine
             continue
-        else:
+        else: #something went wrong, they may have been trying to mess with the computer
             valid = False
             #print("Someone just tried to break it!")
             break
