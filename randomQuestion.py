@@ -28,7 +28,10 @@ def randomAddition(difficulty=1):
     question+="?"
     return question, ans, False
 def randomTangent(difficulty=1):
-    '''Makes a random tangent line problem.'''
+    '''Makes a random tangent line problem.
+    0 gives a linear equation ax + b, where a,b, and c are in the range (-10, 10)
+    1 gives a quadratic equation ax^2 + bx + c, where all of those variables are in the range (-10, 10)
+    2 gives a polynomial equation ax^b + cx^d + e, where b and d are (1, 4) and not the same, and the rest are in the range (-10, 10)'''
     if difficulty==0:
         a = random.randint(-10, 10)
         b = random.randint(-10, 10)
