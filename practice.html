@@ -8,42 +8,51 @@
 	</script>
 	<![endif]-->
 	<meta charset="utf-8">
-	<title>Derive</title>
+	<title>Practice - Derivatives</title>
 	<link rel="stylesheet" type="text/css" href="DeriveCSS.Default.css">
+	<link rel="stylesheet" type="text/css" href="DeriveCSS.Practice.css">
 	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico">
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
 </head>
 <body>
-	<div id="body-div">
+	<div id="page">
 		<div id="header">
-			<div id="header-logo">
-				<a href=""><img src="DeriveLogo.v2.png" title="Welcome to Derive!"></a>
-
+			<div id="header-top">
+				<a href="homepage.html"><img src="DeriveLogo.v2.png" title="Welcome to Derive!" id="derive-logo"></a>
+				
 			</div>
 			<div id="header-menu">
 
 				<a href="homepage.html" title="Home"><button type="button" id="home-button">Home</button></a>
 
-				<a href="" target="_self" title="Learn a Topic"><button type="button">Learn</button></a>
-				<div class="dropdown">The Tangent Line</div>
-				<a href=""><button type="button" title="Practice Your Skills">Practice</button></a>
+				<a href="learn.html" title="Learn a Topic"><button type="button" id="learn-button">Learn</button></a>
+					<!--<div class="dropdown">The Tangent Line</div>-->
 
-				<a href="" target="_blank" title="About Us"><button type="button" id="aboutus-button">About</button></a>
+				<a href="practice.html" title="Practice Your Skills"><button type="button" id="practice-button">Practice</button></a>
+
+				<a href="about.html" title="About Derive"><button type="button" id="aboutus-button">About</button></a>
+
 			</div>
-			<div id="body-div">
-				
-				<h1 id="body-title">
-					Practice Your Skills
-				</h1>
-				<div id="body-text">
-					<p class="body-description">This is a demo page for practicing derivatives.</p>
-					<p class="body-description">This is a sample problem:</p>
-					<latex-eqn class="body-description">$$\frac{d}{dx}x^{2}+2x^{3}= ?$$</latex-eqn>
-					<input type="" name="" class="ans">
-					<latex-eqn class="body-description">$$\frac{d}{d\theta}e^{ri}vE$$</latex-eqn>
+		</div>
+		<div id="body">
+			<h1 id="body-title">
+				Practice Your Skills
+			</h1>
+			
+			<div id="body-text">
+				<p class="body-description">Now that you've learned derivatives, practice your skills with these problems</p>
+				<div id="problem">
+					<p class="body-description" id="question">Find the derivative of the following function</p>
+					<latex-eqn class="body-description">$$\frac{d}{dx}(x^{4}+2x^{3})=?$$</latex-eqn>
+					<div><input type="text" name="" id="input-answer"></div>
+					<button class="body-description" id="check-answer">Check Answer</button>
 				</div>
 			</div>
-
+		</div>
+		<div id="footer">
+			
+		</div>
+	</div>
 	<script type="text/javascript">
 		menuButtonEls = document.querySelectorAll("#header-menu button");
 		menuButtonSep = window.innerWidth/menuButtonEls.length - 10;

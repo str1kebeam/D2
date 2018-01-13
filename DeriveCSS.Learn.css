@@ -1,0 +1,17 @@
+#lesson {
+	margin: 0px 20px 30px 20px;
+	text-align: center;
+}
+
+.lesson-text {
+	font: normal 14pt "Times New Roman", sans-serif;	
+}
+
+
+#lesson img {
+	height: 400px;
+	width: auto;
+
+	border: 5px dashed gray;
+	margin: 15px;
+}
