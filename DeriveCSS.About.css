@@ -1,0 +1,10 @@
+#derive-letter {
+	text-align: center;
+}
+
+#body-text {
+	width: 60%;
+
+	margin-right: auto;
+	margin-left: auto;
+}

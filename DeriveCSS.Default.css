@@ -8,6 +8,7 @@ body {
 	font: 14px sans-serif;
 
 	margin: 0px;
+
 }
 
 button {
@@ -83,9 +84,14 @@ latex-eqn {
 #body {
 	position: relative;
 	top: 160px;
+
+	text-align: center;
+
 	color: black;
 
+	overflow-y: auto;
 }
+
 #body-title {
 	color: rgb(4,48,34); /* Blue 6 */
 

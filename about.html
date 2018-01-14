@@ -10,6 +10,7 @@
 	<meta charset="utf-8">
 	<title>About Derive</title>
 	<link rel="stylesheet" type="text/css" href="DeriveCSS.Default.css">
+	<link rel="stylesheet" type="text/css" href="DeriveCSS.About.css">
 
 	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico">
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
@@ -39,42 +40,13 @@
 				About Derive
 			</h1>
 			<div id="body-text">
-				<p class="body-description">Derive was created to be an interactive, easy-to-use resource for learning and strengthening skills in Calculus.  The Derive Team is a group of three high school students at High Technology High School in Lincroft, New Jersey.  Our mission is to make interactive learning resources available to help people like you learn Calculus by experiencing, experimenting, and enjoying Calculus as a subject.  If you have any comments or feedback, you can email us at <a href="mailto:anmascillaro@ctemc.org">anmascillaro@ctemc.org</a> or leave us a message below.  Have fun and explore the world of math!<br>Sincerely,<br>&#09 The Derive Team — Andrew Mascillaro, Elijah Thorpe, Prahlad Jasti</p>
+				<p class="body-description" id="about-letter">Derive was created to be an interactive, easy-to-use resource for learning and strengthening skills in Calculus.  The Derive Team is a group of three high school students at High Technology High School in Lincroft, New Jersey.  Our mission is to make interactive learning resources available to help people like you learn Calculus by experiencing, experimenting, and enjoying Calculus as a subject.  If you have any comments or feedback, you can email us at <a href="mailto:anmascillaro@ctemc.org">anmascillaro@ctemc.org</a> or leave us a message below.  Have fun and explore the world of math!<br>Sincerely,<br>&#09 The Derive Team — Andrew Mascillaro, Elijah Thorpe, Prahlad Jasti</p>
 				
 			</div>
 		</div>
 		
 	</div>
 
-	<script type="text/javascript">
-		menuButtonEls = document.querySelectorAll("#header-menu button");
-		menuButtonSep = window.innerWidth/menuButtonEls.length - 10;
-		for(var i = 0; i < menuButtonEls.length; i++) {
-			buttonEl = menuButtonEls[i].style;
-			buttonEl.width = menuButtonSep + "px";			
-		};
-		window.onresize = function(e) {
-			menuButtonSep = window.innerWidth/menuButtonEls.length - 10;
-			for(var i = 0; i < menuButtonEls.length; i++) {
-				buttonEl = menuButtonEls[i].style;
-				buttonEl.width = menuButtonSep + "px";			
-			};
-		}
-		/*
-		var mouseOverButton = function(e) {
-			e.target.myParam.style.backgroundColor = "#DDDDDD";
-		};
-		var mouseOutButton = function(e) {
-			e.target.myParam.style.backgroundColor = "#3F3F3F";
-			console.log("Attempt to change 'background-color' of " + e.target.myParam);
-		}
-		
-		for(var i = 0; i < menuButtonEls.length; i++) {
-			menuButtonEls[i].addEventListener("mousemove", mouseOverButton);
-			menuButtonEls[i].addEventListener("mousemout", mouseOutButton);
-			menuButtonEls[i].myParam = menuButtonEls[i];
-		};
-		*/
-	</script>
+	<script src="DeriveJS.Default.js"></script>
 </body>
 </html>
