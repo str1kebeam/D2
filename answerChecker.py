@@ -28,13 +28,17 @@ def stringToSympy(answer):
         #    continue
         #except ValueError:
         #    pass
+        match=re.findall("[\d\.]+",part) #matches things formatted like a number.
         if part=="":#If there were two spaces in a row, not sure if this is even needed
             continue
         elif part=="x": #let x be entered
             continue
-        elif part == re.findall("[\d\.]+",part)[0]: #any number is ok
-            continue                                #matches all things formatted like a number, and if the first one it finds is equal to the whole string then it is good
-                                                    #right now gives an index out of bounds error, may have to make this the last check for it to work with all of the elifs
+        elif len(match)>0 and match[0]==part: #any number is ok
+            continue
+            '''
+            If there is a part that isn't formatted like a number, then it will return only part of the string, which won't be equal to part
+            (The first check is there as if the length is 0 then the second part won't be evaluated, and throw an error)
+            '''
         elif part=="^": #replaces ^ with **, even though sympy apparently turns ^ to **. Took awhile to find out that it didn't work
             parts[i]="**"
             #print "But this works?"
