@@ -1,4 +1,5 @@
 import sympy #Sympy's documentation can be found here: http://docs.sympy.org/latest/index.html
+import re
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
                 ]#,"Derivative(y(x), x)"] this one caused problems, but they shouldn't be typing it anyway
 #that is a list of things that it will allow without any edits
@@ -22,17 +23,22 @@ def stringToSympy(answer):
     valid=True
     for i, part in enumerate(parts):#this converts ^ to **, etc. Also checks that it doesn't try
                         #to do anything evil
-        try:
-            float(part) #a bit of bad form, but works for now. I'll write a regex-using check later and remove this one
-            continue
-        except ValueError:
-            pass
+        #try:
+        #    float(part) #a bit of bad form, but works for now. I'll write a regex-using check later and remove this one
+        #    continue
+        #except ValueError:
+        #    pass
+        match=re.findall("[\d\.]+",part) #matches things formatted like a number.
         if part=="":#If there were two spaces in a row, not sure if this is even needed
             continue
         elif part=="x": #let x be entered
             continue
-        elif part.isdigit(): #any number is ok
+        elif len(match)>0 and match[0]==part: #any number is ok
             continue
+            '''
+            If there is a part that isn't formatted like a number, then it will return only part of the string, which won't be equal to part
+            (The first check is there as if the length is 0 then the second part won't be evaluated, and throw an error)
+            '''
         elif part=="^": #replaces ^ with **, even though sympy apparently turns ^ to **. Took awhile to find out that it didn't work
             parts[i]="**"
             #print "But this works?"
