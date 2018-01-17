@@ -1,6 +1,7 @@
-import sympy #right now, assuming that later on I will be able to install it on the computer
+import sympy #Sympy's documentation can be found here: http://docs.sympy.org/latest/index.html
 import re
-validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot("]
+validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
+                ]#,"Derivative(y(x), x)"] this one caused problems, but they shouldn't be typing it anyway
 #that is a list of things that it will allow without any edits
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
@@ -14,28 +15,51 @@ def stringToSympy(answer):
     answer=newSpacifyEntry(answer)
     x = sympy.symbols("x")#No, this is not a typo, it is needed for sympy to work
                             #This lines means that 'x' is a variable name in the expression
-    if answer==False:
+    y = sympy.Function('y')(x) #y is a function of x now
+    y_ = sympy.Derivative(y, x) #y' is the derivative of y(x). Variable is y_ because you can't have ' in variable names. The user still just types in y'
+    if answer==False: #spacify didn't work
         return False
-    parts=answer.split(" ")
+    parts=answer.split(" ") #splits it into parts
     valid=True
-    for part in parts:#this converts ^ to **, etc. Also checks that it doesn't try
+    lastWasNum=False
+    for i, part in enumerate(parts):#this converts ^ to **, etc. Also checks that it doesn't try
                         #to do anything evil
+        #try:
+        #    float(part) #a bit of bad form, but works for now. I'll write a regex-using check later and remove this one
+        #    continue
+        #except ValueError:
+        #    pass
+        match=re.findall("[\d\.]+",part) #matches things formatted like a number.
         if part=="":#If there were two spaces in a row, not sure if this is even needed
+            pass
+        elif part=="x": #let x be entered
+            if lastWasNum:
+                parts[i]="*x"#turns 3x into 3*x, which has the advantage of not crashing
+            pass
+        elif len(match)>0 and match[0]==part: #any number is ok
+            lastWasNum=True
             continue
-        elif part=="x":
-            continue
-        elif part.isdigit():
-            continue
-        elif part=="^":
-            part="**"
-            continue
-        elif part in validOperations:
-            continue
-        else:
+            '''
+            If there is a part that isn't formatted like a number, then it will return only part of the string, which won't be equal to part
+            (The first check is there as if the length is 0 then the second part won't be evaluated, and throw an error)
+            '''
+        elif part=="^": #replaces ^ with **, even though sympy apparently turns ^ to **. Took awhile to find out that it didn't work
+            parts[i]="**"
+            #print "But this works?"
+            pass
+        elif part=="y'": #replaces y' with the sympy code
+            parts[i]="Derivative(y(x), x)"
+            #print "It should have happened"
+            pass
+        elif part in validOperations: #if it is in the above list, it is fine
+            pass
+        else: #something went wrong, they may have been trying to mess with the computer
             valid = False
             #print("Someone just tried to break it!")
             break
+        lastWasNum=False#if it didn't go to continue at the number check, will set lastWasNum to false
     working="".join(parts)
+    #print working
     if valid:
         return sympy.sympify(working)
     else:
@@ -99,7 +123,7 @@ def newSpacifyEntry(entry):
     if len(entry)==0:
         return "0" #makes it not break on an empty string
     newEntry = entry[0]
-    lastWasNum = newEntry.isdigit()
+    lastWasNum = newEntry.isdigit() or newEntry == "."
     #lastChar=newEntry
     openParens=newEntry.find("(")
     closeParens=newEntry.find(")")
@@ -111,7 +135,7 @@ def newSpacifyEntry(entry):
             continue
         endWord=False
         if lastWasNum:
-            if entry[i].isdigit():
+            if entry[i].isdigit() or entry[i]==".":
                 endWord=False
             else:
                 endWord=True
@@ -121,6 +145,8 @@ def newSpacifyEntry(entry):
             else:
                 endWord=True
         if endWord:
+            if newEntry[-1]==")" and entry[i]=="(":
+                newEntry+=" *"
             newEntry+=" "+entry[i]
             currentWord=entry[i]
         else:
@@ -133,15 +159,26 @@ def newSpacifyEntry(entry):
         if closeParens>openParens:#mismatched parentheses?
             return False
         #lastChar= entry[i] #depreciated
-        lastWasNum=entry[i].isdigit()
+        lastWasNum=entry[i].isdigit() or entry[i]=="."
     if openParens>closeParens:#unclosed parentheses?
         missing=openParens-closeParens
         newEntry+=(" )"*missing)#instead of giving a syntax error, will just append parentheses
     return newEntry
 def testProblems():
     ans1 = raw_input("What is 1 + 1? ")
-    print(checkAnswer(ans1, 2)[0])
+    printCorrectNicely(checkAnswer(ans1, 2))
     ans2 = raw_input("Factor x^2 - 1. ")
-    print(checkAnswer(ans2, "(x-1)*(x+1)",simplify = False)[0])
+    printCorrectNicely(checkAnswer(ans2, "(x-1)*(x+1)",simplify = False))
     ans3 = raw_input("Type in something that is equivalent to x^2 - 1. ")
-    print(checkAnswer(ans3, "x ^ 2 - 1", simplify= True)[0])
+    printCorrectNicely(checkAnswer(ans3, "x ^ 2 - 1", simplify= True))
+    ans4 = raw_input("What is the derivative of y with respect to x? ")
+    printCorrectNicely(checkAnswer(ans4, "y'"))
+def printCorrectNicely(data):
+    '''Just makes a better response than 'True'. 
+    data[0] corresponds to right/wrong, data[1] corresponds to the reason
+    Meant to just be fed the output from checkAnswer()'''
+    if data[0]:
+        print 'Correct!'
+    else:
+        print 'Wrong. '+data[1]
+    return data[0]

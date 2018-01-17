@@ -8,8 +8,9 @@
 	</script>
 	<![endif]--> <!-- IE compatibility -->
 	<meta charset="utf-8">
-	<title>Derive</title>
+	<title>Practice - Derivatives</title>
 	<link rel="stylesheet" type="text/css" href="DeriveCSS.Default.css"> <!-- Import default css for the whole website -->
+	<link rel="stylesheet" type="text/css" href="DeriveCSS.Practice.css"> <!-- Import specific css for this html file -->
 	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
 </head>
@@ -17,8 +18,8 @@
 	<div id="page">
 		<div id="header">
 			<div id="header-top"> <!-- image icon and layer above menu bar -->
-				<a href="homepage.html"><img src="DeriveLogo.v2.png" title="Welcome to Derive!"></a>
-
+				<a href="homepage.html"><img src="DeriveLogo.v2.png" title="Welcome to Derive!" id="derive-logo"></a>
+				
 			</div>
 			<div id="header-menu"> <!-- menu bar -->
 
@@ -35,18 +36,22 @@
 		</div>
 		<div id="body">
 			<h1 id="body-title"> <!-- Title -->
-				Welcome to Derive!
+				Practice Your Skills
 			</h1>
-			<div id="body-text"> <!-- The body text on the homepage, including images -->
-				<p class="body-description">Derive is an interactive learning program designed to teach you Calculus concepts with ease.</p>
-				<p class="body-description">Charts and graphs will change the way you understand Calculus concepts, turning words into diagrams and pictures to easily understand these Calculus concepts.</p>
-				<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Interactive Graph">
-				<p class="body-description">Unlimited practice problems allow you to strengthen your skills as a mathematician and continue on your path to Calculus mastery.</p>
-				<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Practice Problem">
-				<p class="body-description">Start your first \(\frac{\delta}{\delta\theta}e^{ri}vE\) lesson <a href="learn.html" class="inline-link">here</a>!</p>
+			
+			<div id="body-text"> <!-- The body text: problem, answer input -->
+				<p class="body-description">Now that you've learned derivatives, practice your skills with these problems</p>
+				<div id="problem">
+					<p class="body-description" id="question">Find the derivative of the following function</p>
+					<latex-eqn class="body-description">$$\frac{d}{dx}(x^{4}+2x^{3})=?$$</latex-eqn>
+					<div><input type="text" name="" id="input-answer"></div>
+					<button class="body-description" id="check-answer">Check Answer</button>
+				</div>
 			</div>
 		</div>
-		
+		<div id="footer">
+			
+		</div>
 	</div>
 
 	<script src="DeriveJS.Default.js"></script> <!-- import default JS for the webpage -->
