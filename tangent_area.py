@@ -1,9 +1,9 @@
 import numpy as np  
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-x = np.linspace(-15,15,200)
+x = np.linspace(-30,30,200)
 def f(x):             #Function to be plotted
-    return x ** 2
+    return 10 * np.sin(x)
 y = f(x)
 def draw_tangent(i):
     axes = plt.gca()      #Get the current axes
@@ -24,7 +24,7 @@ def draw_secant(i,dx):
     dx = (f(i + float(dx)) - f(i))/(float(dx)) * (x - i) + (f(i))
     plt.plot(x,dx,'red')
 
-def shade(n,i):
+def shade_with_rectangles(n,i):
     plt.plot(x,y,'black')
     currentAxis = plt.gca()
     currentAxis.set_xlim([-30,30])
@@ -40,5 +40,7 @@ def shade(n,i):
     plt.axvline(0, color='black')
 plt.show()
 
+def shade(i):
+    shade_with_rectangles(1000,i)
 
 
