@@ -3,9 +3,6 @@ import re
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
                 ]#,"Derivative(y(x), x)"] this one caused problems, but they shouldn't be typing it anyway
 #that is a list of things that it will allow without any edits
-'''Errors to fix:
-+ -5x gives an error, will need to write something to turn +- into -
-0x gives an error, will need to write something to account for that'''
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
     Right now, has support for: basic 4 functions, x, numbers, parentheses
@@ -24,6 +21,7 @@ def stringToSympy(answer):
         return False
     parts=answer.split(" ") #splits it into parts
     valid=True
+    lastWasNum=False
     for i, part in enumerate(parts):#this converts ^ to **, etc. Also checks that it doesn't try
                         #to do anything evil
         #try:
@@ -33,10 +31,13 @@ def stringToSympy(answer):
         #    pass
         match=re.findall("[\d\.]+",part) #matches things formatted like a number.
         if part=="":#If there were two spaces in a row, not sure if this is even needed
-            continue
+            pass
         elif part=="x": #let x be entered
-            continue
+            if lastWasNum:
+                parts[i]="*x"#turns 3x into 3*x, which has the advantage of not crashing
+            pass
         elif len(match)>0 and match[0]==part: #any number is ok
+            lastWasNum=True
             continue
             '''
             If there is a part that isn't formatted like a number, then it will return only part of the string, which won't be equal to part
@@ -45,17 +46,18 @@ def stringToSympy(answer):
         elif part=="^": #replaces ^ with **, even though sympy apparently turns ^ to **. Took awhile to find out that it didn't work
             parts[i]="**"
             #print "But this works?"
-            continue
+            pass
         elif part=="y'": #replaces y' with the sympy code
             parts[i]="Derivative(y(x), x)"
             #print "It should have happened"
-            continue
+            pass
         elif part in validOperations: #if it is in the above list, it is fine
-            continue
+            pass
         else: #something went wrong, they may have been trying to mess with the computer
             valid = False
             #print("Someone just tried to break it!")
             break
+        lastWasNum=False#if it didn't go to continue at the number check, will set lastWasNum to false
     working="".join(parts)
     #print working
     if valid:
