@@ -1,4 +1,8 @@
-#lesson {
+/* DeriveCSS.Learn.css
+ * 
+*/
+
+#lesson { /* change the box model of and center the lesson div (text and imgs) */
 	margin: 0px 20px 30px 20px;
 
 	text-align: center;
@@ -6,7 +10,7 @@
 
 }
 
-.lesson-text {
+.lesson-text { /* center, change width of, and change font of lesson text */
 	font: normal 14pt "Times New Roman", sans-serif;
 
 
@@ -20,7 +24,7 @@
 
 
 
-#lesson img {
+#lesson img { /* border and size placeholder imgs */
 	height: 400px;
 	width: auto;
 

@@ -1,8 +1,12 @@
-#derive-letter {
+/* DeriveCSS.About.css
+ * 
+*/
+
+#derive-letter { /* center align about letter */
 	text-align: center;
 }
 
-#body-text {
+#body-text { /* change width of body-text and center text */
 	width: 60%;
 
 	margin-right: auto;

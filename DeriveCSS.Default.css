@@ -11,49 +11,49 @@ body {
 
 }
 
-button {
+button { /* remove default formatting from buttons */
 	border-width: 0px; /* remove border */
 	margin: 0px 0px 0px 0px;
 	text-align: center;
 	background-color: inherit;
 }
 
-p a {
+p a { /* change link formatting */
 	color: blue;
 	font-weight: bold;
 	font-style: italic;
 	text-decoration: none;
 }
-p a:visited {
+p a:visited { /* change visited link formatting */
 	color: blue;
 }
 
-latex-eqn {
+latex-eqn { /* latex equation formatting (custom tag) */
 	font-size: 20px;
 	color: inherit;
 }
 
-#header {
+#header { /* format header area with image (goes at the top, freeze to top) */
 	position: fixed;
 	background-color: rgb(170,223,105); /* Green 2 */
 	top: 0px;
 	left: 0px;
 	right: 0px;
 
-	z-index: 1;
+	z-index: 1; /* see in front */
 }
 
-#header-top {
+#header-top { /* header with logo sizing */
 	width: 100%;
 	height: 100px;
 }
 
-#header-top img {
+#header-top img { /* logo formatting */
 	height: 100%;
 	width: auto;
 }
 
-#header-menu, #header-menu button {
+#header-menu, #header-menu button { /*top menu formatting - edits buttons for IE compatibility */
 	width: 100%;
 	height: 50px;
 	max-height: 150px;
@@ -63,7 +63,7 @@ latex-eqn {
 	color: rgb(255,255,255); /* White */
 }
 
-#header-menu button {
+#header-menu button { /* menu button formatting */
 	width: 50px;
 	height: 100%;
 
@@ -74,15 +74,15 @@ latex-eqn {
 	font-size: 18px;
 	text-transform: uppercase;
 }
-#header-menu button:hover {
+#header-menu button:hover { /* menu button formatting when hovered over */
 	background-color: blue;
 	/* background-color: rgb(106,165,35); /* Green 4 */
 }
-#header-menu button:hover .dropdown {
+#header-menu button:hover .dropdown { /* TODO: add dropdown menu */
 	display: blocks;
 }
 
-#body {
+#body { /* body div attributes */
 	position: relative;
 	top: 160px;
 
@@ -90,10 +90,10 @@ latex-eqn {
 
 	color: black;
 
-	overflow-y: auto;
+	overflow-y: auto; /* create a scroll bar if needed */
 }
 
-#body-title {
+#body-title { /* title of page formatting */
 	color: rgb(4,48,34); /* Blue 6 */
 
 	font: 32px "Trebuchet MS", sans-serif;
@@ -101,7 +101,7 @@ latex-eqn {
 	text-align: center;
 }
 
-.dropdown {
+.dropdown { /* TODO: add dropdown buttons */
 	display: none;
 	position: absolute;
 	box-shadow: 0px 10px 20px 2px rgba(0,0,0,.2);
@@ -110,18 +110,18 @@ latex-eqn {
 
 }
 
-.body-description {
+.body-description { /* center align elements in the body */
 	font-size: 18px;
 
 	text-align: center;
 }
 
-#body-text {
+#body-text { /* center align text and add a margin at the bottom of webpage */
 	text-align: center;
 	margin-bottom: 50px;
 }
 
-#body-text img {
+#body-text img { /* format placeholders */
 	height: 400px;
 	width: auto;
 
@@ -129,7 +129,7 @@ latex-eqn {
 	margin: 15px;
 }
 
-p {
+p { /* default paragraph font and color */
 	color: rgb(4,48,34); /* Blue 6 */
 
 	font: 14px "Cambria", sans-serif;

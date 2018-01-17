@@ -1,19 +1,23 @@
-#problem {
+/* DeriveCSS.Practice.css
+ * 
+*/
+
+#problem { /* center align problem text, and make it the same background color */
 	text-align: center;
 	background-color: inherit;
 }
 
-input[type="text"] {
+input[type="text"] { /* change the color, border, and centering of the answer input */
 	background-color: rgb(125,196,173); /* Blue 1 */
 
 	border: 3px solid rgb(26,120,89); /* Blue 4 */
 	font: italic 40px "Times New Roman", monospace;
-	text-rendering: optimizeLegibility;
+	text-rendering: optimizeLegibility; /* subtle difference in text to make it more readable */
 	text-align: center;
 
 }
 
-#check-answer {
+#check-answer { /* change the color, border, and box model of the check answer bitton */
 	background-color: darkgray;
 
 	border: 1px solid black;
@@ -23,6 +27,6 @@ input[type="text"] {
 
 }
 
-#check-answer:hover {
+#check-answer:hover { /* change the color of the check answer button upon hovering over it */
 	background-color: lightgray;
 }
