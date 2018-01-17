@@ -3,6 +3,9 @@ import re
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
                 ]#,"Derivative(y(x), x)"] this one caused problems, but they shouldn't be typing it anyway
 #that is a list of things that it will allow without any edits
+'''Errors to fix:
++ -5x gives an error, will need to write something to turn +- into -
+0x gives an error, will need to write something to account for that'''
 def stringToSympy(answer):
     '''Takes in a string and converts it into a sympy expression
     Right now, has support for: basic 4 functions, x, numbers, parentheses

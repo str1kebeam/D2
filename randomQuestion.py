@@ -1,5 +1,7 @@
 import answerChecker as ac #hopefully this is't shorthand for something else
 import random
+'''Errors to fix:
+I can't have 0x ever show up, because that will break other stuff'''
 def askAQuestion(question, answer, simplify=True):
     ans=raw_input(question+" ")
     return ac.printCorrectNicely(ac.checkAnswer(ans, answer, simplify))
@@ -44,7 +46,7 @@ def randomTangent(difficulty=1):
         b = random.randint(-10, 10)
         c = random.randint(-10, 10)
         x = random.randint(-10, 10)
-        answer = (a*x*2)+b
+        answer = (a*x*2)+b 
         question = "What is the slope of the tangent line of y = %sx^2 + %sx + %s at x=%s?"%(a, b, c, x)
         return question, answer, False
     elif difficulty==2:
@@ -66,8 +68,57 @@ def randomTangent(difficulty=1):
         question = "What is the slope of the tangent line of y = %sx%s + %sx%s + %s at x=%s?"%(a, strb, c, strd, e, x)
         return question, answer, False
     return "(Just type in 0 for now)", 0, False
-problemTypes = {"addition":randomAddition, "tangent line":randomTangent}
-validDifficulties = {"addition":(0,1,2,3,4,5), "tangent line":(0,1,2)}
+def randomDerivative(difficulty=1):
+    '''Just an example of the sympy answer checker parts, because none of the other questions use it and that's what I did a lot on
+    The same as randomTangent, except it doesn't have an x=something'''
+    if difficulty==0:
+        a=random.randint(-10,10)
+        b=random.randint(-10,10)
+        answer=str(a)#needs to be a string for my function to turn it into sympy
+        question = "What is the derivative of %sx + %s?"%(a, b)
+        return question, answer, False
+    elif difficulty ==1:
+        a=random.randint(-10, 10)
+        b=random.randint(-10, 10)
+        c=random.randint(-10, 10)
+        answer=str(2*a)+"x"+str(b)
+        question="What is the derivative of %sx^2 + %sx + %s?"%(a, b, c)
+        return question, answer, False
+    elif difficulty ==2:
+        a=random.randint(-10, 10)
+        b=random.randint(1, 4)
+        c=random.randint(-10, 10)
+        d=random.randint(1,4)
+        while d==b:
+            d=random.randint(1,4)
+        e=random.randint(-10, 10)
+        answer=""
+        question="What is the derivative of " #I was going to have this have it's own if-else tree, but then I realized it would pretty much be the same
+        if b==1:
+            answer+=str(a)
+            question+=str(a)+"x"
+        elif b==2:
+            answer+=str(a*(b))+"x"
+            question+=str(a)+"x^2"
+        else:
+            answer+=str(a*(b))+"x^"+str(b-1)
+            question+=str(a)+"x^"+str(b)
+        answer+="+"
+        question+=" + "
+        if d==1:
+            answer+=str(c)
+            question+=str(c)+"x"
+        elif d==2:
+            answer+=str(c*d)+"x"
+            question+=str(c)+"x^2"
+        else:
+            answer+=str(c*d)+"x^"+str(d-1)
+            question+=str(c)+"x^"+str(d)
+        question+="?"
+        return question, answer, False
+        
+problemTypes = {"addition":randomAddition, "tangent line":randomTangent, "derivative":randomDerivative}
+validDifficulties = {"addition":(0,1,2,3,4,5), "tangent line":(0,1,2), "derivative":(0,1,2)}
 def testLoop():
     cont=True
     while cont:
@@ -81,6 +132,9 @@ def testLoop():
             if problem in problemTypes.keys():
                 contProblems=False
                 ansProblems=problem
+            elif problem in ["tangent","tangentline"]: #so that I don't have to go through a lot of work to change the system, as this is just an example of how it would work
+                ansProblems="tangent line"
+                contProblems=False
         contDifficulty=True
         ansDifficulty=0
         while contDifficulty:
