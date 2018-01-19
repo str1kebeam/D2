@@ -1,3 +1,11 @@
+'''
+Name:       Elijah Thorpe
+Course:     CSE
+Assignment: Software Design Project
+Purpose:    Works with questions and answers. The main method to be used here is checkAnswer(), which will check an answer
+            to a question. testProblems() is the function to call to test this. stringToSympy() turns strings into sympy
+            expressions, which is how it does advanced answer checking.
+'''
 import sympy #Sympy's documentation can be found here: http://docs.sympy.org/latest/index.html
 import re
 validOperations=["*","+","-","/","**", "(",")","sin(", "cos(", "tan(","csc(","sec(","cot(", "y'"
@@ -165,6 +173,7 @@ def newSpacifyEntry(entry):
         newEntry+=(" )"*missing)#instead of giving a syntax error, will just append parentheses
     return newEntry
 def testProblems():
+    '''Runs a few test questions. For testing out if this works.'''
     ans1 = raw_input("What is 1 + 1? ")
     printCorrectNicely(checkAnswer(ans1, 2))
     ans2 = raw_input("Factor x^2 - 1. ")

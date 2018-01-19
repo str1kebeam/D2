@@ -1,16 +1,29 @@
+'''
+Name:       Elijah Thorpe
+Course:     CSE
+Assignment: Software Design Project
+Purpose:    A proof-of-concept of random problem generation (will need different formatting in final version).
+            randomAddition, randomTangent, and randomDerivative are random question/answer generators.
+            testLoop() is for testing out the questions. askAQuestion() would later on be replaced with some connection to the website.
+'''
 import answerChecker as ac #hopefully this is't shorthand for something else
 import random
 def askAQuestion(question, answer, simplify=True):
+    '''Asks the question and gets the user's answer. Gets answerChecker.py to check the answer.
+    In the final version of the website, most of this would be replaced with the webpage code.'''
     ans=raw_input(question+" ")
     return ac.printCorrectNicely(ac.checkAnswer(ans, answer, simplify))
 def randomIntNo0(low, high):
+    '''Repeatedly generates random numbers in range [low, high] until it isn't 0
+    Shortens a few statements, where (-10, 10) could give 0, which would mean another case to test when printing out questions,
+    and would also confuse people when given a problem with 0x written in it.'''
     a=random.randint(low, high)
     while a==0:
         a=random.randint(low,high)
     return a
 def randomAddition(difficulty=1):
     '''Test of making random problems. Gives an addition/subtraction problem. Difficulty 0 corresponds to whole numbers <100,
-    1 is integers -100<=x<=100, add more difficulties later.'''
+    1 is integers -100<=x<=100, greater than 1 is just adds more 0s on to the range for difficulty 1.'''
     a=0
     b=0
     if difficulty==0:
@@ -118,10 +131,14 @@ def randomDerivative(difficulty=1):
             question+=str(c)+"x^"+str(d)
         question+=" + "+str(e)+"?"
         return question, answer, False
-        
+
+#Instead of hardcoding in the choices and the resulting functions called, these two dictionaries
+    #let me quickly add them in
 problemTypes = {"addition":randomAddition, "tangent line":randomTangent, "derivative":randomDerivative}
 validDifficulties = {"addition":(0,1,2,3,4,5), "tangent line":(0,1,2), "derivative":(0,1,2)}
 def testLoop():
+    '''Just a function for testing out the random question generators. Uses the two
+    above dictionaries for the options. All of this would be done by the website/a tiny bit of python.'''
     cont=True
     while cont:
         contProblems=True
