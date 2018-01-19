@@ -3,7 +3,7 @@ var parsePix = function(pixVal) { //remove "px" from a font value
 };
 
 bodyIdEl = document.getElementById("body"); //body element
-bodyIdEl.style.top = "160px"; //bring body below the menu bar
+bodyIdEl.style.top = "150px"; //bring body below the menu bar
 bodyIdEl.style.height = (window.innerHeight - parsePix(bodyIdEl.style.top)) + "px";	//the body takes up the rest of the webpage (vertically)
 
 
