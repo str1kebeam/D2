@@ -89,14 +89,14 @@ def checkAnswer(guess, answer, simplify=True):
         if sanswer == False:#it was caught by my code
             raise(TypeError)#It's an invalid string to be made to sympy for this code
         try:
-            sguess = stringToSympy(guess)
-            if sguess == False:
+            sguess = stringToSympy(guess) #turns their answer into sympy
+            if sguess == False:             #if my code caught it as bad, it will just complain
                 return False, "Unable to interpret your answer"
             eq=sanswer-sguess#this is how sympy's documentation suggests doing it: subtract one expression from another and then check that it is equal to 0
-            check = sympy.simplify(eq)
-            if simplify:
+            check = sympy.simplify(eq) #check=0 will mean that they gave an equivalent answer
+            if simplify: #if it should be simplified, then just check==0 means they got it right
                 return check==0, ""
-            else:
+            else: #if not, it will be strickter
                 if sguess == sanswer:#checks if they are identical
                     return True, ""
                 else:
@@ -104,7 +104,7 @@ def checkAnswer(guess, answer, simplify=True):
                         return False, "Your answer is equivalent, but not correct."
                     else:
                         return False, ""
-        except TypeError:
+        except TypeError: #stops it from crashing on bad input
             return False, "Unable to interpret your answer"
         
     #an old system that in hind sight didn't make as much sense
@@ -127,47 +127,47 @@ def checkAnswer(guess, answer, simplify=True):
         check=sympy.simplify(eq)
         return check==0'''
 def newSpacifyEntry(entry):
-    '''Adds in spaces so that stringToSympy can check for evil stuff. Also does a bit of syntax checking'''
+    '''Adds in spaces so that stringToSympy can check for evil stuff. Also does a bit of syntax checking
+    Adds in missing parentheses, turns '(1)(x)' into '(1)*(x)', or more accurately '( 1 ) * ( x )' '''
     if len(entry)==0:
         return "0" #makes it not break on an empty string
-    newEntry = entry[0]
-    lastWasNum = newEntry.isdigit() or newEntry == "."
+    newEntry = entry[0] #starts off the new string
+    lastWasNum = newEntry.isdigit() or newEntry == "." #checks if it was a number
     #lastChar=newEntry
-    openParens=newEntry.find("(")
-    closeParens=newEntry.find(")")
-    currentWord=newEntry
+    openParens=newEntry.find("(")  #if the first character is an open paren, then the count of open parens is 0. Otherwise -1
+    closeParens=newEntry.find(")") #same as above but for close parens. This was definitely planned out, and not a typo that still worked
+    currentWord=newEntry #starts the first 'word', something not separated by spaces (numbers, function names, etc.)
     if len(entry)==1:
         return newEntry#so it doesn't break on a single character
     for i in range(1, len(entry)):
         if entry[i]==" ":#remove their spaces
             continue
-        endWord=False
-        if lastWasNum:
+        endWord=False #starts off not being at the end of the word
+        if lastWasNum: #if the last char was a number, then check to see if this is part of a number. If so, continue the word. Otherwise, end the word
             if entry[i].isdigit() or entry[i]==".":
                 endWord=False
             else:
                 endWord=True
-        else:
+        else: #if the current word can validly be continued with this character, continue the word. Otherwise, end it
             if currentWord+entry[i] in " ".join(validOperations):#only works because they can't have spaces actualy read
                 endWord=False               #checks for it being part of a valid operation
             else:
                 endWord=True
-        if endWord:
-            if newEntry[-1]==")" and entry[i]=="(":
+        if endWord: #if it is the end of the word, add in a space and start the next word
+            if newEntry[-1]==")" and entry[i]=="(": #if the last was ) and this is (, add a * in between because that's how people sometimes write multiplication
                 newEntry+=" *"
             newEntry+=" "+entry[i]
             currentWord=entry[i]
-        else:
+        else: #if it is continueing the word, add this character to the new string and to the word
             newEntry+=entry[i]
             currentWord+=entry[i]
-        if entry[i]=="(":
+        if entry[i]=="(": #if this was a parenthese, then add it to the count
             openParens+=1
         if entry[i]==")":
             closeParens+=1
-        if closeParens>openParens:#mismatched parentheses?
+        if closeParens>openParens:#if there are more close parens then open parens, then something is wrong and it should be ended.
             return False
-        #lastChar= entry[i] #depreciated
-        lastWasNum=entry[i].isdigit() or entry[i]=="."
+        lastWasNum=entry[i].isdigit() or entry[i]=="." #record if the last digit was a number
     if openParens>closeParens:#unclosed parentheses?
         missing=openParens-closeParens
         newEntry+=(" )"*missing)#instead of giving a syntax error, will just append parentheses
