@@ -1,9 +1,16 @@
+'''
+Name: Prahlad Jasti
+Course: CSE
+Assignment:  Tangent Line and Integration 
+Purpose - To display the tangent line to a graph and the area under it
+          based on certain preset boundaries. 
+'''
 import numpy as np  
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 x = np.linspace(-30,30,200)  
 def f(x):             #Function to be plotted
-    return np.arctan(x)
+    return x ** 2
 y = f(x)
 def draw_tangent(i):
     '''
@@ -32,7 +39,7 @@ def draw_secant(i,dx):
     '''
     plt.plot(x,dx,'red') #Plot tangent line
 
-def shade_with_rectangles(n,h,i):
+def shade_with_rectangles(n,h,i,orientation):
     '''
     Draws rectangles under function using matplotlib's rectangle 
     function. Sets (h,0) as a relative point, and draws rectangles 
@@ -41,14 +48,15 @@ def shade_with_rectangles(n,h,i):
     '''
     plt.plot(x,y,'black')    #Plot function
     currentAxis = plt.gca()
-    currentAxis.set_xlim([-30,30])
-    currentAxis.set_ylim([-30,30])
+    currentAxis.set_xlim([-20,20])
+    currentAxis.set_ylim([-20,20])
     plt.axhline(0, color='black')     #Plots axes
     plt.axvline(0, color='black')
-    orig_point = (h,0)        #Pivot point to start drawing rectangles
-    for a0 in range(n):
-        currentAxis.add_patch(Rectangle(orig_point, (i-h)/float(n), f(orig_point[0] + (i-h)/float(n)), facecolor="blue"))
-        orig_point = (h + (a0+1) * (i-h)/float(n),0)
+    if orientation == 'right':
+        orig_point = (h,0)        #Pivot point to start drawing rectangles
+        for a0 in range(n+1):
+            currentAxis.add_patch(Rectangle(orig_point, (i-h)/float(n), f(orig_point[0] + (i-h)/float(n)), facecolor="blue"))
+            orig_point = (h + (a0+1) * (i-h)/float(n),0)
         '''
         Rectangle is drawn from bottom left corner, giving horizontal 
         length first, and then vertical length. Change in x is given by 
@@ -56,12 +64,18 @@ def shade_with_rectangles(n,h,i):
         height in either direction is given by the y - value of the next 
         x - value on the function. 
         '''
+    elif orientation == 'left':
+        orig_point = (h,0)        #Pivot point to start drawing rectangles
+        for a0 in range(n):
+            currentAxis.add_patch(Rectangle(orig_point, (i-h)/float(n), f(orig_point[0]), facecolor="red"))
+            orig_point = (h + (a0+1) * (i-h)/float(n),0)
+
 def shade(h,i):
     '''
     Does same thing as shade_with_rectangles,
     but the number of rectangles under the 
     function is negligibly large.  
     '''
-    shade_with_rectangles(1000,h,i)
+    shade_with_rectangles(200,h,i,"right")
 plt.show()
 #Displays graph, will save it to new file soon
