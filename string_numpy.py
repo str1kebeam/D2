@@ -9,6 +9,10 @@ import numpy as np
 import sympy as sp
 import answerChecker as ac
 def numpyFunction(string, array, useSympy=True):
+    '''
+    Applies the string function to the numpy array, by using the answer checker code and sympy
+    evaluation of expressions with a variable = something.
+    '''
     function = ac.stringToSympy(string)
     x=sp.symbols("x")
     output = []
