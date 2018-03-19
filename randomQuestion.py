@@ -136,6 +136,7 @@ def randomDerivative(difficulty=1):
     #let me quickly add them in
 problemTypes = {"addition":randomAddition, "tangent line":randomTangent, "derivative":randomDerivative}
 validDifficulties = {"addition":(0,1,2,3,4,5), "tangent line":(0,1,2), "derivative":(0,1,2)}
+spNeeded=['derivative']
 def testLoop():
     '''Just a function for testing out the random question generators. Uses the two
     above dictionaries for the options. All of this would be done by the website/a tiny bit of python.'''
@@ -174,3 +175,32 @@ def testLoop():
             cont=True
         else: #if they say ANYTHING else, end the loop, so that even if I write the check horribly wrong, it won't be stuck
             cont=False
+def getProblem(pType, pDifficulty):
+    '''Makes it so that the php doens't need to deal with all of the different Python functions.
+    pType is the name of the problem type, pDifficutly is the problem difficulty'''
+    worked=True #so that other stuff isn't broken if there is some error with the dropdown
+    question="" 
+    answer=""
+    pNeeded=False #if it is sympy, in case I can't keep it as an int
+    simplify=False #if it should be simplified
+    if pType in problemTypes.keys() and pDifficulty in validDifficulties[pType]:
+        question, answer, simplify=problemTypes[pType](pDifficulty)
+        if pType in spNeeded:
+            pNeeded=True
+    else:
+        worked=False
+    return worked, question, answer, pNeeded, simplify
+def getProblems():
+    '''Returns the name of each problem type, with a semicolon after the name, for the php being able to update itself'''
+    types=""
+    for i in problemTypes.keys():
+        types+=i+";"
+    return types
+def getDifficulties(pType):
+    '''Returns the valid difficulties for the problem type, with a semicolon after the name, for modular code'''
+    diffs=""
+    if pType not in validDifficulties.keys():
+        return "Error"
+    for diff in validDifficulties[pType]:
+        diffs+=str(diff)+";"
+    return diffs
