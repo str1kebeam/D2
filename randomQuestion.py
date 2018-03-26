@@ -204,3 +204,11 @@ def getDifficulties(pType):
     for diff in validDifficulties[pType]:
         diffs+=str(diff)+";"
     return diffs
+def checkProblem(pGuess, pAnswer, pSimplify, pNeeded):
+    '''Checks the problem, gives a minimal response for the website.
+    pGuess is the user's answer, pAnswer is the correct answer, pSimplify is True when the answer should be simplified (problem will say if it is), and pNeeded is if sympy is needed'''
+    if not pNeeded:
+        pGuess=float(pGuess)#since I'm not sure if the website will be able to give it as an int
+        pAnswer=float(pAnswer)
+    right, why=ac.checkAnswer(pGuess, pAnswer, pSimplify)
+    return right, why
