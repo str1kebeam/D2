@@ -1,14 +1,17 @@
 //Creates random problems, checks answers to them
 //mathjs is imported as math in practice.html, but that should be fine
 //el.innerHTML = math.sqrt(9);
+var x=1;
+var currentAns='4x^3+6x^2';
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	var correct=checkAns(ans);
 	if(correct){
-		reply("Great!");
+		reply("Great!"+x.toString());
+		x++;
 	}
 	else{
-		reply('Aww...');
+		//reply('Aww...');
 	}
 }
 function reply(text){
@@ -16,11 +19,14 @@ function reply(text){
 	response.innerHTML=text;
 }
 function checkAns(ans){
-	if (ans=='4x^3 + 6x^2'){
+	//This is going to have its own difficulties:
+	//mathjs doesn't reorder terms, at all, so I need to figure out how to make x+1=1+x
+	if (ans==currentAns){
 		return true;
 	}
-	else if(math.simplify(ans).toString()=='4 * x ^ 3 + 6 * x ^ 2'){
+	else if(math.simplify(ans).equals(math.simplify(currentAns))){
 		return true;
 	}
+	reply(math.simplify(currentAns).toString());
 	return false;
 }
