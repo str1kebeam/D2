@@ -12,7 +12,10 @@
 	<link rel="stylesheet" type="text/css" href="DeriveCSS.Default.css"> <!-- Import default css for the whole website -->
 	<link rel="stylesheet" type="text/css" href="DeriveCSS.Practice.css"> <!-- Import specific css for this html file -->
 	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script>
+	 <!-- Import LaTeX -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/4.2.2/math.min.js"></script>
+	<!--Import mathjs-->
 </head>
 <body>
 	<div id="page">
@@ -45,7 +48,8 @@
 					<p class="body-description" id="question">Find the derivative of the following function</p>
 					<latex-eqn class="body-description">$$\frac{d}{dx}(x^{4}+2x^{3})=?$$</latex-eqn>
 					<div><input type="text" name="" id="input-answer"></div>
-					<button class="body-description" id="check-answer">Check Answer</button>
+					<button class="body-description" id="check-answer" onclick="functionthing();">Check Answer</button>
+					<p id="response"></p>
 				</div>
 			</div>
 		</div>
@@ -53,7 +57,7 @@
 			
 		</div>
 	</div>
-
 	<script src="DeriveJS.Default.js"></script> <!-- import default JS for the webpage -->
+	<script src="answerChecker.js"></script>
 </body>
 </html>
