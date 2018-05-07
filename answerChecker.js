@@ -24,9 +24,11 @@ function checkAns(ans){
 	if (ans==currentAns){
 		return true;
 	}
-	else if(math.simplify(ans).equals(math.simplify(currentAns))){
-		return true;
-	}
-	reply(math.simplify(currentAns).toString());
+	//else if(math.equal(math.simplify(ans),math.simplify(currentAns))){
+	//	return true;
+	//}
+	reply(1)
+	//reply(math.compare(math.simplify(ans),math.simplify(currentAns)));
+	//reply(math.format(math.simplify(currentAns));
 	return false;
 }
