@@ -7,11 +7,11 @@ function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	var correct=checkAns(ans);
 	if(correct){
-		reply("Great!"+x.toString());
-		x++;
+		reply("Great!");//+x.toString());
+		//x++;
 	}
 	else{
-		//reply('Aww...');
+		reply('Aww...');
 	}
 }
 function reply(text){
@@ -27,7 +27,19 @@ function checkAns(ans){
 	//else if(math.equal(math.simplify(ans),math.simplify(currentAns))){
 	//	return true;
 	//}
-	reply(1)
+	else{
+		//reply(2);
+		var a=math.rationalize(math.simplify(ans));//really roundabout way to do this, simplify() simplifies it and rationalize() as a side effect puts it in normal order
+		var b=math.rationalize(math.simplify(currentAns));
+
+		if(a.toString()==b.toString()){
+			return true;
+		}
+		//var a=math.compareNatural(math.simplify(ans),math.simplify(currentAns));
+		//reply(a);
+		
+	}
+	//reply(3);
 	//reply(math.compare(math.simplify(ans),math.simplify(currentAns)));
 	//reply(math.format(math.simplify(currentAns));
 	return false;
