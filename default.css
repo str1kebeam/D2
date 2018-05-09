@@ -1,5 +1,19 @@
 /* CSS File for the Derive homepage */
 
+:root {
+	--color1: green;
+}
+
+.brand-logo {
+	height: 64px;
+	width: auto;
+}
+
+.color1 {
+	background-color: var(--color1);
+}
+
+
 body {
 	background-color: #FFFDD0; /* Green 2 */
 	/* background-color: rgb(215, 206, 199); */
