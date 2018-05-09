@@ -14,6 +14,12 @@ function functionthing() {
 		reply('Aww...');
 	}
 }
+function ask(question, expression){
+	var q=document.getElementById("question");
+	var e=document.getElementById("expression");
+	q.innerHTML=question;
+	e.innerHTML=expression;
+}
 function reply(text){
 	var response=document.getElementById("response");
 	response.innerHTML=text;
@@ -43,4 +49,17 @@ function checkAns(ans){
 	//reply(math.compare(math.simplify(ans),math.simplify(currentAns)));
 	//reply(math.format(math.simplify(currentAns));
 	return false;
+}
+function newDerivative(terms, maxPow, maxCo){
+	var q="What is the derivative of the following?";
+	var e="$$\\frac{d}{dx}(";//The part to print
+	var simple="";//The one to be used to make the answer
+	var cos=[];//May want to make this an associative array, but not sure if I have time to do that right now
+	var pow=[];
+	for(var i=0; i<terms; i++){//Should add in some logic to stop repeat powers
+		var a=(Math.random()*maxCo)+1;
+		var b=(Math.random()*maxPow)+1;
+		cos.push(a);
+		pow.push(b);
+	}
 }
