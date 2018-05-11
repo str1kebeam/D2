@@ -47,6 +47,12 @@ latex-eqn { /* latex equation formatting (custom tag) */
 	color: inherit;
 }
 
+#topbar {
+	display: block;
+	top: 150px;
+
+}
+
 #header { /* format header area with image (goes at the top, freeze to top) */
 	position: fixed;
 	background-color: rgb(170,223,105); /* Green 2 */
