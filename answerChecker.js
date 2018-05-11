@@ -75,6 +75,15 @@ function newDerivative(terms, maxPow, maxCo){
 			}//Add in later: allow a term with coefficient <=0, and account for that with the printing of the + and the entire term
 		}
 	}
+	else{
+		var possiblePows=[];
+		//Ok, for the removing parts of the array, use .splice(a,b), where a=start index, b=end index-1, so .splice(0,1) would remove item at index 0
+		//Also, that doesn't return the value of it.
+		for(var pow=0; pow<=maxPow; pow++){
+			possiblePows.add(pow);
+		}
+		
+	}
 	/*var cos=[];//May want to make this an associative array, but not sure if I have time to do that right now
 	var pow=[];
 	if((maxPow+1)<terms){
