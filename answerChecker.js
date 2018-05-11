@@ -56,9 +56,26 @@ function newDerivative(terms, maxPow, maxCo){
 	var simple="";//The one to be used to make the answer
 	//Ok, going to rethink this:
 	//If there are more possible powers than terms, make terms that are to a random power in the range with a random coefficient, check that isn't already used (delete terms from list, probably)
+		//Then, go through and put them in a reasonable order, to not confuse people
+		//Much better than just generating random numbers and checking that it isn't already used
 	//If there are more or equal terms than possible powers, make a random coefficient for each power, number of terms doesn't matter
 	//Also, posible powers=maxpow+1;
-	var cos=[];//May want to make this an associative array, but not sure if I have time to do that right now
+	if((maxPow+1)<=terms){
+		for(var pow=maxPow; pow>=0; pow--){
+			var co=(Math.random()*maxCo)+1;//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
+			e+=co;
+			simple+=co;
+			if(pow==1){
+				e+="x+";
+				simple+="x+";
+			}
+			else if(pow>1){
+				e+="x^{"+pow+"}+";
+				simple+="x^"+pow+"+";
+			}//Add in later: allow a term with coefficient <=0, and account for that with the printing of the + and the entire term
+		}
+	}
+	/*var cos=[];//May want to make this an associative array, but not sure if I have time to do that right now
 	var pow=[];
 	if((maxPow+1)<terms){
 		terms=maxPow+1;//If the higest power is x^4, you can't have 6 terms. 1+x+x^2+x^3+x^4 is 5 terms
@@ -67,5 +84,5 @@ function newDerivative(terms, maxPow, maxCo){
 		var c=(Math.random()*maxCo)+1;
 		var p=(Math.random()*(maxPow+1));
 
-	}
+	}*/
 }
