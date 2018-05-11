@@ -54,12 +54,18 @@ function newDerivative(terms, maxPow, maxCo){
 	var q="What is the derivative of the following?";
 	var e="$$\\frac{d}{dx}(";//The part to print
 	var simple="";//The one to be used to make the answer
+	//Ok, going to rethink this:
+	//If there are more possible powers than terms, make terms that are to a random power in the range with a random coefficient, check that isn't already used (delete terms from list, probably)
+	//If there are more or equal terms than possible powers, make a random coefficient for each power, number of terms doesn't matter
+	//Also, posible powers=maxpow+1;
 	var cos=[];//May want to make this an associative array, but not sure if I have time to do that right now
 	var pow=[];
+	if((maxPow+1)<terms){
+		terms=maxPow+1;//If the higest power is x^4, you can't have 6 terms. 1+x+x^2+x^3+x^4 is 5 terms
+	}
 	for(var i=0; i<terms; i++){//Should add in some logic to stop repeat powers
-		var a=(Math.random()*maxCo)+1;
-		var b=(Math.random()*maxPow)+1;
-		cos.push(a);
-		pow.push(b);
+		var c=(Math.random()*maxCo)+1;
+		var p=(Math.random()*(maxPow+1));
+
 	}
 }
