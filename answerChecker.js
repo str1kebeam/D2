@@ -82,8 +82,40 @@ function newDerivative(terms, maxPow, maxCo){
 		for(var pow=0; pow<=maxPow; pow++){
 			possiblePows.add(pow);
 		}
-		
+		var pows=[];
+		var cos=[];
+		for(var i=0; i<terms; i++){
+			var pi=(Math.random()*possiblePows.length);
+			var c=(Math.random()*maxCo)+1;
+			var p=possiblePows[pi];
+			possiblePows=possiblePows.slice(pi, pi+1);
+			pows.push(p);
+			cos[p]=c;
+		}
+		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
+		for(var i=0; i<pows.length; i++){
+			var p=pows[i];
+			e+=cos[p];
+			simple+=cos[p];
+			if(p>1){
+				e+="x^{"+p+"}";
+				simple+="x^"+p;
+			}
+			else if(p==1){
+				e+="x";
+				simple+="x";
+			}
+			if((i+1)!=pows.length){
+				e+="+";
+				simple+="+";
+			}
+		}
 	}
+	var ans=math.rationalize(math.simplify(simple)).toString();
+	currentAns=ans;
+	e+="=?$$";
+	ask(q, e);
+
 	/*var cos=[];//May want to make this an associative array, but not sure if I have time to do that right now
 	var pow=[];
 	if((maxPow+1)<terms){
