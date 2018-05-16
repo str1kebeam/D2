@@ -165,6 +165,9 @@ function newDerivative(terms, maxPow, maxCo){
 
 	}*/
 }
+function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this
+	ask("Test:", "\\int xdx");
+}
 function test(){
 	console.log("test");
 }
