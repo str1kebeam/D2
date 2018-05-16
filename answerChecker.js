@@ -166,7 +166,69 @@ function newDerivative(terms, maxPow, maxCo){
 	}*/
 }
 function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this
+	//Yeah, this will be pretty much the same thing...
 	ask("Test:", "\\int xdx");
+}
+function makePolynomial(terms, maxPow, maxCo){
+	//So, this entire thing is just going to be the derivative's polynomial maker
+	//need to have it return the latex and normal text...
+	var string="";
+	if((maxPow+1)<=terms){
+		for(var pow=maxPow; pow>=0; pow--){
+			var co=0;
+			while(co==0){
+				co=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
+			}
+			string+=co;
+			if(pow==1){
+				e+="x+";
+				string+="x+";
+			}
+			else if(pow>1){
+				e+="x^{"+pow+"}+";
+				simple+="x^"+pow+"+";
+			}//Add in later: allow a term with coefficient <=0, and account for that with the printing of the + and the entire term
+		}
+	}
+	else{
+		var possiblePows=[];
+		//Ok, for the removing parts of the array, use .splice(a,b), where a=start index, b=end index-1, so .splice(0,1) would remove item at index 0
+		//Also, that doesn't return the value of it.
+		for(var pow=0; pow<=maxPow; pow++){
+			possiblePows.add(pow);
+		}
+		var pows=[];
+		var cos=[];
+		for(var i=0; i<terms; i++){
+			var pi=(Math.random()*possiblePows.length).toFixed(0);
+			var c=0;
+			while(c==0){
+				c=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);
+			}
+			var p=possiblePows[pi];
+			possiblePows=possiblePows.slice(pi, pi+1);
+			pows.push(p);
+			cos[p]=c;
+		}
+		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
+		for(var i=0; i<pows.length; i++){
+			var p=pows[i];
+			e+=cos[p];
+			simple+=cos[p];
+			if(p>1){
+				e+="x^{"+p+"}";
+				simple+="x^"+p;
+			}
+			else if(p==1){
+				e+="x";
+				simple+="x";
+			}
+			if((i+1)!=pows.length){
+				e+="+";
+				simple+="+";
+			}
+		}
+	}
 }
 function test(){
 	console.log("test");
