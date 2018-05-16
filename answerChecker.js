@@ -3,11 +3,14 @@
 //el.innerHTML = math.sqrt(9);
 var x=1;
 var currentAns='4x^3+6x^2';
+var answered=false;
+var strike=false;
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	var correct=checkAns(ans);
 	if(correct){
 		reply("Great!");//+x.toString());
+		answered=true;
 		//x++;
 	}
 	else{
@@ -15,10 +18,20 @@ function functionthing() {
 	}
 }
 function newQ(){
-	var type=document.getElementById("type").value;
-	var diff=document.getElementById("difficulty").value;
-	if(type=="derivative"){
-		der(diff);
+	if(!answered && !strike){
+		var b=document.getElementById("new-question");
+		b.innerHTML="Are you sure?";
+		strike=true;
+	}
+	else{
+		var type=document.getElementById("type").value;
+		var diff=document.getElementById("difficulty").value;
+		if(type=="derivative"){
+			der(diff);
+		}
+		strike=false;
+		var b=document.getElementById("new-question");
+		b.innerHTML="New Question";
 	}
 }
 function ask(question, expression){
@@ -31,6 +44,7 @@ function ask(question, expression){
 	reply("");
 	var ans=document.getElementById("input-answer");
 	ans.value="";
+	answered=false;
 }
 function reply(text){
 	var response=document.getElementById("response");
