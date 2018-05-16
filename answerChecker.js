@@ -165,3 +165,6 @@ function newDerivative(terms, maxPow, maxCo){
 
 	}*/
 }
+function test(){
+	console.log("test");
+}
