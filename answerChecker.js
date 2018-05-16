@@ -16,9 +16,11 @@ function functionthing() {
 }
 function ask(question, expression){
 	var q=document.getElementById("question");
-	var e=document.getElementById("expression");
+	//var e=document.getElementById("expression");
 	q.innerHTML=question;
-	e.innerHTML=expression;
+	//e.innerHTML=expression;
+	var m=MathJax.Hub.getAllJax("expression")[0];
+	MathJax.Hub.Queue(['Text',m, expression]);
 }
 function reply(text){
 	var response=document.getElementById("response");
@@ -52,7 +54,7 @@ function checkAns(ans){
 }
 function newDerivative(terms, maxPow, maxCo){
 	var q="What is the derivative of the following?";
-	var e="$$\\frac{d}{dx}(";//The part to print
+	var e="\\frac{d}{dx}(";//The part to print
 	var simple="";//The one to be used to make the answer
 	//Ok, going to rethink this:
 	//If there are more possible powers than terms, make terms that are to a random power in the range with a random coefficient, check that isn't already used (delete terms from list, probably)
@@ -113,7 +115,7 @@ function newDerivative(terms, maxPow, maxCo){
 	}
 	var ans=math.rationalize(math.simplify(simple)).toString();
 	currentAns=ans;
-	e+=")=?$$";
+	e+=")=?";
 	ask(q, e);
 
 	/*var cos=[];//May want to make this an associative array, but not sure if I have time to do that right now
