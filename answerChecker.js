@@ -14,6 +14,13 @@ function functionthing() {
 		reply('Aww...');
 	}
 }
+function newQ(){
+	var type=document.getElementById("type").value;
+	var diff=document.getElementById("difficulty").value;
+	if(type=="derivative"){
+		der(diff);
+	}
+}
 function ask(question, expression){
 	var q=document.getElementById("question");
 	//var e=document.getElementById("expression");
@@ -54,6 +61,12 @@ function checkAns(ans){
 	//reply(math.compare(math.simplify(ans),math.simplify(currentAns)));
 	//reply(math.format(math.simplify(currentAns));
 	return false;
+}
+var derDiffs=[]; derDiffs[1]=[2,1,5]; derDiffs[2]=[3,2,5];
+function der(diff){
+	//I fell bad hardcoding this, but I don't know how to do it in js
+	var d=derDiffs[diff];
+	newDerivative(d[0],d[1],d[2]);
 }
 function newDerivative(terms, maxPow, maxCo){
 	var q="What is the derivative of the following?";

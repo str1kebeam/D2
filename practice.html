@@ -52,7 +52,19 @@
 					<div><input type="text" name="" id="input-answer"></div>
 					<button class="body-description" id="check-answer" onclick="functionthing();">Check Answer</button>
 					<p id="response"></p>
-					<button class="body-description" id="check-answer" onclick="newDerivative(3,2,5);">New Question</button>
+					<p>New Question:</p>
+					<p>Type: 
+						<select id="type">
+							<option value="derivative">Derivative</option>
+						</select>
+					</p>
+					<p>Difficulty: 
+						<select id="difficulty">
+							<option value=1>1</option>
+							<option value=2>2</option>
+						</select>
+					</p>
+					<button class="body-description" id="check-answer" onclick="newQ();">New Question</button>
 				</div>
 			</div>
 		</div>
