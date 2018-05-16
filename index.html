@@ -13,22 +13,30 @@
 	<link rel="stylesheet" type="text/css" href="index.css"> <!-- Import default css for the whole website -->
 	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
+
 	
 </head>
 <body>
 	<div id="container">
+		<ul id="lessons" class="dropdown-content">
+  <li><a href="#!">Lesson 1</a></li>
+  <li><a href="#!">Lesson 2</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">Eccetera</a></li>
+</ul>
 		<nav class="color1" id="topbar">
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo center"><img src="DeriveLogo.v2.png" title="Welcome to Derive!"></a>
 				<ul id="nav-mobile" class="left hide-on-med-and-down">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="learn.html">Learn</a></li>
+					<li><a href="index.html">Home<i class="material-icons right">home</i></a></li>
+					<li><a class="dropdown-trigger" href="#!" data-target="lessons">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
 					<li><a href="practice.html">Practice</a></li>
 					<li><a href="about.html">About</a></li>
 					<li><a href="#!">Sign In</a></li>
 				</ul>
 			</div>
 		</nav>
+		
 		<!--
 		<div id="header">
 			<div id="header-top"> <!-- image icon and layer above menu bar 
@@ -48,11 +56,12 @@
 
 			</div>
 		</div> -->
+		<!--
 		<div id="body">
-			<h1 id="body-title"> <!-- Title -->
+			<h1 id="body-title"> <!-- Title -
 				Welcome to Derive!
 			</h1>
-			<div id="body-text"> <!-- The body text on the homepage, including images -->
+			<div id="body-text"> <!-- The body text on the homepage, including images 
 				<p class="body-description">Derive is an interactive learning program designed to teach you Calculus concepts with ease.</p>
 				<p class="body-description">Charts and graphs will change the way you understand Calculus concepts, turning words into diagrams and pictures to easily understand these Calculus concepts.</p>
 				<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Interactive Graph">
@@ -65,5 +74,15 @@
 	</div>
 
 	<script src="default.js"></script> <!-- import default JS for the webpage -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="Imports/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		$('.sidenav').sidenav();
+		$('select').formSelect();
+		$(".dropdown-trigger").dropdown({hover: true});
+	});
+
+	</script>
 </body>
 </html>
