@@ -1,4 +1,19 @@
 /* CSS File for the Derive homepage */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+:root {
+	--color1: green;
+}
+
+.brand-logo {
+	height: 64px;
+	width: auto;
+}
+
+.color1 {
+	background-color: var(--color1);
+}
+
 
 body {
 	background-color: #FFFDD0; /* Green 2 */
@@ -31,6 +46,12 @@ p a:visited { /* change visited link formatting */
 latex-eqn { /* latex equation formatting (custom tag) */
 	font-size: 20px;
 	color: inherit;
+}
+
+#topbar {
+	display: block;
+	top: 150px;
+
 }
 
 #header { /* format header area with image (goes at the top, freeze to top) */
