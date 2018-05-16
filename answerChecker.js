@@ -21,6 +21,9 @@ function ask(question, expression){
 	//e.innerHTML=expression;
 	var m=MathJax.Hub.getAllJax("expression")[0];
 	MathJax.Hub.Queue(['Text',m, expression]);
+	reply("");
+	var ans=document.getElementById("input-answer");
+	ans.value="";
 }
 function reply(text){
 	var response=document.getElementById("response");
@@ -113,7 +116,7 @@ function newDerivative(terms, maxPow, maxCo){
 			}
 		}
 	}
-	var ans=math.rationalize(math.simplify(simple)).toString();
+	var ans=math.rationalize(math.derivative(simple, "x")).toString();
 	currentAns=ans;
 	e+=")=?";
 	ask(q, e);
