@@ -80,7 +80,10 @@ function newDerivative(terms, maxPow, maxCo){
 	//Also, posible powers=maxpow+1;
 	if((maxPow+1)<=terms){
 		for(var pow=maxPow; pow>=0; pow--){
-			var co=((Math.random()*maxCo)+1).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
+			var co=0;
+			while(co==0){
+				co=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
+			}
 			e+=co;
 			simple+=co;
 			if(pow==1){
@@ -104,7 +107,10 @@ function newDerivative(terms, maxPow, maxCo){
 		var cos=[];
 		for(var i=0; i<terms; i++){
 			var pi=(Math.random()*possiblePows.length).toFixed(0);
-			var c=((Math.random()*maxCo)+1).toFixed(0);
+			var c=0;
+			while(c==0){
+				c=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);
+			}
 			var p=possiblePows[pi];
 			possiblePows=possiblePows.slice(pi, pi+1);
 			pows.push(p);
