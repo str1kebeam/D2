@@ -119,13 +119,42 @@ function newDerivative(terms, maxPow, maxCo){
 }
 function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this
 	//Yeah, this will be pretty much the same thing...
-	ask("Test:", "\\int xdx");
+	var latex="\\int(";
+	var simple="";
+	var poly=makePolynomial(terms, maxPow, maxCo, true);
+	latex+=poly[0];
+	simple+=poly[1];
+	latex+=")dx";
+	raw=poly[2];
+	ans=integrate(raw[0],raw[1]);
+	currentAns=ans;
+	ask("Evaluate the following integral:",latex);
 }
-function makePolynomial(terms, maxPow, maxCo){
+function integrate(pows, cos){//one thing mathjs doesn't have that we need is integration, so this will handle the simple rule for it
+	var simple="";//This doesn't make latex right now, but I could easily edit it to do that
+	for(var i=0; i<pows.length; i++){
+		var c=cos[i];
+		var p=pows[i];
+		p++;
+		simple+="("+c+"/"+p+")";
+		if(p==1){
+			simple+="x";
+		}
+		else if(p>1){
+			simple+="x^"+p;
+		}
+		if(i+1!=pows.length){
+			simple+="+";
+		}
+	}
+	return simple;
+}
+function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
 	//need to have it return the latex and normal text...
 	var latex="";
 	var simple="";
+	var raws=[[],[]];
 	if((maxPow+1)<=terms){
 		for(var pow=maxPow; pow>=0; pow--){
 			var co=0;
@@ -148,6 +177,8 @@ function makePolynomial(terms, maxPow, maxCo){
 				latex+="x^{"+pow+"}+";
 				simple+="x^"+pow+"+";
 			}//Add in later: allow a term with coefficient <=0, and account for that with the printing of the + and the entire term
+			raws[0].push(pow);
+			raws[1].push(co);
 		}
 	}
 	else{
@@ -173,7 +204,7 @@ function makePolynomial(terms, maxPow, maxCo){
 		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
 		for(var i=0; i<pows.length; i++){
 			var p=pows[i];
-			if(cos[p]==-1&&p!=0){
+			if((cos[p]==-1)&&(p!=0)){
 				latex+="-";
 				simple+="-";
 			}
@@ -193,9 +224,14 @@ function makePolynomial(terms, maxPow, maxCo){
 				latex+="+";
 				simple+="+";
 			}
+			raws[0].push(p);
+			raws[1].push(cos[p]);
 		}
 	}
 	var result=[latex, simple];
+	if(raw){
+		result.push(raws);
+	}
 	return result;
 }
 function test(){
