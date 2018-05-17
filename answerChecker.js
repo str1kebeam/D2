@@ -92,64 +92,15 @@ function newDerivative(terms, maxPow, maxCo){
 		//Much better than just generating random numbers and checking that it isn't already used
 	//If there are more or equal terms than possible powers, make a random coefficient for each power, number of terms doesn't matter
 	//Also, posible powers=maxpow+1;
-	if((maxPow+1)<=terms){
-		for(var pow=maxPow; pow>=0; pow--){
-			var co=0;
-			while(co==0){
-				co=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
-			}
-			e+=co;
-			simple+=co;
-			if(pow==1){
-				e+="x+";
-				simple+="x+";
-			}
-			else if(pow>1){
-				e+="x^{"+pow+"}+";
-				simple+="x^"+pow+"+";
-			}//Add in later: allow a term with coefficient <=0, and account for that with the printing of the + and the entire term
-		}
+	poly=makePolynomial(terms, maxPow, maxCo);
+	e+=poly[0];
+	simple+=poly[1];
+	if(simple.includes("x")){
+		var ans=math.rationalize(math.derivative(simple, "x")).toString();
 	}
 	else{
-		var possiblePows=[];
-		//Ok, for the removing parts of the array, use .splice(a,b), where a=start index, b=end index-1, so .splice(0,1) would remove item at index 0
-		//Also, that doesn't return the value of it.
-		for(var pow=0; pow<=maxPow; pow++){
-			possiblePows.add(pow);
-		}
-		var pows=[];
-		var cos=[];
-		for(var i=0; i<terms; i++){
-			var pi=(Math.random()*possiblePows.length).toFixed(0);
-			var c=0;
-			while(c==0){
-				c=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);
-			}
-			var p=possiblePows[pi];
-			possiblePows=possiblePows.slice(pi, pi+1);
-			pows.push(p);
-			cos[p]=c;
-		}
-		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
-		for(var i=0; i<pows.length; i++){
-			var p=pows[i];
-			e+=cos[p];
-			simple+=cos[p];
-			if(p>1){
-				e+="x^{"+p+"}";
-				simple+="x^"+p;
-			}
-			else if(p==1){
-				e+="x";
-				simple+="x";
-			}
-			if((i+1)!=pows.length){
-				e+="+";
-				simple+="+";
-			}
-		}
+		ans="0";//Pretty much, mathjs will break if x isn't actually in it, but since this is dx if there isn't x the derivative should be 0 (for now...)
 	}
-	var ans=math.rationalize(math.derivative(simple, "x")).toString();
 	currentAns=ans;
 	e+=")=?";
 	ask(q, e);
@@ -178,10 +129,16 @@ function makePolynomial(terms, maxPow, maxCo){
 		for(var pow=maxPow; pow>=0; pow--){
 			var co=0;
 			while(co==0){
-				co=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
+				co=((Math.random()*maxCo*2)-maxCo).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
 			}
-			simple+=co;
-			latex+=co;
+			if(co==-1&&pow!=0){
+				simple+="-";
+				latex+="-";
+			}
+			else if(co!=1||pow==0){
+				simple+=co;
+				latex+=co;
+			}
 			if(pow==1){
 				latex+="x+";
 				simple+="x+";
@@ -197,7 +154,7 @@ function makePolynomial(terms, maxPow, maxCo){
 		//Ok, for the removing parts of the array, use .splice(a,b), where a=start index, b=end index-1, so .splice(0,1) would remove item at index 0
 		//Also, that doesn't return the value of it.
 		for(var pow=0; pow<=maxPow; pow++){
-			possiblePows.add(pow);
+			possiblePows.push(pow);
 		}
 		var pows=[];
 		var cos=[];
@@ -205,7 +162,7 @@ function makePolynomial(terms, maxPow, maxCo){
 			var pi=(Math.random()*possiblePows.length).toFixed(0);
 			var c=0;
 			while(c==0){
-				c=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);
+				c=((Math.random()*maxCo*2)-maxCo).toFixed(0);
 			}
 			var p=possiblePows[pi];
 			possiblePows=possiblePows.slice(pi, pi+1);
@@ -215,8 +172,14 @@ function makePolynomial(terms, maxPow, maxCo){
 		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
 		for(var i=0; i<pows.length; i++){
 			var p=pows[i];
-			latex+=cos[p];
-			simple+=cos[p];
+			if(cos[p]==-1&&p!=0){
+				latex+="-";
+				simple+="-";
+			}
+			else if(cos[p]!=1||p==0){
+				latex+=cos[p];
+				simple+=cos[p];
+			}
 			if(p>1){
 				latex+="x^{"+p+"}";
 				simple+="x^"+p;
