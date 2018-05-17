@@ -172,20 +172,22 @@ function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a functio
 function makePolynomial(terms, maxPow, maxCo){
 	//So, this entire thing is just going to be the derivative's polynomial maker
 	//need to have it return the latex and normal text...
-	var string="";
+	var latex="";
+	var simple="";
 	if((maxPow+1)<=terms){
 		for(var pow=maxPow; pow>=0; pow--){
 			var co=0;
 			while(co==0){
 				co=((Math.random()*maxCo*2)-maxCo+1).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
 			}
-			string+=co;
+			simple+=co;
+			latex+=co;
 			if(pow==1){
-				e+="x+";
-				string+="x+";
+				latex+="x+";
+				simple+="x+";
 			}
 			else if(pow>1){
-				e+="x^{"+pow+"}+";
+				latex+="x^{"+pow+"}+";
 				simple+="x^"+pow+"+";
 			}//Add in later: allow a term with coefficient <=0, and account for that with the printing of the + and the entire term
 		}
@@ -213,22 +215,24 @@ function makePolynomial(terms, maxPow, maxCo){
 		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
 		for(var i=0; i<pows.length; i++){
 			var p=pows[i];
-			e+=cos[p];
+			latex+=cos[p];
 			simple+=cos[p];
 			if(p>1){
-				e+="x^{"+p+"}";
+				latex+="x^{"+p+"}";
 				simple+="x^"+p;
 			}
 			else if(p==1){
-				e+="x";
+				latex+="x";
 				simple+="x";
 			}
 			if((i+1)!=pows.length){
-				e+="+";
+				latex+="+";
 				simple+="+";
 			}
 		}
 	}
+	var result=[latex, simple];
+	return result;
 }
 function test(){
 	console.log("test");
