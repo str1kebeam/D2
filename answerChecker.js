@@ -95,8 +95,9 @@ function newDerivative(terms, maxPow, maxCo){
 	poly=makePolynomial(terms, maxPow, maxCo);
 	e+=poly[0];
 	simple+=poly[1];
+	var ans;
 	if(simple.includes("x")){
-		var ans=math.rationalize(math.derivative(simple, "x")).toString();
+		ans=math.rationalize(math.derivative(simple, "x")).toString();
 	}
 	else{
 		ans="0";//Pretty much, mathjs will break if x isn't actually in it, but since this is dx if there isn't x the derivative should be 0 (for now...)
