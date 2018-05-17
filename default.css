@@ -14,9 +14,8 @@
 	background-color: var(--color1);
 }
 
-
 body {
-	background-color: #FFFDD0; /* Green 2 */
+	/*background-color: #FFFDD0; /* Green 2 */
 	/* background-color: rgb(215, 206, 199); */
 	color: rgb(4, 48, 34); /* Blue 6 */
 
@@ -24,6 +23,14 @@ body {
 
 	margin: 0px;
 
+	background-color: #ccccff; 
+    background-size: 50px 50px;
+    background-image: linear-gradient(to right, lightblue 1px, transparent 1px), linear-gradient(to bottom, lightblue 1px, transparent 1px);
+    /* https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css#32861765 */
+	/*
+background-image:url(https://blueprint.hackmit.org/img/bg-tile.png);
+ background-size:7rem;
+ background-attachment:fixed */
 }
 
 button { /* remove default formatting from buttons */
@@ -39,78 +46,21 @@ p a { /* change link formatting */
 	font-style: italic;
 	text-decoration: none;
 }
-p a:visited { /* change visited link formatting */
-	color: blue;
-}
 
 latex-eqn { /* latex equation formatting (custom tag) */
 	font-size: 20px;
 	color: inherit;
 }
 
-#topbar {
-	display: block;
-	top: 150px;
-
-}
-
-#header { /* format header area with image (goes at the top, freeze to top) */
-	position: fixed;
-	background-color: rgb(170,223,105); /* Green 2 */
-	top: 0px;
-	left: 0px;
-	right: 0px;
-
-	z-index: 1; /* see in front */
-}
-
-#header-top { /* header with logo sizing */
-	width: 100%;
-	height: 100px;
-}
-
-#header-top img { /* logo formatting */
-	height: 100%;
-	width: auto;
-}
-
-#header-menu, #header-menu button { /*top menu formatting - edits buttons for IE compatibility */
-	width: 100%;
-	height: 50px;
-	max-height: 150px;
-	text-align: center;
-
-	background-color: rgb(77,130,11); /* Green 5 */
-	color: rgb(255,255,255); /* White */
-}
-
-#header-menu button { /* menu button formatting */
-	width: 50px;
-	height: 100%;
-
-	background-color: inherit;
-	color: rgb(255,255,255);
-
-	font-family: "Trebuchet MS", sans-serif;
-	font-size: 18px;
-	text-transform: uppercase;
-}
-#header-menu button:hover { /* menu button formatting when hovered over */
-	background-color: blue;
-	/* background-color: rgb(106,165,35); /* Green 4 */
-}
-#header-menu button:hover .dropdown { /* TODO: add dropdown menu */
-	display: blocks;
+#side-content {
+	background-color: #f1d592;
+	height: auto;
+	z-index: -10;
 }
 
 #body { /* body div attributes */
-	position: relative;
-	top: 160px;
-
 	text-align: center;
-
 	color: black;
-
 	overflow-y: auto; /* create a scroll bar if needed */
 }
 
@@ -120,15 +70,6 @@ latex-eqn { /* latex equation formatting (custom tag) */
 	font: 32px "Trebuchet MS", sans-serif;
 
 	text-align: center;
-}
-
-.dropdown { /* TODO: add dropdown buttons */
-	display: none;
-	position: absolute;
-	box-shadow: 0px 10px 20px 2px rgba(0,0,0,.2);
-
-	background-color: blue;
-
 }
 
 .body-description { /* center align elements in the body */
