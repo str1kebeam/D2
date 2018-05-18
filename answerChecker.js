@@ -29,6 +29,9 @@ function newQ(){
 		if(type=="derivative"){
 			der(diff);
 		}
+		else if(type=="integral"){
+			intQ(diff);
+		}
 		strike=false;
 		var b=document.getElementById("new-question");
 		b.innerHTML="New Question";
@@ -117,6 +120,11 @@ function newDerivative(terms, maxPow, maxCo){
 
 	}*/
 }
+var intDiffs=[]; intDiffs[1]=[2,1,5]; intDiffs[2]=[3,2,5];
+function intQ(diff){
+	var d=intDiffs[diff];
+	newIntegral(d[0],d[1],d[2]);
+}
 function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this
 	//Yeah, this will be pretty much the same thing...
 	var latex="\\int(";
@@ -126,11 +134,11 @@ function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a functio
 	simple+=poly[1];
 	latex+=")dx";
 	raw=poly[2];
-	ans=integrate(raw[0],raw[1]);
+	ans=integrate(raw[0],raw[1], true);
 	currentAns=ans;
 	ask("Evaluate the following integral:",latex);
 }
-function integrate(pows, cos){//one thing mathjs doesn't have that we need is integration, so this will handle the simple rule for it
+function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we need is integration, so this will handle the simple rule for it
 	var simple="";//This doesn't make latex right now, but I could easily edit it to do that
 	for(var i=0; i<pows.length; i++){
 		var c=cos[i];
@@ -146,6 +154,9 @@ function integrate(pows, cos){//one thing mathjs doesn't have that we need is in
 		if(i+1!=pows.length){
 			simple+="+";
 		}
+	}
+	if(con){
+		simple+="+c";
 	}
 	return simple;
 }
