@@ -9,7 +9,7 @@ var entry_text="";
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	if(entry_text!=""){
-		ans=entry_text;
+		ans=entry_text.replace("[","(").replace("]",")");
 	}
 	var correct=checkAns(ans);
 	if(correct){
@@ -278,6 +278,9 @@ function numpad(key){
 	else if(key=="back"){
 		entry_text=backspace(area, entry_text);
 	}
+	else if(key=="frac"){
+		entry_text+=addFrac(area);
+	}
 	else{
 		area.innerHTML+=key;
 		entry_text+=key;
@@ -308,12 +311,27 @@ function addExpo(feild){
 var frac_stage=0;//0=not in fraction, 1=numerator, 2=denominator
 function addFrac(feild){
 	if(frac_stage==0){
-		feild.innerHTML+="(";
+		feild.innerHTML+="[";
 		frac_stage=1;
-		return "(";
+		return "[";
 	}
-	if(frac_stage==1){
-
+	else if(frac_stage==1){
+		feild.innerHTML+="]/[";
+		frac_stage=2;
+		return "]/[";
+	}
+	else if(frac_stage==2){
+		var start=feild.innerHTML.indexOf("[");
+		var mid=feild.innerHTML.indexOf("]/[");
+		var before=feild.innerHTML.slice(0,start);
+		var num=feild.innerHTML.slice(start+1,mid);
+		var den=feild.innerHTML.slice(mid+3);
+		console.log(before);
+		console.log(num);
+		console.log(den);
+		feild.innerHTML=before+"<sup>"+num+"</sup>&frasl;<sub>"+den+"</sub>";
+		frac_stage=0;
+		return "]";
 	}
 }
 function backspace(feild, text){
