@@ -23,7 +23,7 @@ body {
 
 	margin: 0px;
 
-	background-color: #ccccff; 
+	background-color: #bbddff; 
     background-size: 50px 50px;
     background-image: linear-gradient(to right, lightblue 1px, transparent 1px), linear-gradient(to bottom, lightblue 1px, transparent 1px);
     /* https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css#32861765 */
