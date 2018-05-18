@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <html>
 <head>
 	<!--[if lt IE9]>
@@ -8,9 +6,9 @@
 	</script>
 	<![endif]--> <!-- IE compatibility -->
 	<meta charset="utf-8">
-	<title>Practice - Derivatives</title>
-	<link rel="stylesheet" type="text/css" href="DeriveCSS.Default.css"> <!-- Import default css for the whole website -->
-	<link rel="stylesheet" type="text/css" href="DeriveCSS.Practice.css"> <!-- Import specific css for this html file -->
+	<title>Derive - Practice</title>
+	<link type="text/CSS" rel="stylesheet" href="Imports\materialize\css\materialize.min.css"  media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="practice.css"> <!-- Import default css for the whole website -->
 	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script>
 	 <!-- Import LaTeX -->
@@ -19,28 +17,37 @@
 	<script type="text/javascript" src="https://raw.githubusercontent.com/asciimath/asciimathml/master/ASCIIMathML.js"></script>
 	<!--Import ASCIImath -->
 </head>
+
 <body>
-	<div id="page">
-		<div id="header">
-			<div id="header-top"> <!-- image icon and layer above menu bar -->
-				<a href="index.html"><img src="DeriveLogo.v2.png" title="Welcome to Derive!" id="derive-logo"></a>
-				
+	<body>
+	<div id="container">
+		<ul id="lessons" class="dropdown-content">
+			<li><a href="#!">Lesson 1</a></li>
+			<li><a href="#!">Lesson 2</a></li>
+			<li class="divider"></li>
+			<li><a href="#!">Eccetera</a></li>
+		</ul>
+		<nav class="color1" id="topbar">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo center">Logo Here</a>
+				<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="index.html">Home<i class="material-icons right">home</i></a></li>
+					<li><a class="dropdown-trigger" href="/Lessons/index.html" data-target="lessons">Lessons<i class="material-icons right">arrow_drop_down</i></a></li>
+					<li><a href="practice.html">Practice</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="#!">Sign In</a></li>
+				</ul>
 			</div>
-			<div id="header-menu"> <!-- menu bar -->
+		</nav>
 
-				<a href="index.html" title="Home"><button type="button" id="home-button">Home</button></a>
-
-				<a href="learn.html" title="Learn a Topic"><button type="button" id="learn-button">Learn</button></a>
-					<!--<div class="dropdown">The Tangent Line</div>-->
-
-				<a href="practice.html" title="Practice Your Skills"><button type="button" id="practice-button">Practice</button></a>
-
-				<a href="about.html" title="About Derive"><button type="button" id="aboutus-button">About</button></a>
-
+		<div class="row">
+			<div class="col s12 m4 l3 z-depth-1" id="side-content">
+				<h3>You made a sidebar!</h3>
+				<p>I'm so proud of you</p>
+				<p>jk it kinda stinks rn</p>
 			</div>
-		</div>
-		<div id="body">
-			<h1 id="body-title"> <!-- Title -->
+			<div class="col s12 m8 l9" id="main-content">
+				<h1 id="body-title"> <!-- Title -->
 				Practice Your Skills
 			</h1>
 			
@@ -69,35 +76,56 @@
 					<button class="body-description" id="new-question" onclick="newQ();">New Question</button>
 				</div>
 				<div id="numpad">
-					<p>
-						<button onclick="numpad(1);">1</button>
-						<button onclick="numpad(2);">2</button>
-						<button onclick="numpad(3);">3</button>
-						<button onclick="numpad(4);">4</button>
-						<button onclick="numpad(5);">5</button>
-						<button onclick="numpad(6);">6</button>
-						<button onclick="numpad(7);">7</button>
-						<button onclick="numpad(8);">8</button>
-						<button onclick="numpad(9);">9</button>
-						<button onclick="numpad(0);">0</button>
-						<button onclick="numpad('-');">-</button>
-						<button onclick="numpad('+');">+</button>
-						<button onclick="numpad('x');">x</button>
-						<button onclick="numpad('^');">a<sup>b</sup></button>
-						<button onclick="numpad('back');">&#8592;</button>
-						<button onclick="numpad('*');">*</button>
-						<button onclick="numpad('/');">/</button>
-						<button onclick="numpad('c');">c</button>
-						<button onclick="numpad('frac');"><sup>a</sup>&frasl;<sub>b</sub></button>
-					</p>
+						<button onclick="numpad(1);" class="btn waves-effect waves-light">1</button>
+						<button onclick="numpad(2);" class="btn waves-effect waves-light">2</button>
+						<button onclick="numpad(3);" class="btn waves-effect waves-light">3</button>
+						<button onclick="numpad(4);" class="btn waves-effect waves-light">4</button>
+						<button onclick="numpad(5);" class="btn waves-effect waves-light">5</button>
+						<button onclick="numpad(6);" class="btn waves-effect waves-light">6</button>
+						<button onclick="numpad(7);" class="btn waves-effect waves-light">7</button>
+						<button onclick="numpad(8);" class="btn waves-effect waves-light">8</button>
+						<button onclick="numpad(9);" class="btn waves-effect waves-light">9</button>
+						<button onclick="numpad(0);" class="btn waves-effect waves-light">0</button>
+						<button onclick="numpad('-');" class="btn waves-effect waves-light">-</button>
+						<button onclick="numpad('+');" class="btn waves-effect waves-light">+</button>
+						<button onclick="numpad('x');" class="btn waves-effect waves-light">x</button>
+						<button onclick="numpad('^');" class="btn waves-effect waves-light">a<sup>b</sup></button>
+						<button onclick="numpad('back');" class="btn waves-effect waves-light">&#8592;</button>
+						<button onclick="numpad('*');" class="btn waves-effect waves-light">*</button>
+						<button onclick="numpad('/');" class="btn waves-effect waves-light">/</button>
+						<button onclick="numpad('c');" class="btn waves-effect waves-light">c</button>
+						<button onclick="numpad('frac');" class="btn waves-effect waves-light"><sup>a</sup>&frasl;<sub>b</sub></button>
 				</div>
 			</div>
-		</div>
-		<div id="footer">
-			
+			</div>
 		</div>
 	</div>
-	<script src="DeriveJS.Default.js"></script> <!-- import default JS for the webpage -->
-	<script src="answerChecker.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="Imports/materialize/js/materialize.min.js"></script>
+<script src="answerChecker.js"></script>
+<script src="default.js"></script> <!-- import default JS for the webpage -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.sidenav').sidenav();
+	$('select').formSelect();
+	$("nav .dropdown-trigger").dropdown({
+		hover: true,
+		coverTrigger: false,
+		closeOnClick: false
+	});
+	$(".dropdown-trigger #difficulty").dropdown({
+		hover: false,
+		coverTrigger: false,
+	});
+	$('.carousel').carousel({
+		duration: 500
+	});
+});
+
+let keypadButtons = document.querySelectorAll("#numpad button");
+keypadButtons.forEach(function(el) {
+	el.classList.add("")
+});
+</script>
 </body>
 </html>
