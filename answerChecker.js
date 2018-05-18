@@ -202,7 +202,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 		var pows=[];
 		var cos=[];
 		for(var i=0; i<terms; i++){
-			var pi=(Math.random()*possiblePows.length).toFixed(0);
+			var pi=Math.floor((Math.random()*possiblePows.length));
 			var c=0;
 			while(c==0){
 				c=((Math.random()*maxCo*2)-maxCo).toFixed(0);
