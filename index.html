@@ -47,9 +47,9 @@
 				<h1 id="body-title"> <!-- Title -->
 				Welcome to Derive!
 			</h1>
-			<div id="carousel">
-				<a class="carousel-item" href="#one!"><img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png""></a>
-				<a class="carousel-item" href="#two!"><img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png""></a>
+			<div class="carousel">
+				<a class="carousel-item" href="#one!"><img src="DeriveLogo.v2.jpg"></a>
+				<a class="carousel-item" href="#two!"><img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png"></a>
 			</div>
 			</div>
 		</div>
@@ -74,21 +74,23 @@
 		
 	</div>
 
-	<script src="default.js"></script> <!-- import default JS for the webpage -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="Imports/materialize/js/materialize.min.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$('.sidenav').sidenav();
-		$('select').formSelect();
-		$(".dropdown-trigger").dropdown({
-			hover: true,
-			coverTrigger: false,
-			closeOnClick: false
-		});
-		$('.carousel').carousel();
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="Imports/materialize/js/materialize.min.js"></script>
+<script src="default.js"></script> <!-- import default JS for the webpage -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.sidenav').sidenav();
+	$('select').formSelect();
+	$(".dropdown-trigger").dropdown({
+		hover: true,
+		coverTrigger: false,
+		closeOnClick: false
 	});
+	$('.carousel').carousel({
+		duration: 500
+	});
+});
 
-	</script>
+</script>
 </body>
 </html>
