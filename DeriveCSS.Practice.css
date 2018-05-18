@@ -30,3 +30,7 @@ input[type="text"] { /* change the color, border, and centering of the answer in
 #check-answer:hover { /* change the color of the check answer button upon hovering over it */
 	background-color: lightgray;
 }
+sup { 
+    vertical-align: super;
+    font-size: smaller;
+}

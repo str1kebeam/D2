@@ -50,6 +50,7 @@
 					<p class="body-description" id="question">Find the derivative of the following function</p>
 					<latex-eqn class="body-description" id="expression">$$\frac{d}{dx}(x^{4}+2x^{3})=?$$</latex-eqn>
 					<div><input type="text" name="" id="input-answer"></div>
+					<div><p id="new-entry"></p></div>
 					<button class="body-description" id="check-answer" onclick="functionthing();">Check Answer</button>
 					<p id="response"></p>
 					<p>New Question:</p>
@@ -66,6 +67,29 @@
 						</select>
 					</p>
 					<button class="body-description" id="new-question" onclick="newQ();">New Question</button>
+				</div>
+				<div id="numpad">
+					<p>
+						<button onclick="numpad(1);">1</button>
+						<button onclick="numpad(2);">2</button>
+						<button onclick="numpad(3);">3</button>
+						<button onclick="numpad(4);">4</button>
+						<button onclick="numpad(5);">5</button>
+						<button onclick="numpad(6);">6</button>
+						<button onclick="numpad(7);">7</button>
+						<button onclick="numpad(8);">8</button>
+						<button onclick="numpad(9);">9</button>
+						<button onclick="numpad(0);">0</button>
+						<button onclick="numpad('-');">-</button>
+						<button onclick="numpad('+');">+</button>
+						<button onclick="numpad('x');">x</button>
+						<button onclick="numpad('^');">a<sup>b</sup></button>
+						<button onclick="numpad('back');">&#8592;</button>
+						<button onclick="numpad('*');">*</button>
+						<button onclick="numpad('/');">/</button>
+						<button onclick="numpad('c');">c</button>
+						<button onclick="numpad('frac');"><sup>a</sup>&frasl;<sub>b</sub></button>
+					</p>
 				</div>
 			</div>
 		</div>
