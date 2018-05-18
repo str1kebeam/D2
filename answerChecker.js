@@ -5,8 +5,12 @@ var x=1;
 var currentAns='4x^3+6x^2';
 var answered=false;
 var strike=false;
+var entry_text="";
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
+	if(entry_text!=""){
+		ans=entry_text;
+	}
 	var correct=checkAns(ans);
 	if(correct){
 		reply("Great!");//+x.toString());
@@ -85,7 +89,7 @@ function der(diff){
 	var d=derDiffs[diff];
 	newDerivative(d[0],d[1],d[2]);
 }
-function newDerivative(terms, maxPow, maxCo){
+function newDerivative(terms, maxPow, maxCo, test=false){
 	var q="What is the derivative of the following?";
 	var e="\\frac{d}{dx}(";//The part to print
 	var simple="";//The one to be used to make the answer
@@ -95,7 +99,16 @@ function newDerivative(terms, maxPow, maxCo){
 		//Much better than just generating random numbers and checking that it isn't already used
 	//If there are more or equal terms than possible powers, make a random coefficient for each power, number of terms doesn't matter
 	//Also, posible powers=maxpow+1;
-	poly=makePolynomial(terms, maxPow, maxCo);
+	poly=makePolynomial(terms, maxPow, maxCo, test);
+	if(test){
+		for(var i=0; i<poly[2][0].length; i++){
+			console.log(poly[2][0][i]);
+		}
+		console.log("pows:");
+		for(var i=0; i<poly[2][1].length; i++){
+			console.log(poly[2][1][i]);
+		}
+	}
 	e+=poly[0];
 	simple+=poly[1];
 	var ans;
@@ -199,10 +212,12 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 		for(var pow=0; pow<=maxPow; pow++){
 			possiblePows.push(pow);
 		}
+		//console.log(possiblePows);
 		var pows=[];
 		var cos=[];
 		for(var i=0; i<terms; i++){
-			var pi=(Math.random()*possiblePows.length).toFixed(0);
+			var pi=Math.floor((Math.random()*possiblePows.length));
+			//console.log(pi);
 			var c=0;
 			while(c==0){
 				c=((Math.random()*maxCo*2)-maxCo).toFixed(0);
@@ -213,6 +228,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 			cos[p]=c;
 		}
 		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
+		//console.log(pows);
 		for(var i=0; i<pows.length; i++){
 			var p=pows[i];
 			if((cos[p]==-1)&&(p!=0)){
@@ -237,6 +253,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 			}
 			raws[0].push(p);
 			raws[1].push(cos[p]);
+			//console.log("Co:"+cos[p]+" Pow:"+p);
 		}
 	}
 	var result=[latex, simple];
@@ -247,4 +264,79 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 }
 function test(){
 	console.log("test");
+}
+var expo=false;
+function numpad(key){
+	var area=document.getElementById("new-entry");
+	if(typeof key=="number"){
+		area.innerHTML+=key;
+		entry_text+=key;
+	}
+	else if(key=="^"){
+		entry_text+=addExpo(area);
+	}
+	else if(key=="back"){
+		entry_text=backspace(area, entry_text);
+	}
+	else{
+		area.innerHTML+=key;
+		entry_text+=key;
+	}
+}
+function addExpo(feild){
+	if(!expo){
+		feild.innerHTML+="^(";
+		expo=true;
+		return "^(";
+	}
+	else{
+		var start=feild.innerHTML.indexOf("^(");
+		//console.log(feild.innerHTML.substring(start+2));
+		var inside=feild.innerHTML.substring(start+2);
+		var before=feild.innerHTML.substring(0,start);
+		//console.log(before);
+		if(inside==""){
+			feild.innerHTML=before;
+		}
+		else{
+			feild.innerHTML=before+"<sup>"+inside+"</sup>";
+		}
+		expo=false;
+		return ")";
+	}
+}
+var frac_stage=0;//0=not in fraction, 1=numerator, 2=denominator
+function addFrac(feild){
+	if(frac_stage==0){
+		feild.innerHTML+="(";
+		frac_stage=1;
+		return "(";
+	}
+	if(frac_stage==1){
+
+	}
+}
+function backspace(feild, text){
+	var last=feild.innerHTML.slice(-1);
+	//console.log(last);;
+	if(feild.innerHTML.slice(-6)=="</sup>"){
+		var start=feild.innerHTML.lastIndexOf("<sup>");
+		var inside=feild.innerHTML.slice(start+5,-6);
+		var before=feild.innerHTML.slice(0,start);
+		//console.log(inside);
+		//console.log(before);
+		feild.innerHTML=before+"^("+inside;
+		expo=true;
+		text=text.slice(0,-1);
+	}
+	else if(last=="("&&feild.innerHTML.slice(-2)=="^("){
+		feild.innerHTML=feild.innerHTML.slice(0,-2);
+		text=text.slice(0,-2);
+		expo=false;
+	}
+	else{
+		feild.innerHTML=feild.innerHTML.slice(0,-1);
+		text=text.slice(0,-1);
+	}
+	return text;
 }
