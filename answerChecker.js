@@ -337,7 +337,7 @@ function addFrac(feild){
 function backspace(feild, text){
 	var last=feild.innerHTML.slice(-1);
 	//console.log(last);;
-	if(feild.innerHTML.slice(-6)=="</sup>"){
+	if(feild.innerHTML.slice(-6)=="</sup>"){//Check for superscript closing tag, undo formatting
 		var start=feild.innerHTML.lastIndexOf("<sup>");
 		var inside=feild.innerHTML.slice(start+5,-6);
 		var before=feild.innerHTML.slice(0,start);
@@ -347,12 +347,46 @@ function backspace(feild, text){
 		expo=true;
 		text=text.slice(0,-1);
 	}
-	else if(last=="("&&feild.innerHTML.slice(-2)=="^("){
+	else if(last=="("&&feild.innerHTML.slice(-2)=="^("){//check for superscript opening tag, remove entire thing instead of just a single character
 		feild.innerHTML=feild.innerHTML.slice(0,-2);
 		text=text.slice(0,-2);
 		expo=false;
 	}
-	else{
+	else if(last==">"&&feild.innerHTML.slice(-6)=="</sub>"){//check for fraction closing tag, remove formatting
+		console.log("Yeah, right now this is broken...");
+		return text;
+		var middle = feild.innerHTML.lastIndexOf("</sup>&frasl;<sub>");
+		//Oh, this will be fun to code. 3 scenARios:
+			//"<sup>[exponent]</sup>[other stuff]*<sup>*[rest of fraction]"
+			//"*<sup>*[rest of fraction]"
+			//"*<sup>*[numerator stuff]<sup>[exponent]</sup>[rest of fraction]"
+		var temp=feild.innerHTML.slice(0,middle);
+		while(temp.lastIndexOf("</sup>")>temp.lastIndexOf("<sup>")){
+			//Keep on removing any exponents until it's outside of the fraction
+			temp=temp.slice(0, temp.lastIndexOf("<sup>"));
+		}
+		var start=temp.lastIndexOf("<sup>");
+		var before=feild.innerHTML.slice(0, start);
+		var num=feild.innerHTML.slice(start+5,middle);
+		var den=feild.innerHTML.slice(middle+18, -6);
+		console.log(before);
+		console.log(num);
+		console.log(den);
+		feild.innerHTML=before+"["+num+"]/["+den;
+		text=text.slice(0,-1);
+		frac_stage=2;
+	}
+	else if(last=="["&&feild.innerHTML.slice(-3)=="]/["){//check for the fraction slash
+		feild.innerHTML=feild.innerHTML.slice(0,-3);
+		text=text.slice(0,-3);
+		frac_stage=1;
+	}
+	else if(last=="["){//fraction numerator start
+		feild.innerHTML=feild.innerHTML.slice(0,-1);
+		text=text.slice(0,-1);
+		frac_stage=0;
+	}
+	else{//normal backspace
 		feild.innerHTML=feild.innerHTML.slice(0,-1);
 		text=text.slice(0,-1);
 	}
