@@ -1,2 +1,19 @@
 @import url(default.css);
 
+#images {
+  width: 70%;
+  height: auto;
+}
+
+.carousel .carousel-item {
+	width: 100% !important;
+  margin: 0;
+  top: 0;
+} /* https://stackoverflow.com/questions/37762139/how-to-increase-the-size-of-carousel-in-materialize-css#37898005 */
+
+.carousel {
+  height: 310px;
+  width: 30%;
+  margin: auto;
+  text-align: center;
+}

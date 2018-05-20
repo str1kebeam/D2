@@ -3,6 +3,8 @@
 
 :root {
 	--color1: green;
+	--grid-lines: #7f7fff8f;
+	--grid-back: #e0e0ff;
 }
 
 .brand-logo {
@@ -23,9 +25,9 @@ body {
 
 	margin: 0px;
 
-	background-color: #bbddff; 
+	background-color: var(--grid-back);
     background-size: 50px 50px;
-    background-image: linear-gradient(to right, lightblue 1px, transparent 1px), linear-gradient(to bottom, lightblue 1px, transparent 1px);
+    background-image: linear-gradient(to right, var(--grid-lines) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-lines) 1px, transparent 1px);
     /* https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css#32861765 */
 	/*
 background-image:url(https://blueprint.hackmit.org/img/bg-tile.png);
@@ -93,6 +95,13 @@ latex-eqn { /* latex equation formatting (custom tag) */
 
 p { /* default paragraph font and color */
 	color: rgb(4,48,34); /* Blue 6 */
-
 	font: 14px "Cambria", sans-serif;
+}
+
+.carousel-item p { /* caption */
+	text-align: center;
+}
+
+#side-content {
+	height: 100vh;
 }
