@@ -354,8 +354,9 @@ function backspace(feild, text){
 	}
 	else if(last==">"&&feild.innerHTML.slice(-6)=="</sub>"){//check for fraction closing tag, remove formatting
 		console.log("Yeah, right now this is broken...");
-		return text;
-		var middle = feild.innerHTML.lastIndexOf("</sup>&frasl;<sub>");
+		//return text;
+		var middle = feild.innerHTML.lastIndexOf("</sup>⁄<sub>");//special note: that is not the normal forward slash, that is &frasl;
+		console.log(middle);
 		//Oh, this will be fun to code. 3 scenARios:
 			//"<sup>[exponent]</sup>[other stuff]*<sup>*[rest of fraction]"
 			//"*<sup>*[rest of fraction]"
@@ -368,10 +369,11 @@ function backspace(feild, text){
 		var start=temp.lastIndexOf("<sup>");
 		var before=feild.innerHTML.slice(0, start);
 		var num=feild.innerHTML.slice(start+5,middle);
-		var den=feild.innerHTML.slice(middle+18, -6);
+		var den=feild.innerHTML.slice(middle+12, -6);//found part of the problem- .innerHTML is returing the specail /, not &frasl;
 		console.log(before);
 		console.log(num);
 		console.log(den);
+		//return text;
 		feild.innerHTML=before+"["+num+"]/["+den;
 		text=text.slice(0,-1);
 		frac_stage=2;
