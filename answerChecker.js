@@ -9,7 +9,7 @@ var entry_text="";
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	if(entry_text!=""){
-		ans=entry_text.replace("[","(").replace("]",")");
+		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance
 	}
 	var correct=checkAns(ans);
 	if(correct){
