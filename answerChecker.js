@@ -311,6 +311,7 @@ function addExpo(feild){
 		}
 		else{
 			console.log("Need to let the user know this");
+			reply("<div class='bad'>You need to close the fraction before you can close the exponent</div>");
 			return "";
 		}
 		var start=feild.innerHTML.indexOf("^(");
@@ -343,7 +344,8 @@ function addFrac(feild){
 	}
 	else if(frac_stage==1){
 		if(first!=3&&first!=2){
-			console.log("Need to let the user know this");
+			//console.log("Need to let the user know this");
+			reply("<div class='bad'>You need to close the exponent before you can close the fraction</div>");
 			return "";
 		}
 		feild.innerHTML+="]/[";
@@ -358,7 +360,8 @@ function addFrac(feild){
 			first=0;
 		}
 		else{
-			console.log("Need to let the user know this");
+			//console.log("Need to let the user know this");
+			reply("<div class='bad'>You need to close the exponent before you can close the fraction</div>");
 			return "";
 		}
 		var start=feild.innerHTML.indexOf("[");
