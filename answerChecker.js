@@ -266,6 +266,9 @@ function test(){
 	console.log("test");
 }
 var expo=false;
+var first=0;
+//wait, so you can have [number], [expoenet][/exponent], [fstart][fmid][fend], [exponent][fstart][/exponent], [fstart][exponent][fmid], and also in denominator, but it isn't much of a problem
+//So, those scenarios can be 0, 1, 2, 3, 4
 function numpad(key){
 	var area=document.getElementById("new-entry");
 	if(typeof key=="number"){
@@ -285,14 +288,31 @@ function numpad(key){
 		area.innerHTML+=key;
 		entry_text+=key;
 	}
+	console.log(first);
 }
 function addExpo(feild){
 	if(!expo){
 		feild.innerHTML+="^(";
 		expo=true;
+		if (first==0){
+			first=1;
+		}
+		else if(first==2){
+			first=4;
+		}
 		return "^(";
 	}
 	else{
+		if(first==4){
+			first=2;
+		}
+		else if(first==1){
+			first=0;
+		}
+		else{
+			console.log("Need to let the user know this");
+			return "";
+		}
 		var start=feild.innerHTML.indexOf("^(");
 		//console.log(feild.innerHTML.substring(start+2));
 		var inside=feild.innerHTML.substring(start+2);
@@ -313,14 +333,34 @@ function addFrac(feild){
 	if(frac_stage==0){
 		feild.innerHTML+="[";
 		frac_stage=1;
+		if(first==0){
+			first=2;
+		}
+		else if(first==1){
+			first=3;
+		}
 		return "[";
 	}
 	else if(frac_stage==1){
+		if(first!=3&&first!=2){
+			console.log("Need to let the user know this");
+			return "";
+		}
 		feild.innerHTML+="]/[";
 		frac_stage=2;
 		return "]/[";
 	}
 	else if(frac_stage==2){
+		if (first==3){
+			first=1;
+		}
+		else if(first==2){
+			first=0;
+		}
+		else{
+			console.log("Need to let the user know this");
+			return "";
+		}
 		var start=feild.innerHTML.indexOf("[");
 		var mid=feild.innerHTML.indexOf("]/[");
 		var before=feild.innerHTML.slice(0,start);
@@ -345,18 +385,30 @@ function backspace(feild, text){
 		//console.log(before);
 		feild.innerHTML=before+"^("+inside;
 		expo=true;
+		if (first==0){
+			first=1;
+		}
+		else if(first==2){
+			first=4;
+		}
 		text=text.slice(0,-1);
 	}
 	else if(last=="("&&feild.innerHTML.slice(-2)=="^("){//check for superscript opening tag, remove entire thing instead of just a single character
 		feild.innerHTML=feild.innerHTML.slice(0,-2);
 		text=text.slice(0,-2);
 		expo=false;
+		if(first==4){
+			first=2;
+		}
+		else if(first==1){
+			first=0;
+		}
 	}
 	else if(last==">"&&feild.innerHTML.slice(-6)=="</sub>"){//check for fraction closing tag, remove formatting
-		console.log("Yeah, right now this is broken...");
+		//console.log("Yeah, right now this is broken...");
 		//return text;
 		var middle = feild.innerHTML.lastIndexOf("</sup>⁄<sub>");//special note: that is not the normal forward slash, that is &frasl;
-		console.log(middle);
+		//console.log(middle);
 		//Oh, this will be fun to code. 3 scenARios:
 			//"<sup>[exponent]</sup>[other stuff]*<sup>*[rest of fraction]"
 			//"*<sup>*[rest of fraction]"
@@ -377,6 +429,12 @@ function backspace(feild, text){
 		feild.innerHTML=before+"["+num+"]/["+den;
 		text=text.slice(0,-1);
 		frac_stage=2;
+		if(first==0){
+			first=2;
+		}
+		else if(first==1){
+			first=3;
+		}
 	}
 	else if(last=="["&&feild.innerHTML.slice(-3)=="]/["){//check for the fraction slash
 		feild.innerHTML=feild.innerHTML.slice(0,-3);
@@ -387,6 +445,12 @@ function backspace(feild, text){
 		feild.innerHTML=feild.innerHTML.slice(0,-1);
 		text=text.slice(0,-1);
 		frac_stage=0;
+		if (first==3){
+			first=1;
+		}
+		else if(first==2){
+			first=0;
+		}
 	}
 	else{//normal backspace
 		feild.innerHTML=feild.innerHTML.slice(0,-1);
