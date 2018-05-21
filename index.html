@@ -51,8 +51,8 @@
 				<p>Changing The Way You Learn Math</p>
 			<div class="centered">
 				<div id="examples" class="carousel">
-					<a class="carousel-item responsive-img" href="#one!"><img src="DeriveLogo.v2.jpg"><p>Caption</p></a>
-					<a class="carousel-item responsive-img" href="#two!"><img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png"><p>Interactive Graphs Help Visualize Math</p></a>
+					<a class="carousel-item" href="#two!"><img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png"><p>Interactive Graphs Help Visualize Math</p></a>
+					<a class="carousel-item" href="#one!"><img src="DeriveLogo.v2.jpg"><p>Caption</p></a>
 				</div>
 			</div>
 			<div class="row img-examples">
@@ -87,8 +87,7 @@
 				</div>
 				</div>
 			</div>
-			<p class="body-description">
-				Start your first \(\frac{\delta}{\delta\theta}e^{ri}vE\) lesson <a href="learn.html" class="inline-link">here</a>!</p>
+			<p class="body-description">Start your first \(\frac{\delta}{\delta\theta}e^{ri}vE\) lesson <a href="learn.html" class="inline-link">here</a>!</p>
 			</div>
 		</div>
 		<!--
@@ -116,8 +115,12 @@ $(document).ready(function(){
 		closeOnClick: false
 	});
 	$('.carousel').carousel({
-		duration: 500
+		duration: 500,
+		dist: 100,
+		shift: 0,
+		fullWidth: true
 	});
+	$('.carousel .carousel-item').height(400);
 	$('.pushpin').pushpin({
 		offset: 50
 	});
