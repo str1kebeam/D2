@@ -1,6 +1,7 @@
 //Creates random problems, checks answers to them
 //mathjs is imported as math in practice.html, but that should be fine
 //el.innerHTML = math.sqrt(9);
+var response=document.getElementById("response");
 var x=1;
 var currentAns='4x^3+6x^2';
 var answered=false;
@@ -9,16 +10,23 @@ var entry_text="";
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	if(entry_text!=""){
-		ans=entry_text;
+		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance
 	}
-	var correct=checkAns(ans);
-	if(correct){
-		reply("Great!");//+x.toString());
-		answered=true;
-		//x++;
+	try{
+		var correct=checkAns(ans);
+		if(correct){
+			reply("Great!");//+x.toString());
+			answered=true;
+			//x++;
+		}
+		else{
+			reply('Aww...');
+		}
 	}
-	else{
-		reply('Aww...');
+	catch(err){
+		reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
+		response.style.color = "#f00";
+		response.style.font_weight="bold";
 	}
 }
 function newQ(){
@@ -56,6 +64,7 @@ function ask(question, expression){
 function reply(text){
 	var response=document.getElementById("response");
 	response.innerHTML=text;
+	response.style.color = "#000";
 }
 function checkAns(ans){
 	//This is going to have its own difficulties:
@@ -266,6 +275,9 @@ function test(){
 	console.log("test");
 }
 var expo=false;
+var first=0;
+//wait, so you can have [number], [expoenet][/exponent], [fstart][fmid][fend], [exponent][fstart][/exponent], [fstart][exponent][fmid], and also in denominator, but it isn't much of a problem
+//So, those scenarios can be 0, 1, 2, 3, 4
 function numpad(key){
 	var area=document.getElementById("new-entry");
 	if(typeof key=="number"){
@@ -278,18 +290,40 @@ function numpad(key){
 	else if(key=="back"){
 		entry_text=backspace(area, entry_text);
 	}
+	else if(key=="frac"){
+		entry_text+=addFrac(area);
+	}
 	else{
 		area.innerHTML+=key;
 		entry_text+=key;
 	}
+	console.log(first);
 }
 function addExpo(feild){
 	if(!expo){
 		feild.innerHTML+="^(";
 		expo=true;
+		if (first==0){
+			first=1;
+		}
+		else if(first==2){
+			first=4;
+		}
 		return "^(";
 	}
 	else{
+		if(first==4){
+			first=2;
+		}
+		else if(first==1){
+			first=0;
+		}
+		else{
+			console.log("Need to let the user know this");
+			reply("<You need to close the fraction before you can close the exponent");
+			response.style.color = "#f00";
+			return "";
+		}
 		var start=feild.innerHTML.indexOf("^(");
 		//console.log(feild.innerHTML.substring(start+2));
 		var inside=feild.innerHTML.substring(start+2);
@@ -308,18 +342,56 @@ function addExpo(feild){
 var frac_stage=0;//0=not in fraction, 1=numerator, 2=denominator
 function addFrac(feild){
 	if(frac_stage==0){
-		feild.innerHTML+="(";
+		feild.innerHTML+="[";
 		frac_stage=1;
-		return "(";
+		if(first==0){
+			first=2;
+		}
+		else if(first==1){
+			first=3;
+		}
+		return "[";
 	}
-	if(frac_stage==1){
-
+	else if(frac_stage==1){
+		if(first!=3&&first!=2){
+			//console.log("Need to let the user know this");
+			reply("You need to close the exponent before you can close the fraction");
+			style.color = "#f00";
+			return "";
+		}
+		feild.innerHTML+="]/[";
+		frac_stage=2;
+		return "]/[";
+	}
+	else if(frac_stage==2){
+		if (first==3){
+			first=1;
+		}
+		else if(first==2){
+			first=0;
+		}
+		else{
+			//console.log("Need to let the user know this");
+			reply("<div class='bad'>You need to close the exponent before you can close the fraction</div>");
+			return "";
+		}
+		var start=feild.innerHTML.indexOf("[");
+		var mid=feild.innerHTML.indexOf("]/[");
+		var before=feild.innerHTML.slice(0,start);
+		var num=feild.innerHTML.slice(start+1,mid);
+		var den=feild.innerHTML.slice(mid+3);
+		console.log(before);
+		console.log(num);
+		console.log(den);
+		feild.innerHTML=before+"<sup>"+num+"</sup>&frasl;<sub>"+den+"</sub>";
+		frac_stage=0;
+		return "]";
 	}
 }
 function backspace(feild, text){
 	var last=feild.innerHTML.slice(-1);
 	//console.log(last);;
-	if(feild.innerHTML.slice(-6)=="</sup>"){
+	if(feild.innerHTML.slice(-6)=="</sup>"){//Check for superscript closing tag, undo formatting
 		var start=feild.innerHTML.lastIndexOf("<sup>");
 		var inside=feild.innerHTML.slice(start+5,-6);
 		var before=feild.innerHTML.slice(0,start);
@@ -327,14 +399,74 @@ function backspace(feild, text){
 		//console.log(before);
 		feild.innerHTML=before+"^("+inside;
 		expo=true;
+		if (first==0){
+			first=1;
+		}
+		else if(first==2){
+			first=4;
+		}
 		text=text.slice(0,-1);
 	}
-	else if(last=="("&&feild.innerHTML.slice(-2)=="^("){
+	else if(last=="("&&feild.innerHTML.slice(-2)=="^("){//check for superscript opening tag, remove entire thing instead of just a single character
 		feild.innerHTML=feild.innerHTML.slice(0,-2);
 		text=text.slice(0,-2);
 		expo=false;
+		if(first==4){
+			first=2;
+		}
+		else if(first==1){
+			first=0;
+		}
 	}
-	else{
+	else if(last==">"&&feild.innerHTML.slice(-6)=="</sub>"){//check for fraction closing tag, remove formatting
+		//console.log("Yeah, right now this is broken...");
+		//return text;
+		var middle = feild.innerHTML.lastIndexOf("</sup>⁄<sub>");//special note: that is not the normal forward slash, that is &frasl;
+		//console.log(middle);
+		//Oh, this will be fun to code. 3 scenARios:
+			//"<sup>[exponent]</sup>[other stuff]*<sup>*[rest of fraction]"
+			//"*<sup>*[rest of fraction]"
+			//"*<sup>*[numerator stuff]<sup>[exponent]</sup>[rest of fraction]"
+		var temp=feild.innerHTML.slice(0,middle);
+		while(temp.lastIndexOf("</sup>")>temp.lastIndexOf("<sup>")){
+			//Keep on removing any exponents until it's outside of the fraction
+			temp=temp.slice(0, temp.lastIndexOf("<sup>"));
+		}
+		var start=temp.lastIndexOf("<sup>");
+		var before=feild.innerHTML.slice(0, start);
+		var num=feild.innerHTML.slice(start+5,middle);
+		var den=feild.innerHTML.slice(middle+12, -6);//found part of the problem- .innerHTML is returing the specail /, not &frasl;
+		console.log(before);
+		console.log(num);
+		console.log(den);
+		//return text;
+		feild.innerHTML=before+"["+num+"]/["+den;
+		text=text.slice(0,-1);
+		frac_stage=2;
+		if(first==0){
+			first=2;
+		}
+		else if(first==1){
+			first=3;
+		}
+	}
+	else if(last=="["&&feild.innerHTML.slice(-3)=="]/["){//check for the fraction slash
+		feild.innerHTML=feild.innerHTML.slice(0,-3);
+		text=text.slice(0,-3);
+		frac_stage=1;
+	}
+	else if(last=="["){//fraction numerator start
+		feild.innerHTML=feild.innerHTML.slice(0,-1);
+		text=text.slice(0,-1);
+		frac_stage=0;
+		if (first==3){
+			first=1;
+		}
+		else if(first==2){
+			first=0;
+		}
+	}
+	else{//normal backspace
 		feild.innerHTML=feild.innerHTML.slice(0,-1);
 		text=text.slice(0,-1);
 	}
