@@ -46,12 +46,12 @@
 				<p>I'm so proud of you</p>
 				<p>jk it kinda stinks rn</p>
 			</div>
-			<div class="col s12 m8 push-m8 l9 push-l3 t-cen" id="main-content">
+			<div class="col s12 m8 push-m4 l9 push-l3 t-cen" id="main-content">
 				<h1 id="body-title">Welcome to Derive!</h1>
 				<p>Changing The Way You Learn Math</p>
 			<div class="centered">
-				<div id="examples" class="carousel">
-					<a class="carousel-item" href="#two!"><img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png"><p>Interactive Graphs Help Visualize Math</p></a>
+				<div id="examples" class="carousel carousel-slider">
+					<a id="tootall" class="carousel-item" href="#two!" height="200px"><img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png"><p>Interactive Graphs Help Visualize Math</p></a>
 					<a class="carousel-item" href="#one!"><img src="DeriveLogo.v2.jpg"><p>Caption</p></a>
 				</div>
 			</div>
@@ -118,9 +118,14 @@ $(document).ready(function(){
 		duration: 500,
 		dist: 100,
 		shift: 0,
-		fullWidth: true
+		fullWidth: true,
+		padding: 50,
+		margin: "auto"
 	});
-	$('.carousel .carousel-item').height(400);
+	$('.carousel.carousel-slider').carousel({
+    fullWidth: true
+  });
+	$('.carousel-slider').slider();
 	$('.pushpin').pushpin({
 		offset: 50
 	});
@@ -130,7 +135,7 @@ $(document).ready(function(){
 	    $('.carousel').carousel('next');
 	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
 });
-
+console.log("height: " + document.getElementById("tootall").style.height);
 </script>
 </body>
 </html>

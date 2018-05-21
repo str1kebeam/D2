@@ -6,6 +6,7 @@
 	--color2: lightblue;
 	--grid-lines: #7f7fff8f;
 	--grid-back: #e0e0ff;
+	--btncolor: #3399ff;
 }
 
 .brand-logo {
@@ -34,17 +35,13 @@ body {
     background-size: 50px 50px;
     background-image: linear-gradient(to right, var(--grid-lines) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-lines) 1px, transparent 1px);
     /* https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css#32861765 */
-	/*
-background-image:url(https://blueprint.hackmit.org/img/bg-tile.png);
- background-size:7rem;
- background-attachment:fixed */
 }
 
 button { /* remove default formatting from buttons */
 	border-width: 0px; /* remove border */
 	margin: 0px 0px 0px 0px;
 	text-align: center;
-	background-color: inherit;
+	background-color: var(--btncolor);
 }
 
 p a { /* change link formatting */
