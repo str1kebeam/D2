@@ -11,14 +11,19 @@ function functionthing() {
 	if(entry_text!=""){
 		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance
 	}
-	var correct=checkAns(ans);
-	if(correct){
-		reply("Great!");//+x.toString());
-		answered=true;
-		//x++;
+	try{
+		var correct=checkAns(ans);
+		if(correct){
+			reply("Great!");//+x.toString());
+			answered=true;
+			//x++;
+		}
+		else{
+			reply('Aww...');
+		}
 	}
-	else{
-		reply('Aww...');
+	catch(err){
+		reply("<div class='verybad'>There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.</div><br><div class='sorry'>I'm sorry, I'm working on fixing it.</div>");
 	}
 }
 function newQ(){
