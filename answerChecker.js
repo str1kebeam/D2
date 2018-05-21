@@ -297,6 +297,14 @@ function numpad(key){
 	else if(key=="frac"){
 		entry_text+=addFrac(area);
 	}
+	else if(['x','c'].includes(key)){//any remaining value, not a function
+		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
+			entry_text+="*";
+			area.innerHTML+="*";
+		}
+		area.innerHTML+=key;
+		entry_text+=key;
+	}
 	else{
 		area.innerHTML+=key;
 		entry_text+=key;
