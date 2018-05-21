@@ -1,6 +1,7 @@
 //Creates random problems, checks answers to them
 //mathjs is imported as math in practice.html, but that should be fine
 //el.innerHTML = math.sqrt(9);
+var response=document.getElementById("response");
 var x=1;
 var currentAns='4x^3+6x^2';
 var answered=false;
@@ -23,7 +24,9 @@ function functionthing() {
 		}
 	}
 	catch(err){
-		reply("<div class='verybad'>There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.</div><br><div class='sorry'>I'm sorry, I'm working on fixing it.</div>");
+		reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
+		response.style.color = "#f00";
+		response.style.font_weight="bold";
 	}
 }
 function newQ(){
@@ -61,6 +64,7 @@ function ask(question, expression){
 function reply(text){
 	var response=document.getElementById("response");
 	response.innerHTML=text;
+	response.style.color = "#000";
 }
 function checkAns(ans){
 	//This is going to have its own difficulties:
@@ -316,7 +320,8 @@ function addExpo(feild){
 		}
 		else{
 			console.log("Need to let the user know this");
-			reply("<div class='bad'>You need to close the fraction before you can close the exponent</div>");
+			reply("<You need to close the fraction before you can close the exponent");
+			response.style.color = "#f00";
 			return "";
 		}
 		var start=feild.innerHTML.indexOf("^(");
@@ -350,7 +355,8 @@ function addFrac(feild){
 	else if(frac_stage==1){
 		if(first!=3&&first!=2){
 			//console.log("Need to let the user know this");
-			reply("<div class='bad'>You need to close the exponent before you can close the fraction</div>");
+			reply("You need to close the exponent before you can close the fraction");
+			style.color = "#f00";
 			return "";
 		}
 		feild.innerHTML+="]/[";
