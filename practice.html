@@ -58,6 +58,32 @@
 					<latex-eqn class="body-description" id="expression">$$\frac{d}{dx}(x^{4}+2x^{3})=?$$</latex-eqn>
 					<div><input type="text" name="" id="input-answer"></div>
 					<div><p id="new-entry"></p></div>
+					<div id="numpad">
+						<button onclick="numpad(1);" class="btn waves-effect waves-light">1</button>
+						<button onclick="numpad(2);" class="btn waves-effect waves-light">2</button>
+						<button onclick="numpad(3);" class="btn waves-effect waves-light">3</button>
+						<br>
+						<button onclick="numpad(4);" class="btn waves-effect waves-light">4</button>
+						<button onclick="numpad(5);" class="btn waves-effect waves-light">5</button>
+						<button onclick="numpad(6);" class="btn waves-effect waves-light">6</button>
+						<br>
+						<button onclick="numpad(7);" class="btn waves-effect waves-light">7</button>
+						<button onclick="numpad(8);" class="btn waves-effect waves-light">8</button>
+						<button onclick="numpad(9);" class="btn waves-effect waves-light">9</button>
+						<br>
+						<button onclick="numpad('-');" class="btn waves-effect waves-light">-</button>
+						<button onclick="numpad(0);" class="btn waves-effect waves-light">0</button>
+						<button onclick="numpad('+');" class="btn waves-effect waves-light">+</button>
+						<br>
+						<button onclick="numpad('x');" class="btn waves-effect waves-light">x</button>
+						<button onclick="numpad('*');" class="btn waves-effect waves-light">*</button>
+						<button onclick="numpad('c');" class="btn waves-effect waves-light">c</button>
+						<br>
+						<button onclick="numpad('^');" class="btn waves-effect waves-light">a<sup>b</sup></button>
+						<button onclick="numpad('back');" class="btn waves-effect waves-light">&#8592;</button>
+						<button onclick="numpad('frac');" class="btn waves-effect waves-light"><sup>a</sup>&frasl;<sub>b</sub></button>
+					</div>
+					<br>
 					<button class="body-description btn waves-effect waves-light" id="check-answer" onclick="functionthing();">Check Answer</button>
 					<p id="response"></p>
 					<p>New Question:</p>
@@ -75,27 +101,7 @@
 					</p>
 					<button class="body-description" id="new-question" onclick="newQ();">New Question</button>
 				</div>
-				<div id="numpad">
-						<button onclick="numpad(1);" class="btn waves-effect waves-light">1</button>
-						<button onclick="numpad(2);" class="btn waves-effect waves-light">2</button>
-						<button onclick="numpad(3);" class="btn waves-effect waves-light">3</button>
-						<button onclick="numpad(4);" class="btn waves-effect waves-light">4</button>
-						<button onclick="numpad(5);" class="btn waves-effect waves-light">5</button>
-						<button onclick="numpad(6);" class="btn waves-effect waves-light">6</button>
-						<button onclick="numpad(7);" class="btn waves-effect waves-light">7</button>
-						<button onclick="numpad(8);" class="btn waves-effect waves-light">8</button>
-						<button onclick="numpad(9);" class="btn waves-effect waves-light">9</button>
-						<button onclick="numpad(0);" class="btn waves-effect waves-light">0</button>
-						<button onclick="numpad('-');" class="btn waves-effect waves-light">-</button>
-						<button onclick="numpad('+');" class="btn waves-effect waves-light">+</button>
-						<button onclick="numpad('x');" class="btn waves-effect waves-light">x</button>
-						<button onclick="numpad('^');" class="btn waves-effect waves-light">a<sup>b</sup></button>
-						<button onclick="numpad('back');" class="btn waves-effect waves-light">&#8592;</button>
-						<button onclick="numpad('*');" class="btn waves-effect waves-light">*</button>
-						<button onclick="numpad('/');" class="btn waves-effect waves-light">/</button>
-						<button onclick="numpad('c');" class="btn waves-effect waves-light">c</button>
-						<button onclick="numpad('frac');" class="btn waves-effect waves-light"><sup>a</sup>&frasl;<sub>b</sub></button>
-				</div>
+
 			</div>
 			</div>
 		</div>
