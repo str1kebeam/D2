@@ -281,6 +281,10 @@ var first=0;
 function numpad(key){
 	var area=document.getElementById("new-entry");
 	if(typeof key=="number"){
+		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
+			area.innerHTML+="*";
+			entry_text+="*";
+		}
 		area.innerHTML+=key;
 		entry_text+=key;
 	}
