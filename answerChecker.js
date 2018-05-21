@@ -341,14 +341,18 @@ function addExpo(feild){
 		var inside=feild.innerHTML.substring(start+2);
 		var before=feild.innerHTML.substring(0,start);
 		//console.log(before);
+		val="";
 		if(inside==""){
-			feild.innerHTML=before;
+			//feild.innerHTML=before;//Yeah, that probably did more bad than good
+			inside="1";//so that it just won't do anything, instead of breaking something
+			//If I have the time to rework the flow of this, I would make it remove the opening exponent instead
+			val="1";
 		}
-		else{
-			feild.innerHTML=before+"<sup>"+inside+"</sup>";
-		}
+		//else{
+		feild.innerHTML=before+"<sup>"+inside+"</sup>";
+		//}
 		expo=false;
-		return ")";
+		return val+")";
 	}
 }
 var frac_stage=0;//0=not in fraction, 1=numerator, 2=denominator
@@ -371,6 +375,14 @@ function addFrac(feild){
 			style.color = "#f00";
 			return "";
 		}
+		//Slightly bad workaround, but I don't think it's worth the effort to find what the numerator is here
+		//This will need to be redone if I ever allow fractions inside of fractions
+		if(feild.innerHTML.slice(-1)=="["){
+			feild.innerHTML+="1]/[";
+			frac_stage=2;
+			return "1]/[";
+			//Oh, I really should redo this part at some point, but I just want to get a better fix out for now
+		}
 		feild.innerHTML+="]/[";
 		frac_stage=2;
 		return "]/[";
@@ -384,7 +396,8 @@ function addFrac(feild){
 		}
 		else{
 			//console.log("Need to let the user know this");
-			reply("<div class='bad'>You need to close the exponent before you can close the fraction</div>");
+			reply("You need to close the exponent before you can close the fraction");
+			style.color = "#f00";
 			return "";
 		}
 		var start=feild.innerHTML.indexOf("[");
@@ -395,9 +408,15 @@ function addFrac(feild){
 		console.log(before);
 		console.log(num);
 		console.log(den);
+		val="";
+		if(den==""){
+			console.log("Yeah, actually setting the denominator to 1");
+			den="1";
+			val="1";
+		}
 		feild.innerHTML=before+"<sup>"+num+"</sup>&frasl;<sub>"+den+"</sub>";
 		frac_stage=0;
-		return "]";
+		return val+"]";//slightly better, but still kind of painful...
 	}
 }
 function backspace(feild, text){
