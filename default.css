@@ -3,6 +3,7 @@
 
 :root {
 	--color1: green;
+	--color2: lightblue;
 	--grid-lines: #7f7fff8f;
 	--grid-back: #e0e0ff;
 }
@@ -14,6 +15,10 @@
 
 .color1 {
 	background-color: var(--color1);
+}
+
+.color2 {
+	background-color: var(--color2);
 }
 
 body {
@@ -104,4 +109,8 @@ p { /* default paragraph font and color */
 
 #side-content {
 	height: 100vh;
+}
+
+.t-cen {
+	text-align: center;
 }

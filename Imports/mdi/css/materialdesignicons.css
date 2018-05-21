@@ -1,4 +1,4 @@
-/* MaterialDesignIcons.com */
+﻿/* MaterialDesignIcons.com */
 @font-face {
   font-family: "Material Design Icons";
   src: url("../fonts/materialdesignicons-webfont.eot?v=2.2.43");
@@ -9008,6 +9008,22 @@
 
 .mdi-48px.mdi-set, .mdi-48px.mdi:before {
   font-size: 48px;
+}
+
+.mdi-64px.mdi-set, .mdi-64px.mdi:before {
+  font-size: 64px;
+}
+
+.mdi-96px.mdi-set, .mdi-96px.mdi:before {
+  font-size: 96px;
+}
+
+.mdi-128px.mdi-set, .mdi-128px.mdi:before {
+  font-size: 128px;
+}
+
+.mdi-196px.mdi-set, .mdi-196px.mdi:before {
+  font-size: 196px;
 }
 
 .mdi-dark:before {

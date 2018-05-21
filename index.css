@@ -12,8 +12,13 @@
 } /* https://stackoverflow.com/questions/37762139/how-to-increase-the-size-of-carousel-in-materialize-css#37898005 */
 
 .carousel {
-  height: 310px;
+  height: 315px;
   width: 30%;
   margin: auto;
   text-align: center;
+}
+
+.img-examples .card-panel {
+  color: gray;
+  height: 425px !important;
 }
