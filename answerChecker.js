@@ -385,6 +385,40 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 	}
 	return result;
 }
+var nTrig=['sin','cos','tan'];
+var rTrig=['csc','sec','cot'];
+var inTrig=['arcsin','arccos','arctan'];
+var irTrig=['arccsc','arcsec', 'arccot'];
+var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
+function trig_term(maxTCo, maxXCo, maxTPow, maxXPow, diff=defTrigDiff){
+	//Ok, so all of these variables are because you can have: a*sin^c(bx^d)
+	//'max' is just there to be descriptive
+	//'T' is for 'Trig', so it is a modifier for the trig (a and c)
+	//'X' is for 'x', so it is a modifier for the indepenent variable (b and d)
+	//'Co' is 'Coefficient', so it is a and b
+	//'Pow' is 'Power', so it is c and d
+	//So: maxTCo*sin^maxTPow(maxXCo*x^maxXPow) would be what it is, if it rolled 'sin' and 1 for every random thing
+	//diff is an array of all of the trig functions that can be used, which are kindly listed in a few arrays above this function
+	//Default is just sin, cos and tan
+	var latex="";
+	var simple="";
+	var trigs=diff.filter(function (trig){
+		return allTrig.includes(trig);
+	});
+	//Ok, since I seem to already be writing a lot of comments for this, might as well plan out the logic:
+	//Generate a random coefficient within the range and !=0, print it, accounting for possibly =+-1
+	//Pick a random power within the range, thought I may want to make it !=0
+		//If it is 1, don't need to worry about it anymore
+		//Otherwise, print a parenthese and later on print the exponent
+		//May just drop this part...
+	//Pick a random trig function within the checked list, print it 
+		//(latex for trig stuff is \trig, with 'trig' being an actual trig function, makes it not an italicized variable)
+	//Pick a random coefficient within the second range, print it, accounting for =+-1
+	//Pick a random exponent for x, possible checking !=0, but we may want that... Do I need another argument for having x^0?
+		//Yeah, print it according to the normal printing rules
+	//Close the parens, put in the ^pow if it should be there
+	//Why am I writing so many comments right now?
+}
 function test(){
 	console.log("test");
 }
