@@ -159,6 +159,27 @@ function newDerivative(terms, maxPow, maxCo, test=false){
 
 	}*/
 }
+function tangent_slope(terms, maxPow, maxCo, maxX){
+	var q="What is the slope of the following equation at x=";
+	var e="f(x)=";
+	var simple="";
+	poly=makePolynomial(terms, maxPow, maxCo);
+	e+=poly[0];
+	simple+=poly[1];
+	var xVal=((Math.random()*maxX*2)-maxX).toFixed(0);//If I am correct, this gives a random number [-maxX, maxX], and rounds it to an integer
+	//needs to be "xVal" because of how mathjs works
+	var ans;
+	if(simple.includes("x")){
+		ans=math.derivative(simple, "x").toString();
+		ans=math.eval(ans, {x:xVal});
+	}
+	else{
+		ans=0;
+	}
+	q+=xVal+"?";
+	ask(q,e);
+	currentAns=ans;
+}
 var intDiffs=[]; intDiffs[1]=[2,1,5]; intDiffs[2]=[3,2,5];
 function intQ(diff){
 	var d=intDiffs[diff];
@@ -238,23 +259,25 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 		for(var pow=0; pow<=maxPow; pow++){
 			possiblePows.push(pow);
 		}
-		//console.log(possiblePows);
+		console.log(possiblePows);
 		var pows=[];
 		var cos=[];
 		for(var i=0; i<terms; i++){
 			var pi=Math.floor((Math.random()*possiblePows.length));
-			//console.log(pi);
+			console.log(pi);
 			var c=0;
 			while(c==0){
 				c=((Math.random()*maxCo*2)-maxCo).toFixed(0);
 			}
 			var p=possiblePows[pi];
-			possiblePows=possiblePows.slice(pi, pi+1);
+			possiblePows.splice(pi, 1);
+			console.log(possiblePows);
 			pows.push(p);
 			cos[p]=c;
+			console.log(p);
 		}
 		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
-		//console.log(pows);
+		console.log(pows);
 		for(var i=0; i<pows.length; i++){
 			var p=pows[i];
 			if((cos[p]==-1)&&(p!=0)){
@@ -279,7 +302,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 			}
 			raws[0].push(p);
 			raws[1].push(cos[p]);
-			//console.log("Co:"+cos[p]+" Pow:"+p);
+			console.log("Co:"+cos[p]+" Pow:"+p);
 		}
 	}
 	var result=[latex, simple];
@@ -291,6 +314,9 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 function test(){
 	console.log("test");
 }
+///////
+//Numpad stuff (I would move this into a separate file, but they work so closely together that they might as well be in the same file)
+///////
 var expo=false;
 var first=0;
 //wait, so you can have [number], [expoenet][/exponent], [fstart][fmid][fend], [exponent][fstart][/exponent], [fstart][exponent][fmid], and also in denominator, but it isn't much of a problem
