@@ -7,6 +7,7 @@ var currentAns='4x^3+6x^2';
 var answered=false;
 var strike=false;
 var entry_text="";
+var qType="der";
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	if(entry_text!=""){
@@ -28,6 +29,19 @@ function functionthing() {
 		response.style.color = "#f00";
 		response.style.font_weight="bold";
 	}
+}
+function wrongResponse(){
+	//Goes through and comes up with a better response to a wrong answer than "Aww..."
+	var r="Incorrect<br>";
+	if(qType=="der"){
+		var responses=["Did you remember the power rule?","Check you work and try again.","You can do it!"];//I can't come up with any other response
+		var a=Math.floor((Math.random()*responses.length))
+		r+=responses[a];
+	}
+	else if(qType=="int"){
+		//if()
+	}
+	reply(r);
 }
 function newQ(){
 	if(!answered && !strike){
@@ -281,6 +295,15 @@ var expo=false;
 var first=0;
 //wait, so you can have [number], [expoenet][/exponent], [fstart][fmid][fend], [exponent][fstart][/exponent], [fstart][exponent][fmid], and also in denominator, but it isn't much of a problem
 //So, those scenarios can be 0, 1, 2, 3, 4
+var keyWrapper=function keyGuard(event){
+	//Do some modification to the keypress, and then call numpad with it
+	console.log(event.code);
+	console.log(event.key);
+	event.currentTarget.value ="test";
+	event.preventDefault();
+}
+var entry=document.getElementById("input-answer");
+//entry.addEventListener('keydown', keyWrapper);
 function numpad(key){
 	var area=document.getElementById("new-entry");
 	if(typeof key=="number"){
@@ -313,6 +336,10 @@ function numpad(key){
 		entry_text+=key;
 	}
 	console.log(first);
+}
+function newNumpad(key, btn){
+	//key-what key was pressed, using the response from event.key
+	//btn-false if from the text box, true if from the 
 }
 function addExpo(feild){
 	if(!expo){
