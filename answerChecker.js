@@ -232,7 +232,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 			while(co==0){
 				co=((Math.random()*maxCo*2)-maxCo).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
 			}
-			if(co==-1&&pow!=0){
+			/*if(co==-1&&pow!=0){
 				simple+="-";
 				latex+="-";
 			}
@@ -247,7 +247,40 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 			else if(pow>1){
 				latex+="x^{"+pow+"}+";
 				simple+="x^"+pow+"+";
-			}//Add in later: allow a term with coefficient <=0, and account for that with the printing of the + and the entire term
+			}*/
+			//Add in later: allow a term with coefficient <=0, and account for that with the printing of the + and the entire term
+			if(pow!=maxPow){
+				if(co>0){
+					latex+="+";
+					simple+="+";
+				}
+				if(Math.abs(co)>1||pow==0){
+					latex+=co;
+					simple+=co;
+				}
+				else if(co<0){//-1
+					latex+="-";
+					simple+="-";
+				}
+			}
+			else{
+				if(Math.abs(co)>1||pow==0){
+					simple+=co;
+					latex+=co;
+				}
+				else if(co<0){//-1
+					simple+="-";
+					latex+="-";
+				}
+			}
+			if(pow>0){
+				simple+="x";
+				latex+="x";
+				if(pow>1){
+					simple+="^"+pow;
+					latex+="^{"+pow+"}";
+				}
+			}
 			raws[0].push(pow);
 			raws[1].push(co);
 		}
@@ -280,7 +313,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 		console.log(pows);
 		for(var i=0; i<pows.length; i++){
 			var p=pows[i];
-			if((cos[p]==-1)&&(p!=0)){
+			/*if((cos[p]==-1)&&(p!=0)){
 				latex+="-";
 				simple+="-";
 			}
@@ -299,6 +332,38 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 			if((i+1)!=pows.length){
 				latex+="+";
 				simple+="+";
+			}*/
+			if(i>0){
+				if(cos[p]>0){
+					latex+="+";
+					simple+="+";
+				}
+				if(Math.abs(cos[p])>1||p==0){
+					latex+=cos[p];
+					simple+=cos[p];
+				}
+				else if(cos[p]<0){//-1
+					latex+="-";
+					simple+="-";
+				}
+			}
+			else{
+				if(Math.abs(cos[p])>1||p==0){
+					simple+=cos[p];
+					latex+=cos[p];
+				}
+				else if(cos[p]<0){//-1
+					simple+="-";
+					latex+="-";
+				}
+			}
+			if(p>0){
+				simple+="x";
+				latex+="x";
+				if(p>1){
+					simple+="^"+p;
+					latex+="^{"+p+"}";
+				}
 			}
 			raws[0].push(p);
 			raws[1].push(cos[p]);
