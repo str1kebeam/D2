@@ -30,6 +30,9 @@
   overflow: hidden;
   padding: auto;
 }
+.carousel .carousel-item {
+  height: 475px;
+}
 
 .img-examples .card-panel {
   color: gray;
