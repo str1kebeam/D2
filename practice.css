@@ -1,7 +1,13 @@
 @import url("default.css");
 
+::root {
+  --inpBack: #00000033;
+}
+
 #input-answer {
   width: 80%;
+  background-color: #00000033;
+  text-align: center;
   /* border-width: 1px; */
 }
 #input-answer:focus {
@@ -25,8 +31,9 @@
   border-radius: 10px;
   padding: 5px;
   align-items: stretch;
-
 }
+
+
 #calculator * {
   background-color: var(--calcbtncol);
   margin: 5px;
@@ -103,4 +110,16 @@
 }
 #bvarz {
   grid-area: varz;
+}
+#lpar {
+  grid-area: lpar;
+}
+#rpar {
+  grid-area: rpar;
+}
+#lbrc {
+  grid-area: lbrc;
+}
+#rbrc {
+  grid-area: rbrc;
 }
