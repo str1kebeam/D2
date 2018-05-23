@@ -58,6 +58,9 @@ function newQ(){
 		else if(type=="integral"){
 			intQ(diff);
 		}
+		else if(type=="tangent"){
+			t_l(diff);
+		}
 		strike=false;
 		var b=document.getElementById("new-question");
 		b.innerHTML="New Question";
@@ -158,6 +161,12 @@ function newDerivative(terms, maxPow, maxCo, test=false){
 		var p=(Math.random()*(maxPow+1));
 
 	}*/
+}
+var tlDiffs=[]; tlDiffs[1]=[2,1,5,3]; tlDiffs[2]=[3,2,5,10]; 
+function t_l(diff){
+	//makes a new tangent line problem, from just the difficulty
+	var d=tlDiffs[diff];
+	tangent_slope(d[0],d[1],d[2],d[3]);
 }
 function tangent_slope(terms, maxPow, maxCo, maxX){
 	var q="What is the slope of the following equation at x=";
