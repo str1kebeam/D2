@@ -7,6 +7,7 @@
 	--grid-lines: #7f7fff8f;
 	--grid-back: #e0e0ff;
 	--btncolor: #3399ff;
+	--calcbtncol: var(--color1);
 }
 
 .brand-logo {

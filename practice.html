@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<!--[if lt IE9]>
@@ -8,6 +9,7 @@
 	<meta charset="utf-8">
 	<title>Derive - Practice</title>
 	<link type="text/CSS" rel="stylesheet" href="Imports\materialize\css\materialize.min.css"  media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="Imports/mdi/css/materialdesignicons.min.css">
 	<link rel="stylesheet" type="text/css" href="practice.css"> <!-- Import default css for the whole website -->
 	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script>
@@ -27,6 +29,7 @@
 			<li class="divider"></li>
 			<li><a href="#!">Eccetera</a></li>
 		</ul>
+		<div class="navbar-fixed">
 		<nav class="color1" id="topbar">
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo center">Logo Here</a>
@@ -39,18 +42,18 @@
 				</ul>
 			</div>
 		</nav>
-
+		</div>
 		<div class="row">
-			<div class="col s12 m4 l3 z-depth-1" id="side-content">
+			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
 				<h3>You made a sidebar!</h3>
 				<p>I'm so proud of you</p>
 				<p>jk it kinda stinks rn</p>
 			</div>
-			<div class="col s12 m8 l9" id="main-content">
+			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
 				<h1 id="body-title"> <!-- Title -->
 				Practice Your Skills
 			</h1>
-			
+
 			<div id="body-text"> <!-- The body text: problem, answer input -->
 				<p class="body-description">Now that you've learned derivatives, practice your skills with these problems</p>
 				<div id="problem">
@@ -58,42 +61,38 @@
 					<latex-eqn class="body-description" id="expression">$$\frac{d}{dx}(x^{4}+2x^{3})=?$$</latex-eqn>
 					<div><input type="text" name="" id="input-answer"></div>
 					<div><p id="new-entry"></p></div>
-					<div id="numpad">
-						<button onclick="numpad(1);" class="btn waves-effect waves-light">1</button>
-						<button onclick="numpad(2);" class="btn waves-effect waves-light">2</button>
-						<button onclick="numpad(3);" class="btn waves-effect waves-light">3</button>
-						<br>
-						<button onclick="numpad(4);" class="btn waves-effect waves-light">4</button>
-						<button onclick="numpad(5);" class="btn waves-effect waves-light">5</button>
-						<button onclick="numpad(6);" class="btn waves-effect waves-light">6</button>
-						<br>
-						<button onclick="numpad(7);" class="btn waves-effect waves-light">7</button>
-						<button onclick="numpad(8);" class="btn waves-effect waves-light">8</button>
-						<button onclick="numpad(9);" class="btn waves-effect waves-light">9</button>
-						<br>
-						<button onclick="numpad('-');" class="btn waves-effect waves-light">-</button>
-						<button onclick="numpad(0);" class="btn waves-effect waves-light">0</button>
-						<button onclick="numpad('+');" class="btn waves-effect waves-light">+</button>
-						<br>
-						<button onclick="numpad('x');" class="btn waves-effect waves-light">x</button>
-						<button onclick="numpad('*');" class="btn waves-effect waves-light">*</button>
-						<button onclick="numpad('c');" class="btn waves-effect waves-light">c</button>
-						<br>
-						<button onclick="numpad('^');" class="btn waves-effect waves-light">a<sup>b</sup></button>
-						<button onclick="numpad('back');" class="btn waves-effect waves-light">&#8592;</button>
-						<button onclick="numpad('frac');" class="btn waves-effect waves-light"><sup>a</sup>&frasl;<sub>b</sub></button>
+					<div id="calculator">
+						<button id="b1" onclick="numpad(1);" class="btn waves-effect waves-light">1</button>
+						<button id="b2" onclick="numpad(2);" class="btn waves-effect waves-light">2</button>
+						<button id="b3" onclick="numpad(3);" class="btn waves-effect waves-light">3</button>
+						<button id="b4" onclick="numpad(4);" class="btn waves-effect waves-light">4</button>
+						<button id="b5" onclick="numpad(5);" class="btn waves-effect waves-light">5</button>
+						<button id="b6" onclick="numpad(6);" class="btn waves-effect waves-light">6</button>
+						<button id="b7" onclick="numpad(7);" class="btn waves-effect waves-light">7</button>
+						<button id="b8" onclick="numpad(8);" class="btn waves-effect waves-light">8</button>
+						<button id="b9" onclick="numpad(9);" class="btn waves-effect waves-light">9</button>
+						<button id="bsub" onclick="numpad('-');" class="btn waves-effect waves-light">-</button>
+						<button id="b0" onclick="numpad(0);" class="btn waves-effect waves-light">0</button>
+						<button id="badd" onclick="numpad('+');" class="btn waves-effect waves-light">+</button>
+						<button id="bvarx" onclick="numpad('x');" class="btn waves-effect waves-light">x</button>
+						<button id="bvary" onclick="numpad('y');" class="btn waves-effect waves-light">y</button>
+						<button id="bvarz" onclick="numpad('z');" class="btn waves-effect waves-light">z</button>
+						<button id="bmult" onclick="numpad('*');" class="btn waves-effect waves-light">*</button>
+						<button id="bclr" onclick="numpad('c');" class="btn waves-effect waves-light">c</button>
+						<button id="bexp" onclick="numpad('^');" class="btn waves-effect waves-light">a<sup>b</sup></button>
+						<button id="bback" onclick="numpad('back');" class="btn waves-effect waves-light">&#8592;</button>
+						<button id="bfrac" onclick="numpad('frac');" class="btn waves-effect waves-light"><sup>a</sup>&frasl;<sub>b</sub></button>
+						<button id="benter" class="body-description btn waves-effect waves-light" id="check-answer" onclick="functionthing();">Check Answer</button>
 					</div>
-					<br>
-					<button class="body-description btn waves-effect waves-light" id="check-answer" onclick="functionthing();">Check Answer</button>
 					<p id="response"></p>
 					<p>New Question:</p>
-					<p>Type: 
+					<p>Type:
 						<select id="type">
 							<option value="derivative">Derivative</option>
 							<option value="integral">Integral</option>
 						</select>
 					</p>
-					<p>Difficulty: 
+					<p>Difficulty:
 						<select id="difficulty">
 							<option value=1>1</option>
 							<option value=2>2</option>
@@ -122,6 +121,9 @@ $(document).ready(function(){
 	$(".dropdown-trigger #difficulty").dropdown({
 		hover: false,
 		coverTrigger: false,
+	});
+	$('.pushpin').pushpin({
+		offset: 50
 	});
 	$('.carousel').carousel({
 		duration: 500
