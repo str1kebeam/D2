@@ -1,5 +1,13 @@
 @import url("default.css");
 
+#input-answer {
+  width: 80%;
+  /* border-width: 1px; */
+}
+#input-answer:focus {
+  /* border-width: 5px; */
+}
+
 #calculator {
   display: inline-grid;
   grid-template-columns: repeat(11, 1fr);
