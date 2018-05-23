@@ -27,6 +27,8 @@
   align-items: stretch;
 
 }
+
+
 #calculator * {
   background-color: var(--calcbtncol);
   margin: 5px;
@@ -103,4 +105,16 @@
 }
 #bvarz {
   grid-area: varz;
+}
+#lpar {
+  grid-area: lpar;
+}
+#rpar {
+  grid-area: rpar;
+}
+#lbrc {
+  grid-area: lbrc;
+}
+#rbrc {
+  grid-area: rbrc;
 }
