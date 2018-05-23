@@ -60,6 +60,9 @@ function ask(question, expression){
 	var ans=document.getElementById("input-answer");
 	ans.value="";
 	answered=false;
+	var ent=document.getElementById("new-entry");
+	ent.innerHTML="";
+	entry_text="";
 }
 function reply(text){
 	var response=document.getElementById("response");

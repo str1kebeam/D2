@@ -1,5 +1,106 @@
 @import url("default.css");
-/*
-#numpad {
-	top: 50px;
-} */
+
+#input-answer {
+  width: 80%;
+  /* border-width: 1px; */
+}
+#input-answer:focus {
+  /* border-width: 5px; */
+}
+
+#calculator {
+  display: inline-grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(4,1fr);
+  grid-gap: 3px 5px;
+  grid-template-areas:
+    "b1 b2  b3  add  exp  exp  sin sin bksp bksp bksp"
+    "b4 b5  b6  subt frac frac cos cos varx vary varz"
+    "b7 b8  b9  mult lpar rpar tan tan pi   e    .   "
+    "b0 clr clr divd lbrc rbrc .   .   entr entr entr";
+  width: 80%;
+  height: 40vh;
+  background-color: var(--color2);
+  border: 2px solid blue;
+  border-radius: 10px;
+  padding: 5px;
+  align-items: stretch;
+
+}
+#calculator * {
+  background-color: var(--calcbtncol);
+  margin: 5px;
+  align-content: stretch;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+#b1 {
+  grid-area: b1;
+}
+#b2 {
+  grid-area: b2;
+}
+#b3 {
+  grid-area: b3;
+}
+#b4 {
+  grid-area: b4;
+}
+#b5 {
+  grid-area: b5;
+}
+#b6 {
+  grid-area: b6;
+}
+#b7 {
+  grid-area: b7;
+}
+#b8 {
+  grid-area: b8;
+}
+#b9 {
+  grid-area: b9;
+}
+#b0 {
+  grid-area: b0;
+}
+#bsub {
+  grid-area: subt;
+}
+#badd {
+  grid-area: add;
+}
+#bmult {
+  grid-area: mult;
+}
+#bdiv {
+  grid-area: divd;
+}
+#bclr {
+  grid-area: clr;
+}
+#bexp {
+  grid-area: exp;
+}
+#bclr {
+  grid-area: clr;
+}
+#benter {
+  grid-area: entr;
+}
+#bback {
+  grid-area: bksp;
+}
+#bfrac {
+  grid-area: frac;
+}
+#bvarx {
+  grid-area: varx;
+}
+#bvary {
+  grid-area: vary;
+}
+#bvarz {
+  grid-area: varz;
+}
