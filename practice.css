@@ -24,6 +24,7 @@
   margin: 5px;
   align-content: stretch;
   text-align: center;
+  text-transform: capitalize;
 }
 
 #b1 {
