@@ -21,6 +21,9 @@
 }
 #calculator * {
   background-color: var(--calcbtncol);
+  margin: 5px;
+  align-content: stretch;
+  text-align: center;
 }
 
 #b1 {
@@ -79,6 +82,9 @@
 }
 #bback {
   grid-area: bksp;
+}
+#bfrac {
+  grid-area: frac;
 }
 #bvarx {
   grid-area: varx;
