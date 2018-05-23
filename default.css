@@ -60,7 +60,6 @@ latex-eqn { /* latex equation formatting (custom tag) */
 #side-content {
 	background-color: #f1d592;
 	height: auto;
-	z-index: -10;
 }
 
 #body { /* body div attributes */
