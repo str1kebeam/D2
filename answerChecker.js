@@ -390,7 +390,7 @@ var rTrig=['csc','sec','cot'];
 var inTrig=['arcsin','arccos','arctan'];
 var irTrig=['arccsc','arcsec', 'arccot'];
 var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
-function trig_term(maxTCo, maxXCo, maxTPow, maxXPow, diff=defTrigDiff){
+function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=defTrigDiff){
 	//Ok, so all of these variables are because you can have: a*sin^c(bx^d)
 	//'max' is just there to be descriptive
 	//'T' is for 'Trig', so it is a modifier for the trig (a and c)
@@ -411,6 +411,7 @@ function trig_term(maxTCo, maxXCo, maxTPow, maxXPow, diff=defTrigDiff){
 		//If it is 1, don't need to worry about it anymore
 		//Otherwise, print a parenthese and later on print the exponent
 		//May just drop this part...
+		//Dropping it for now
 	//Pick a random trig function within the checked list, print it 
 		//(latex for trig stuff is \trig, with 'trig' being an actual trig function, makes it not an italicized variable)
 	//Pick a random coefficient within the second range, print it, accounting for =+-1
@@ -418,7 +419,21 @@ function trig_term(maxTCo, maxXCo, maxTPow, maxXPow, diff=defTrigDiff){
 		//Yeah, print it according to the normal printing rules
 	//Close the parens, put in the ^pow if it should be there
 	//Why am I writing so many comments right now?
-	var tc=((Math.random()*maxTCo*2)-maxTCo).toFixed(0);
+	var tc=0;
+	while(tc==0){
+		tc=((Math.random()*maxTCo*2)-maxTCo).toFixed(0);
+	}
+	if(Math.abs(tc)==1){
+		if(tc==-1){
+			simple+="-";
+			latex+="-";
+		}
+	}
+	else{
+		simple+=tc;
+		latex+=tc;
+	}
+	
 }
 function test(){
 	console.log("test");
