@@ -1,12 +1,12 @@
 @import url("default.css");
 
-::root {
+:root {
   --inpBack: #00000033;
 }
 
 #input-answer {
   width: 80%;
-  background-color: #00000033;
+  background-color: var(--inpBack);
   text-align: center;
   /* border-width: 1px; */
 }
