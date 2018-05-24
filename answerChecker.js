@@ -418,9 +418,34 @@ function trig_term(maxTCo, maxXCo, maxTPow, maxXPow, diff=defTrigDiff){
 		//Yeah, print it according to the normal printing rules
 	//Close the parens, put in the ^pow if it should be there
 	//Why am I writing so many comments right now?
+	var tc=((Math.random()*maxTCo*2)-maxTCo).toFixed(0);
 }
 function test(){
 	console.log("test");
+}
+function testRandom(max, limit=100){
+	//Just a check that I was doing random numbers properly
+	//I think it might be rolling both + and - 0 though?
+	var full=[];
+	for (var i=-max; i<=max; i++){
+		full[i]=false;
+	}
+	var cont=true;
+	var count=0;
+	while(cont&&count<limit){
+		count++;
+		var a=((Math.random()*max*2)-max).toFixed(0);
+		if(a>max||a<-max){
+			console.log("Problem:"+a);
+		}
+		full[a]=true;
+		cont=!full.every(function (i){
+			return i;
+		})
+	}
+	console.log("All were generated?"+!cont);
+	console.log("Times rolled: "+count);
+	console.log(full);
 }
 ///////
 //Numpad stuff (I would move this into a separate file, but they work so closely together that they might as well be in the same file)
