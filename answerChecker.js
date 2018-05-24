@@ -433,7 +433,40 @@ function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=defTrigDiff){
 		simple+=tc;
 		latex+=tc;
 	}
-	
+	var t=Math.floor(Math.random()*trigs.length);
+	var tr=trigs[t];
+	simple+=tr+"(";
+	latex+="\\"+tr+"(";//If it was just "sin", it LaTeX would italicize it because it thinks it is a variable, so it needs to be"\sin"
+	var xc=0;
+	while(xc==0){
+		xc=((Math.random()*maxXCo*2)-maxXCo).toFixed(0);
+	}
+	if(xc==-1){
+		simple+="-";
+		latex+="-";
+	}
+	else if(xc!=1){
+		simple+=xc;
+		latex+=xc;
+	}
+	var xp=(Math.random()*maxXPow).toFixed(0);
+	if(xp==0){
+		if(Math.abs(xc)==1){//If it had just printed a - or nothing at all for the coefficient, print 1
+			simple+="1";
+			latex+="1";
+		}
+	}
+	else{
+		simple+="x";
+		latex+="x";
+		if(xp>1){
+			simple+="^"+xp;
+			latex+="^{"+xp+"}";
+		}
+	}
+	simple+=")";
+	latex+=")";
+	return [simple, latex];
 }
 function test(){
 	console.log("test");
@@ -442,14 +475,14 @@ function testRandom(max, limit=100){
 	//Just a check that I was doing random numbers properly
 	//I think it might be rolling both + and - 0 though?
 	var full=[];
-	for (var i=-max; i<=max; i++){
+	for (var i=0; i<=max; i++){
 		full[i]=false;
 	}
 	var cont=true;
 	var count=0;
 	while(cont&&count<limit){
 		count++;
-		var a=((Math.random()*max*2)-max).toFixed(0);
+		var a=((Math.random()*max)).toFixed(0);
 		if(a>max||a<-max){
 			console.log("Problem:"+a);
 		}
