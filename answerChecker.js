@@ -390,7 +390,7 @@ var rTrig=['csc','sec','cot'];
 var inTrig=['arcsin','arccos','arctan'];
 var irTrig=['arccsc','arcsec', 'arccot'];
 var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
-function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=defTrigDiff){
+function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig){
 	//Ok, so all of these variables are because you can have: a*sin^c(bx^d)
 	//'max' is just there to be descriptive
 	//'T' is for 'Trig', so it is a modifier for the trig (a and c)
