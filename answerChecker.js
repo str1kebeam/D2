@@ -89,8 +89,12 @@ function setDropdown(dropdown, val){
 	//Pretty much, I need to find the list item that has the span inside with the right lable, and then change it's class, while reseting the other classes
 	var parent=dropdown.parentElement;
 	//console.log(parent);
-	var el=parent.querySelector(".dropdown-content");
-	//console.log(el);
+	//var el=parent.querySelector(".dropdown-content");
+	var e2=parent.querySelector(".dropdown-trigger");
+	e2.click();//Yes, this is the best way to do this. Materialize has no real javasript API
+	var e3=M.Dropdown.getInstance(e2);
+	e3.close();
+	/*//console.log(el);
 	var temp=el.firstElementChild;
 	//console.log(temp);
 	while(temp!=null){
@@ -109,7 +113,7 @@ function setDropdown(dropdown, val){
 		temp=temp.nextElementSibling;
 		//console.log(temp);
 	}
-	//console.log("called");
+	//console.log("called");*/
 }
 function updateDropdowns(){
 	var elms=document.querySelectorAll(".dropdown-trigger");
