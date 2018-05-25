@@ -48,11 +48,11 @@ var loadFunc = function(){
 	if(qType!=""){
 		document.getElementById("type").value=qType;
 		//document.getElementById("type").onload=
-		setDropdown(document.getElementById("type"), qType);
+		setTimeout(setDropdown(document.getElementById("type"), qType), 300000);
 
 		//document.getElementById("type").onload=function(){document.getElementById("type").value=qType;};
 		document.getElementById("difficulty").value=start_diff;
-		setDropdown(document.getElementById("difficulty"), start_diff);
+		setTimeout(setDropdown(document.getElementById("difficulty"), start_diff), 300000);
 		//document.getElementById("difficulty").onload=function(){document.getElementById("difficulty").value=start_diff;};
 		newQ();
 		//console.log("test");
@@ -85,12 +85,30 @@ function setDropdown(dropdown, val){
 			//return;
 		}
 	}
+	//Ok, so all of this code is a workaround to materialze
+	//Pretty much, I need to find the list item that has the span inside with the right lable, and then change it's class, while reseting the other classes
 	var parent=dropdown.parentElement;
-	console.log(parent);
-	var el=parent.querySelectorAll(".dropdown-trigger");
-	console.log(el);
-	var e=M.Dropdown.getInstance(el[0]);
-	e.focusedIndex=index;
+	//console.log(parent);
+	var el=parent.querySelector(".dropdown-content");
+	//console.log(el);
+	var temp=el.firstElementChild;
+	//console.log(temp);
+	while(temp!=null){
+		var inside=temp.firstElementChild;
+		//console.log(temp);
+		temp.class="";
+		var text=inside.innerHTML;
+		console.log(temp.class);
+		console.log(text);
+		console.log(dropdown.options[index].text);
+		console.log(text==dropdown.options[index].text)
+		if(text==dropdown.options[index].text){
+			temp.class="active selected";//Materialize's selected class
+			console.log(temp.class);
+		}
+		temp=temp.nextElementSibling;
+		//console.log(temp);
+	}
 	//console.log("called");
 }
 function updateDropdowns(){
