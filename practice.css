@@ -22,8 +22,8 @@
   grid-template-areas:
     "b1 b2  b3  add  exp  exp  sin sin bksp bksp bksp"
     "b4 b5  b6  subt frac frac cos cos varx vary varz"
-    "b7 b8  b9  mult lpar rpar tan tan pi   e    .   "
-    "b0 clr clr divd lbrc rbrc .   .   entr entr entr";
+    "b7 b8  b9  mult lpar rpar tan tan pi   e    plsc"
+    "b0 dec .   divd lbrc rbrc clr clr entr entr entr";
   width: 80%;
   height: 40vh;
   background-color: var(--color2);
@@ -37,9 +37,9 @@
 #calculator * {
   background-color: var(--calcbtncol);
   margin: 5px;
-  align-content: stretch;
+  align-content: stretch center;
   text-align: center;
-  text-transform: capitalize;
+  text-transform: lowercase;
 }
 
 #b1 {
@@ -86,6 +86,7 @@
 }
 #bclr {
   grid-area: clr;
+  text-transform: uppercase;
 }
 #bexp {
   grid-area: exp;
@@ -95,6 +96,7 @@
 }
 #benter {
   grid-area: entr;
+  text-transform: uppercase;
 }
 #bback {
   grid-area: bksp;
@@ -111,6 +113,10 @@
 #bvarz {
   grid-area: varz;
 }
+#bplsc {
+  grid-area: plsc;
+  text-transform: uppercase;
+}
 #lpar {
   grid-area: lpar;
 }
@@ -122,4 +128,22 @@
 }
 #rbrc {
   grid-area: rbrc;
+}
+#sin {
+  grid-area: sin;
+}
+#cos {
+  grid-area: cos;
+}
+#tan {
+  grid-area: tan;
+}
+#pi {
+  grid-area: pi;
+}
+#e {
+  grid-area: e;
+}
+#dec {
+  grid-area: dec;
 }
