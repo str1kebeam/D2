@@ -4,10 +4,11 @@
 var response=document.getElementById("response");
 var x=1;
 var currentAns='';
-var answered=false;
+var answered=true;
 var strike=false;
 var entry_text="";
 var qType="";
+start_diff=1;
 var nTrig=['sin','cos','tan'];
 var rTrig=['csc','sec','cot'];
 var inTrig=['arcsin','arccos','arctan'];
@@ -17,21 +18,22 @@ var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
 //Startup stuff
 //////
 var page=document.getElementById("problem");
-page.onload= function(){
+var loadFunc = function(){
+	//console.log("test");
 	var query=window.location.search.substring(1);//Based off of an example I found online, this will give me a string to use
 	var vars=query.split("&");
-	var start_diff=1;
+	//var start_diff=1;
 	for(var v=0; v<vars.length; v++){
 		var stuff=vars[v].split("=");
 		if(stuff[0]=="type"){
 			if(stuff[1]=="derivative"){
-				qType="der";
+				qType="derivative";
 			}
 			else if(stuff[1]=="integral"){
-				qType="int";
+				qType="integral";
 			}
 			else if(stuff[1]=="tangent"){
-				qType="tl";
+				qType="tangent";
 			}
 		}
 		if(stuff[0]=="difficulty"){
@@ -41,12 +43,68 @@ page.onload= function(){
 			}
 		}
 	}
-	console.log(qType);
-	console.log(start_diff);
+	//console.log(qType);
+	//console.log(start_diff);
+	if(qType!=""){
+		document.getElementById("type").value=qType;
+		//document.getElementById("type").onload=
+		setDropdown(document.getElementById("type"), qType);
+
+		//document.getElementById("type").onload=function(){document.getElementById("type").value=qType;};
+		document.getElementById("difficulty").value=start_diff;
+		setDropdown(document.getElementById("difficulty"), start_diff);
+		//document.getElementById("difficulty").onload=function(){document.getElementById("difficulty").value=start_diff;};
+		newQ();
+		//console.log("test");
+	}
 };
+function setDropdown(dropdown, val){
+	//console.log("test");
+	//var instance = M.Dropdown.getInstance(dropdown);
+	//instance.open();
+	//instance.close();
+	var found=false;
+	var index;
+	for(var i=0;i<dropdown.options.length&&!found; i++){
+		//console.log("test"+i);
+		//console.log(dropdown.options[i].value);
+		//console.log(val);
+		//console.log(dropdown.options[i].value==val);
+		if(dropdown.options[i].value==val){
+			//console.log("found");
+			dropdown.selectedIndex=i;
+			var opt=dropdown.options[i];
+			opt.selected=true;
+			index=i;
+			found=true;
+			//dropdown.remove(i);
+			//dropdown.add(opt, i);
+			//dropdown.click();
 
 
-
+			//return;
+		}
+	}
+	var parent=dropdown.parentElement;
+	console.log(parent);
+	var el=parent.querySelectorAll(".dropdown-trigger");
+	console.log(el);
+	var e=M.Dropdown.getInstance(el[0]);
+	e.focusedIndex=index;
+	//console.log("called");
+}
+function updateDropdowns(){
+	var elms=document.querySelectorAll(".dropdown-trigger");
+	for (var i=0; i<elms.length; i++){
+		var elm=M.Dropdown.getInstance(elms[i]);
+		elm.open();
+		elm.recalculateDimensions();
+		elm.close();
+		console.log(elm.dropdownEl);
+	}
+}
+//window.onload=setTimeout(loadFunc, 2000);
+MathJax.Hub.Register.StartupHook("End", loadFunc);//Wait for MathJax to finish starting up
 //////
 //Questions
 //////
