@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 	<!--[if lt IE9]>
@@ -9,82 +8,105 @@
 	<![endif]--> <!-- IE compatibility -->
 	<meta charset="utf-8">
 	<title>Learn - The Tangent Line Problem</title>
-	<link rel="stylesheet" type="text/css" href="DeriveCSS.Default.css"> <!-- Import default css for the whole website -->
-	<link rel="stylesheet" type="text/css" href="DeriveCSS.Learn.css"> <!-- Import specific css for this html file -->
-	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
+	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.min.css"  media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
+	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
+	<link rel="shortcut icon" href="..\DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
 </head>
 <body>
-	<div id="page">
-		<div id="header">
-			<div id="header-top"> <!-- image icon and layer above menu bar -->
-				<a href="homepage.html"><img src="DeriveLogo.v2.png" title="Welcome to Derive!"></a>
-
+	<div id="container">
+		<ul id="lessons" class="dropdown-content">
+			<li><a href="#!">Lesson 1</a></li>
+			<li><a href="#!">Lesson 2</a></li>
+			<li class="divider"></li>
+			<li><a href="#!">Eccetera</a></li>
+		</ul>
+		<div class="navbar-fixed">
+		<nav class="color1" id="topbar">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo center">Logo Here</a>
+				<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="../index.html">Home<i class="material-icons right">home</i></a></li>
+					<li><a href="index.html" data-target="lessons">Lessons</a></li>
+					<li><a href="../practice.html">Practice</a></li>
+					<li><a href="../about.html">About</a></li>
+				</ul>
 			</div>
-			<div id="header-menu"> <!-- menu bar -->
-
-				<a href="homepage.html" title="Home"><button type="button" id="home-button">Home</button></a>
-
-				<a href="learn.html" title="Learn a Topic"><button type="button" id="learn-button">Learn</button></a>
-					<!--<div class="dropdown">The Tangent Line</div>-->
-
-				<a href="practice.html" title="Practice Your Skills"><button type="button" id="practice-button">Practice</button></a>
-
-				<a href="about.html" title="About Derive"><button type="button" id="aboutus-button">About</button></a>
-
+		</nav>
+		</div>
+		<div class="row">
+			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
+				<h2>Available Lessons</h2>
+				<ul class="collection with-header" id="sitemap">
+					<a href="#!" class="collection-header"><h4>Limits</h4></a>
+					<a href="#!" class="collection-item active">What is a Limit?</a>
+					<a href="#!" class="collection-item">Solving a Limit Graphically</a>
+					<a href="#!" class="collection-item">Left and Right Limits</a>
+					<a href="#!" class="collection-item">Solving a Limit Algebraically</a>
+					<a href="#!" class="collection-header"><h4>Derivatives</h4></a>
+					<a href="#!" class="collection-item">Introduction to the Tangent Line</a>
+					<a href="#!" class="collection-item">Lesson 2</a>
+					<a href="#!" class="collection-item">Lesson 3</a>
+					<a href="#!" class="collection-item">Lesson 4</a>
+					<a href="#!" class="collection-header"><h4>Integrals</h4></a>
+					<a href="#!" class="collection-item">Lesson 5</a>
+					<a href="#!" class="collection-item">Lesson 6</a>
+					<a href="#!" class="collection-item">Lesson 7</a>
+				</ul>
 			</div>
-		</div>	
-
-		<div id="body">
-			<h1 id="body-title"> <!-- Title -->
-				The Tangent Line Problem
-			</h1>
-			
-			<div id="lesson"> <!-- The lesson text, graphs, eqns, etc -->
-				<p class="lesson-text">
-					A <strong>tangent line</strong> is a line that just barely touches — but does not cross over — another line.  For example, look at the function <latex-eqn>$$f(x)=x^{2}$$</latex-eqn>
-				</p>
-				<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2">
-				<p class="lesson-text">
-					You may have noticed that the x-axis, in fact, is <strong>tangent</strong> to the parabola above.  
-				</p>
-				<p class="lesson-text">
-					But how do we find a tangent line to a function?  And how do we know the slope of the line at the tangent?
-				</p>
-				<p class="lesson-text">
-					To find a tangent line, we make a similar type of line called a <strong>secant line</strong> and then turn it into a tangent line.  For example, the graph below is also of <latex-eqn>\(f(x)=x^{2}\)</latex-eqn>
-				</p>
-				<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with a secant line">
-				<p class="lesson-text">
-					The secant line is a line on a curve that intersects the curve at two points.  Let's call them \((x_{1}, y_{1})\) and \((x_{2}, y_{2})\).  You may recall that the slope between two points is rise over run, or <latex-eqn>$$m=\frac{rise}{run}=\frac{Δy}{Δx}=\frac{y_{2}-y_{1}}{x_{2}-x_{1}}$$</latex-eqn>
-				</p>
-				<p class="lesson-text">
-					In this graph, since the secant line goes through \((0,0)\) and \((1,1)\), the slope is <latex-eqn>$$m=\frac{1-0}{1-0}=1$$</latex-eqn>
-				</p>
-				<p class="lesson-text">
-					Try using the interactive graph below to make a secant line through different points on the graph.
-				</p>
-				<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with an interactive secant line">
-				<p class="lesson-text">
-					To make this secant line, which goes through two points, become a tangent line, which goes through one point, we must bring both points as close to each other as possible.  For example, the points \((0.9, 0.81)\) and \((1, 1)\) are really close and the secant line between them have a slope of <latex-eqn>$$\frac{1-0.81}{1-0.9}=\frac{0.19}{0.1}=1.9$$</latex-eqn>
-				</p>
-				<p class="lesson-text">
-					But what happens if we try to make both points at exactly the same spot?  What if they're both \((1,1)\)?  We can't calculate the slope of this line since the slope equation will give an answer of \(\frac{0}{0}\) — or indeterminate. <latex-eqn>$$\frac{1-1}{1-1}=\frac{0}{0}=\textrm{indeterminate}$$</latex-eqn>
-				</p>
-				<p class="lesson-text">
-					Instead, mathematicians make the two points <strong>approach</strong> each other: they become infinitesimally close so that the answer is the same but the denominator is not exactly zero, making the answer defined.  In calculus, this is called a <strong>limit</strong>, represented as <latex-eqn>$$m=\frac{1-y_{1}}{1-x_{1}}=\lim_{x \to 1}\frac{1-f(x)}{1-x}$$</latex-eqn>
-				</p>
-				<p class="lesson-text">
-					Do you think you found the answer to the limit above?  At the point \((1,1)\), the slope of \(f(x) = x^{2}\) is exactly 2.  This can be solved by creating the secant line and making the points approach each other, or by <a href="">solving the limit analytically</a>.
-				</p>
-				<p class="lesson-text">
-					Just for completeness, let's solve for the equation of the tangent line.  You may remember that the point-slope form of a linear equation is \(y=m(x-x_{1})+y_{1}\).  All we need to do is plug in \(2\) for \(m\) and \((1, 1)\) for \((x_{1}, y_{1})\), as shown below: <latex-eqn>$$y=2(x-1)+1$$</latex-eqn>
-				</p>
-				<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with the tangent line">
-				<p class="lesson-text">
-					Think you understand the tangent line?  Test your skills and become a master by <a href="practice.html">practicing tangent lines</a>!
-				</p>
+			<div class="col s12 m8 l9" id="main-content">
+				<h1 id="body-title"> <!-- Title -->
+					The Tangent Line Problem
+				</h1>
+				<div id="lesson"> <!-- The lesson text, graphs, eqns, etc -->
+					<p class="lesson-text">
+						A <strong>tangent line</strong> is a line that just barely touches — but does not cross over — another line.  For example, look at the function <latex-eqn>$$f(x)=x^{2}$$</latex-eqn>
+					</p>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2">
+					<p class="lesson-text">
+						You may have noticed that the x-axis, in fact, is <strong>tangent</strong> to the parabola above.
+					</p>
+					<p class="lesson-text">
+						But how do we find a tangent line to a function?  And how do we know the slope of the line at the tangent?
+					</p>
+					<p class="lesson-text">
+						To find a tangent line, we make a similar type of line called a <strong>secant line</strong> and then turn it into a tangent line.  For example, the graph below is also of <latex-eqn>\(f(x)=x^{2}\)</latex-eqn>
+					</p>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with a secant line">
+					<p class="lesson-text">
+						The secant line is a line on a curve that intersects the curve at two points.  Let's call them \((x_{1}, y_{1})\) and \((x_{2}, y_{2})\).  You may recall that the slope between two points is rise over run, or <latex-eqn>$$m=\frac{rise}{run}=\frac{Δy}{Δx}=\frac{y_{2}-y_{1}}{x_{2}-x_{1}}$$</latex-eqn>
+					</p>
+					<p class="lesson-text">
+						In this graph, since the secant line goes through \((0,0)\) and \((1,1)\), the slope is <latex-eqn>$$m=\frac{1-0}{1-0}=1$$</latex-eqn>
+					</p>
+					<p class="lesson-text">
+						Try using the interactive graph below to make a secant line through different points on the graph.
+					</p>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with an interactive secant line">
+					<p class="lesson-text">
+						To make this secant line, which goes through two points, become a tangent line, which goes through one point, we must bring both points as close to each other as possible.  For example, the points \((0.9, 0.81)\) and \((1, 1)\) are really close and the secant line between them have a slope of <latex-eqn>$$\frac{1-0.81}{1-0.9}=\frac{0.19}{0.1}=1.9$$</latex-eqn>
+					</p>
+					<p class="lesson-text">
+						But what happens if we try to make both points at exactly the same spot?  What if they're both \((1,1)\)?  We can't calculate the slope of this line since the slope equation will give an answer of \(\frac{0}{0}\) — or indeterminate. <latex-eqn>$$\frac{1-1}{1-1}=\frac{0}{0}=\textrm{indeterminate}$$</latex-eqn>
+					</p>
+					<p class="lesson-text">
+						Instead, mathematicians make the two points <strong>approach</strong> each other: they become infinitesimally close so that the answer is the same but the denominator is not exactly zero, making the answer defined.  In calculus, this is called a <strong>limit</strong>, represented as <latex-eqn>$$m=\frac{1-y_{1}}{1-x_{1}}=\lim_{x \to 1}\frac{1-f(x)}{1-x}$$</latex-eqn>
+					</p>
+					<p class="lesson-text">
+						Do you think you found the answer to the limit above?  At the point \((1,1)\), the slope of \(f(x) = x^{2}\) is exactly 2.  This can be solved by creating the secant line and making the points approach each other, or by <a href="">solving the limit analytically</a>.
+					</p>
+					<p class="lesson-text">
+						Just for completeness, let's solve for the equation of the tangent line.  You may remember that the point-slope form of a linear equation is \(y=m(x-x_{1})+y_{1}\).  All we need to do is plug in \(2\) for \(m\) and \((1, 1)\) for \((x_{1}, y_{1})\), as shown below: <latex-eqn>$$y=2(x-1)+1$$</latex-eqn>
+					</p>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with the tangent line">
+					<p class="lesson-text">
+						Think you understand the tangent line?  Test your skills and become a master by <a href="practice.html">practicing tangent lines</a>!
+					</p>
+				</div>
 			</div>
+		</div>
+
 		</div>
 	</div>
 

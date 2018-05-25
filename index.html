@@ -13,8 +13,6 @@
 	<link rel="stylesheet" type="text/css" href="Imports/mdi/css/materialdesignicons.min.css">
 	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
-
-
 </head>
 <body>
 	<div id="container">
@@ -33,7 +31,6 @@
 					<li><a class="dropdown-trigger" href=".\Lessons\index.html" data-target="lessons">Lessons<i class="material-icons right">arrow_drop_down</i></a></li>
 					<li><a href="practice.html">Practice</a></li>
 					<li><a href="about.html">About</a></li>
-					<li><a href="#!">Sign In</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -41,9 +38,13 @@
 
 		<div class="row">
 			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
-				<h3>You made a sidebar!</h3>
-				<p>I'm so proud of you</p>
-				<p>jk it kinda stinks rn</p>
+				<h2>Options</h2>
+				<ul class="collection with-header">
+					<a href="index.html" class="collection-item active">Home</a>
+					<a href="./Lessons/index.html" class="collection-item">Lessons</a>
+					<a href="practice.html" class="collection-item">Practice</a>
+					<a href="about.html" class="collection-item">About</a>
+				</ul>
 			</div>
 			<div class="col s12 m8 push-m4 l9 push-l3 t-cen" id="main-content">
 				<h1 id="body-title">Welcome to Derive!</h1>
@@ -100,7 +101,6 @@
 		</div> -->
 
 	</div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="Imports/materialize/js/materialize.min.js"></script>
 <script src="default.js"></script> <!-- import default JS for the webpage -->
@@ -134,7 +134,6 @@ $(document).ready(function(){
 	    $('.carousel').carousel('next');
 	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
 });
-console.log("height: " + document.getElementById("tootall").style.height);
 </script>
 </body>
 </html>
