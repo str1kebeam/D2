@@ -3,11 +3,53 @@
 //el.innerHTML = math.sqrt(9);
 var response=document.getElementById("response");
 var x=1;
-var currentAns='4x^3+6x^2';
+var currentAns='';
 var answered=false;
 var strike=false;
 var entry_text="";
-var qType="der";
+var qType="";
+var nTrig=['sin','cos','tan'];
+var rTrig=['csc','sec','cot'];
+var inTrig=['arcsin','arccos','arctan'];
+var irTrig=['arccsc','arcsec', 'arccot'];
+var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
+//////
+//Startup stuff
+//////
+var page=document.getElementById("problem");
+page.onload= function(){
+	var query=window.location.search.substring(1);//Based off of an example I found online, this will give me a string to use
+	var vars=query.split("&");
+	var start_diff=1;
+	for(var v=0; v<vars.length; v++){
+		var stuff=vars[v].split("=");
+		if(stuff[0]=="type"){
+			if(stuff[1]=="derivative"){
+				qType="der";
+			}
+			else if(stuff[1]=="integral"){
+				qType="int";
+			}
+			else if(stuff[1]=="tangent"){
+				qType="tl";
+			}
+		}
+		if(stuff[0]=="difficulty"){
+			var t=Number(stuff[1]);
+			if(!isNaN(t)){//Check that t is actually a number
+				start_diff=t;
+			}
+		}
+	}
+	console.log(qType);
+	console.log(start_diff);
+};
+
+
+
+//////
+//Questions
+//////
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	if(entry_text!=""){
@@ -407,11 +449,6 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 	}
 	return result;
 }
-var nTrig=['sin','cos','tan'];
-var rTrig=['csc','sec','cot'];
-var inTrig=['arcsin','arccos','arctan'];
-var irTrig=['arccsc','arcsec', 'arccot'];
-var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
 function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig){
 	//Ok, so all of these variables are because you can have: a*sin^c(bx^d)
 	//'max' is just there to be descriptive
