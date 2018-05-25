@@ -112,11 +112,18 @@ function checkAns(ans){
 	//reply(math.format(math.simplify(currentAns));
 	return false;
 }
-var derDiffs=[]; derDiffs[1]=[2,1,5]; derDiffs[2]=[3,2,5];
+var derDiffs=[]; 
+derDiffs[1]=[2,1,5]; derDiffs[2]=[3,2,5]; //Polynomial difficulty levels
+derDiffs[3]=[1,1,1,nTrig]; derDiffs[4]=[2,2,2,nTrig.concat(rTrig)];//The trig difficulty levels
 function der(diff){
 	//I fell bad hardcoding this, but I don't know how to do it in js
 	var d=derDiffs[diff];
-	newDerivative(d[0],d[1],d[2]);
+	if(d.length==3){//The polynomial trig questions
+		newDerivative(d[0],d[1],d[2]);
+	}
+	if(d.length==4){//The trig questions have 4 parts of data
+		newTrigDerivative(d[0],d[1],d[2],d[3]);
+	}
 }
 function newDerivative(terms, maxPow, maxCo, test=false){
 	var q="What is the derivative of the following?";
@@ -161,6 +168,21 @@ function newDerivative(terms, maxPow, maxCo, test=false){
 		var p=(Math.random()*(maxPow+1));
 
 	}*/
+}
+function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
+	var q="What is the derivative of the following?";
+	var e="\\frac{x}{dx}(";
+	var simple="";
+	var trig=trig_term(maxTCo, maxXCo, maxXPow, diff);
+	e+=trig[1];
+	simple+=trig[0];
+	e+=")=?";
+	var ans=0;
+	if(simple.includes("x")){
+		ans=math.rationalize(math.derivative(simple,"x")).toString();
+	}
+	currentAns=ans;
+	ask(q,e);
 }
 var tlDiffs=[]; tlDiffs[1]=[2,1,5,3]; tlDiffs[2]=[3,2,5,10]; 
 function t_l(diff){
