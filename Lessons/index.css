@@ -3,3 +3,10 @@
 #side-text {
   overflow-y: auto;
 }
+
+#tabs {
+  width: 80%;
+}
+#tabs li {
+  width: 20%;
+}

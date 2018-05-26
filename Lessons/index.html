@@ -60,18 +60,15 @@
 			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
 				<h1 id="body-title" class="t-cen">Welcome to Derive!</h1>
 				<p class="t-cen">Changing The Way You Learn Math</p>
-				<div class="row">
-					<ul class="tabs">
-						<li class="tab col s3"><a href="#limits">Limits</a></li>
-						<li class="tab col s3"><a href="#derivatives">Derivatives</a></li>
-
-					</ul>
-					<div id="limits" class="col s12">
-						Wow Limits
-					</div>
-					<div id="derivatives" class="col s12">
-						Wow Derivatives
-					</div>
+				<ul class="tabs" id="tabs">
+					<li class="tab"><a href="#limits">Limits</a></li>
+					<li class="tab"><a href="#derivatives">Derivatives</a></li>
+				</ul>
+				<div id="limits" class="col s12">
+					Wow Limits
+				</div>
+				<div id="derivatives" class="col s12">
+					Wow Derivatives
 				</div>
 				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> <!-- Test for Scroll -->
 			</div>
@@ -123,7 +120,6 @@ $(document).ready(function(){
 	    $('.carousel').carousel('next');
 	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
 });
-console.log("height: " + document.getElementById("tootall").style.height);
 </script>
 </body>
 </html>
