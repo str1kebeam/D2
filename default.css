@@ -59,7 +59,7 @@ latex-eqn { /* latex equation formatting (custom tag) */
 
 #side-content {
 	background-color: #f1d592;
-	height: auto;
+	
 }
 
 #body { /* body div attributes */
@@ -132,6 +132,7 @@ p { /* default paragraph font and color */
 .t-cen {
 	text-align: center;
 }
+/*
 #sitemap * {
 	background: transparent;
 }

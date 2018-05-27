@@ -1,5 +1,12 @@
 @import url("../default.css");
-/*
-#side-content {
+
+#side-text {
   overflow-y: auto;
-} */
+}
+
+#tabs {
+  width: 80%;
+}
+#tabs li {
+  width: 20%;
+}

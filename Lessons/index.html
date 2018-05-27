@@ -16,19 +16,13 @@
 </head>
 <body>
 	<div id="container">
-		<ul id="lessons" class="dropdown-content">
-			<li><a href="#!">Lesson 1</a></li>
-			<li><a href="#!">Lesson 2</a></li>
-			<li class="divider"></li>
-			<li><a href="#!">Eccetera</a></li>
-		</ul>
 		<div class="navbar-fixed">
 		<nav class="color1" id="topbar">
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo center">Logo Here</a>
 				<ul id="nav-mobile" class="left hide-on-med-and-down">
 					<li><a href="../index.html">Home<i class="material-icons right">home</i></a></li>
-					<li><a href="index.html" data-target="lessons">Lessons</a></li>
+					<li><a href="index.html">Lessons</a></li>
 					<li><a href="../practice.html">Practice</a></li>
 					<li><a href="../about.html">About</a></li>
 				</ul>
@@ -38,29 +32,46 @@
 
 		<div class="row">
 			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
-				<h2>Available Lessons</h2>
-				<ul class="collection with-header" id="sitemap">
-					<a href="#!" class="collection-header"><h4>Limits</h4></a>
-					<a href="#!" class="collection-item active">What is a Limit?</a>
-					<a href="#!" class="collection-item">Solving a Limit Graphically</a>
-					<a href="#!" class="collection-item">Left and Right Limits</a>
-					<a href="#!" class="collection-item">Solving a Limit Algebraically</a>
-					<a href="#!" class="collection-header"><h4>Derivatives</h4></a>
-					<a href="tangentline.html" class="collection-item">Introduction to the Tangent Line</a>
-					<a href="#!" class="collection-item">Lesson 2</a>
-					<a href="#!" class="collection-item">Lesson 3</a>
-					<a href="#!" class="collection-item">Lesson 4</a>
-					<a href="#!" class="collection-header"><h4>Integrals</h4></a>
-					<a href="#!" class="collection-item">Lesson 5</a>
-					<a href="#!" class="collection-item">Lesson 6</a>
-					<a href="#!" class="collection-item">Lesson 7</a>
-				</ul>
+				<div id="side-text">
+					<h2>Available Lessons</h2>
+					<h4>Limits</h4>
+					<div class="collection sitemap">
+						<a href="#!" class="collection-item active">What is a Limit?</a>
+						<a href="#!" class="collection-item">Solving a Limit Graphically</a>
+						<a href="#!" class="collection-item">Left and Right Limits</a>
+						<a href="#!" class="collection-item">Solving a Limit Algebraically</a>
+					</div>
+					<h4>Derivatives</h4>
+					<div class="collection sitemap">
+						<a href="tangentline.html" class="collection-item">Introduction to the Tangent Line</a>
+						<a href="#!" class="collection-item">Lesson 2</a>
+						<a href="#!" class="collection-item">Lesson 3</a>
+						<a href="#!" class="collection-item">Lesson 4</a>
+					</div>
+					<h4>Integrals</h4>
+					<div class="collection sitemap">
+						<a href="#!" class="collection-item">Lesson 5</a>
+						<a href="#!" class="collection-item">Lesson 6</a>
+						<a href="#!" class="collection-item">Lesson 7</a>
+					</div>
+					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> <!-- Test for Scroll -->
+				</div>
 			</div>
 			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
 				<h1 id="body-title" class="t-cen">Welcome to Derive!</h1>
 				<p class="t-cen">Changing The Way You Learn Math</p>
+				<ul class="tabs" id="tabs">
+					<li class="tab"><a href="#limits">Limits</a></li>
+					<li class="tab"><a href="#derivatives">Derivatives</a></li>
+				</ul>
+				<div id="limits" class="col s12">
+					Wow Limits
+				</div>
+				<div id="derivatives" class="col s12">
+					Wow Derivatives
+				</div>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> <!-- Test for Scroll -->
 			</div>
-			<p class="body-description">Start your first \(\frac{\delta}{\delta\theta}e^{ri}vE\) lesson <a href="learn.html" class="inline-link">here</a>!</p>
 			</div>
 		</div>
 		<!--
@@ -96,19 +107,19 @@ $(document).ready(function(){
 		margin: "auto"
 	});
 	$('.carousel.carousel-slider').carousel({
-    fullWidth: true
-  });
+		fullWidth: true
+	});
 	$('.carousel-slider').slider();
 	$('.pushpin').pushpin({
 		offset: 50
 	});
+	$('.tabs').tabs();
 
 	setInterval(autoplay, 5000);
 	function autoplay() {
 	    $('.carousel').carousel('next');
 	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
 });
-console.log("height: " + document.getElementById("tootall").style.height);
 </script>
 </body>
 </html>
