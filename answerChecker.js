@@ -9,11 +9,23 @@ var strike=false;
 var entry_text="";
 var qType="";
 start_diff=1;
+
+var oldMaxDiff=2;//For updating the dropdown
+/////
+//Difficulty settings
+/////
 var nTrig=['sin','cos','tan'];
 var rTrig=['csc','sec','cot'];
 var inTrig=['arcsin','arccos','arctan'];
 var irTrig=['arccsc','arcsec', 'arccot'];
 var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
+var diffs=[];
+diffs["derivative"]=[
+	[2,1,5], [3,2,5], //Polynomial difficulty levels
+	[1,1,1,nTrig], [2,2,2,nTrig.concat(rTrig)]//The trig difficulty levels
+];
+diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
+diffs["integral"]=[[2,1,5],[3,2,5]];
 //////
 //Startup stuff
 //////
@@ -115,15 +127,34 @@ function setDropdown(dropdown, val){
 	}
 	//console.log("called");*/
 }
+document.getElementById("type").onload=setTimeout(document.getElementById("type").style="visibility: visible", 30000)
 function updateDropdowns(){
-	var elms=document.querySelectorAll(".dropdown-trigger");
-	for (var i=0; i<elms.length; i++){
-		var elm=M.Dropdown.getInstance(elms[i]);
-		elm.open();
-		elm.recalculateDimensions();
-		elm.close();
-		console.log(elm.dropdownEl);
+	var type=document.getElementById("type").value;
+	console.log(type);
+	var options=diffs[type].length;
+	console.log(options);
+	var diffDrop=document.getElementById("difficulty");
+	if(options==oldMaxDiff){//No options need to be added or removed
+		console.log("fine");
+		return;
 	}
+	else if(options>oldMaxDiff){//Need to add options
+		console.log("Adding");
+		for(var i=oldMaxDiff+1; i<=options; i++){//Add some options
+			var option=document.createElement("option");
+			option.text=i;
+			option.value=i;
+			diffDrop.add(option);
+			console.log(option);
+		}
+	}
+	else{//need to remove options
+		console.log("removing");
+		for(var i=oldMaxDiff; i>options; i--){//remove some options
+			diffDrop.remove(i-1);//Remove the option at index i-1, so i=4 would remove index 3 (which would be '4')
+		}
+	}
+	oldMaxDiff=options;
 }
 //window.onload=setTimeout(loadFunc, 2000);
 MathJax.Hub.Register.StartupHook("End", loadFunc);//Wait for MathJax to finish starting up
@@ -234,12 +265,11 @@ function checkAns(ans){
 	//reply(math.format(math.simplify(currentAns));
 	return false;
 }
-var derDiffs=[]; 
-derDiffs[1]=[2,1,5]; derDiffs[2]=[3,2,5]; //Polynomial difficulty levels
-derDiffs[3]=[1,1,1,nTrig]; derDiffs[4]=[2,2,2,nTrig.concat(rTrig)];//The trig difficulty levels
+
 function der(diff){
 	//I fell bad hardcoding this, but I don't know how to do it in js
-	var d=derDiffs[diff];
+	var derDiffs=diffs["derivative"];
+	var d=derDiffs[diff-1];
 	if(d.length==3){//The polynomial trig questions
 		newDerivative(d[0],d[1],d[2]);
 	}
@@ -306,10 +336,10 @@ function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
 	currentAns=ans;
 	ask(q,e);
 }
-var tlDiffs=[]; tlDiffs[1]=[2,1,5,3]; tlDiffs[2]=[3,2,5,10]; 
 function t_l(diff){
 	//makes a new tangent line problem, from just the difficulty
-	var d=tlDiffs[diff];
+	var tlDiffs=diffs["tangent"];
+	var d=tlDiffs[diff-1];
 	tangent_slope(d[0],d[1],d[2],d[3]);
 }
 function tangent_slope(terms, maxPow, maxCo, maxX){
@@ -333,9 +363,9 @@ function tangent_slope(terms, maxPow, maxCo, maxX){
 	ask(q,e);
 	currentAns=ans;
 }
-var intDiffs=[]; intDiffs[1]=[2,1,5]; intDiffs[2]=[3,2,5];
 function intQ(diff){
-	var d=intDiffs[diff];
+	var intDiffs=diffs["integral"];
+	var d=intDiffs[diff-1];
 	newIntegral(d[0],d[1],d[2]);
 }
 function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this

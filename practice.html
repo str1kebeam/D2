@@ -40,14 +40,14 @@
 			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
 				<h3>Practice Settings</h3>
 				<p>Select a Lesson</p>
-				<div class="input-field" id="typeWrap">
-				<select id="type">
+				<div>
+				<select id="type" style="visibility: visible">
 					<option value="derivative">Derivative</option>
 					<option value="integral">Integral</option>
 					<option value="tangent">Tangent Line</option>
 				</select>
 				<p>Select a Difficulty</p>
-				<select id="difficulty">
+				<select id="difficulty" style="visibility: visible">
 					<option value=1>1</option>
 					<option value=2>2</option>
 				</select>
@@ -116,16 +116,16 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.sidenav').sidenav();
-	$('select').formSelect();
+	//$('select').formSelect();
 	$("nav .dropdown-trigger").dropdown({
 		hover: true,
 		coverTrigger: false,
 		closeOnClick: false
 	});
-	$(".dropdown-trigger #difficulty").dropdown({
+	/*$(".dropdown-trigger #difficulty").dropdown({
 		hover: false,
 		coverTrigger: false,
-	});
+	});*/
 	$('.pushpin').pushpin({
 		offset: 50
 	});
