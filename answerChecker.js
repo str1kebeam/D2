@@ -127,7 +127,7 @@ function setDropdown(dropdown, val){
 	}
 	//console.log("called");*/
 }
-document.getElementById("type").onload=setTimeout(document.getElementById("type").style="visibility: visible", 30000)
+//document.getElementById("type").onload=setTimeout(document.getElementById("type").style="visibility: visible", 30000)
 function updateDropdowns(){
 	var type=document.getElementById("type").value;
 	console.log(type);
@@ -155,9 +155,13 @@ function updateDropdowns(){
 		}
 	}
 	oldMaxDiff=options;
+	$('#difficulty').formSelect();
 }
 //window.onload=setTimeout(loadFunc, 2000);
 MathJax.Hub.Register.StartupHook("End", loadFunc);//Wait for MathJax to finish starting up
+document.getElementById("type").addEventListener("change",updateDropdowns());
+setTimeout(document.getElementById("type").addEventListener("change",function(){updateDropdowns()}), 100000000);//I should not have to do this, but materialize is evil
+document.getElementById("type").addEventListener("change",console.log("test"));
 //////
 //Questions
 //////
