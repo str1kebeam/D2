@@ -3,11 +3,133 @@
 //el.innerHTML = math.sqrt(9);
 var response=document.getElementById("response");
 var x=1;
-var currentAns='4x^3+6x^2';
-var answered=false;
+var currentAns='';
+var answered=true;
 var strike=false;
 var entry_text="";
-var qType="der";
+var qType="";
+start_diff=1;
+var nTrig=['sin','cos','tan'];
+var rTrig=['csc','sec','cot'];
+var inTrig=['arcsin','arccos','arctan'];
+var irTrig=['arccsc','arcsec', 'arccot'];
+var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
+//////
+//Startup stuff
+//////
+var page=document.getElementById("problem");
+var loadFunc = function(){
+	//console.log("test");
+	var query=window.location.search.substring(1);//Based off of an example I found online, this will give me a string to use
+	var vars=query.split("&");
+	//var start_diff=1;
+	for(var v=0; v<vars.length; v++){
+		var stuff=vars[v].split("=");
+		if(stuff[0]=="type"){
+			if(stuff[1]=="derivative"){
+				qType="derivative";
+			}
+			else if(stuff[1]=="integral"){
+				qType="integral";
+			}
+			else if(stuff[1]=="tangent"){
+				qType="tangent";
+			}
+		}
+		if(stuff[0]=="difficulty"){
+			var t=Number(stuff[1]);
+			if(!isNaN(t)){//Check that t is actually a number
+				start_diff=t;
+			}
+		}
+	}
+	//console.log(qType);
+	//console.log(start_diff);
+	if(qType!=""){
+		document.getElementById("type").value=qType;
+		//document.getElementById("type").onload=
+		setTimeout(setDropdown(document.getElementById("type"), qType), 300000);
+
+		//document.getElementById("type").onload=function(){document.getElementById("type").value=qType;};
+		document.getElementById("difficulty").value=start_diff;
+		setTimeout(setDropdown(document.getElementById("difficulty"), start_diff), 300000);
+		//document.getElementById("difficulty").onload=function(){document.getElementById("difficulty").value=start_diff;};
+		newQ();
+		//console.log("test");
+	}
+};
+function setDropdown(dropdown, val){
+	//console.log("test");
+	//var instance = M.Dropdown.getInstance(dropdown);
+	//instance.open();
+	//instance.close();
+	var found=false;
+	var index;
+	for(var i=0;i<dropdown.options.length&&!found; i++){
+		//console.log("test"+i);
+		//console.log(dropdown.options[i].value);
+		//console.log(val);
+		//console.log(dropdown.options[i].value==val);
+		if(dropdown.options[i].value==val){
+			//console.log("found");
+			dropdown.selectedIndex=i;
+			var opt=dropdown.options[i];
+			opt.selected=true;
+			index=i;
+			found=true;
+			//dropdown.remove(i);
+			//dropdown.add(opt, i);
+			//dropdown.click();
+
+
+			//return;
+		}
+	}
+	//Ok, so all of this code is a workaround to materialze
+	//Pretty much, I need to find the list item that has the span inside with the right lable, and then change it's class, while reseting the other classes
+	var parent=dropdown.parentElement;
+	//console.log(parent);
+	//var el=parent.querySelector(".dropdown-content");
+	var e2=parent.querySelector(".dropdown-trigger");
+	e2.click();//Yes, this is the best way to do this. Materialize has no real javasript API
+	var e3=M.Dropdown.getInstance(e2);
+	e3.close();
+	/*//console.log(el);
+	var temp=el.firstElementChild;
+	//console.log(temp);
+	while(temp!=null){
+		var inside=temp.firstElementChild;
+		//console.log(temp);
+		temp.class="";
+		var text=inside.innerHTML;
+		console.log(temp.class);
+		console.log(text);
+		console.log(dropdown.options[index].text);
+		console.log(text==dropdown.options[index].text)
+		if(text==dropdown.options[index].text){
+			temp.class="active selected";//Materialize's selected class
+			console.log(temp.class);
+		}
+		temp=temp.nextElementSibling;
+		//console.log(temp);
+	}
+	//console.log("called");*/
+}
+function updateDropdowns(){
+	var elms=document.querySelectorAll(".dropdown-trigger");
+	for (var i=0; i<elms.length; i++){
+		var elm=M.Dropdown.getInstance(elms[i]);
+		elm.open();
+		elm.recalculateDimensions();
+		elm.close();
+		console.log(elm.dropdownEl);
+	}
+}
+//window.onload=setTimeout(loadFunc, 2000);
+MathJax.Hub.Register.StartupHook("End", loadFunc);//Wait for MathJax to finish starting up
+//////
+//Questions
+//////
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	if(entry_text!=""){
@@ -112,11 +234,18 @@ function checkAns(ans){
 	//reply(math.format(math.simplify(currentAns));
 	return false;
 }
-var derDiffs=[]; derDiffs[1]=[2,1,5]; derDiffs[2]=[3,2,5];
+var derDiffs=[]; 
+derDiffs[1]=[2,1,5]; derDiffs[2]=[3,2,5]; //Polynomial difficulty levels
+derDiffs[3]=[1,1,1,nTrig]; derDiffs[4]=[2,2,2,nTrig.concat(rTrig)];//The trig difficulty levels
 function der(diff){
 	//I fell bad hardcoding this, but I don't know how to do it in js
 	var d=derDiffs[diff];
-	newDerivative(d[0],d[1],d[2]);
+	if(d.length==3){//The polynomial trig questions
+		newDerivative(d[0],d[1],d[2]);
+	}
+	if(d.length==4){//The trig questions have 4 parts of data
+		newTrigDerivative(d[0],d[1],d[2],d[3]);
+	}
 }
 function newDerivative(terms, maxPow, maxCo, test=false){
 	var q="What is the derivative of the following?";
@@ -161,6 +290,21 @@ function newDerivative(terms, maxPow, maxCo, test=false){
 		var p=(Math.random()*(maxPow+1));
 
 	}*/
+}
+function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
+	var q="What is the derivative of the following?";
+	var e="\\frac{x}{dx}(";
+	var simple="";
+	var trig=trig_term(maxTCo, maxXCo, maxXPow, diff);
+	e+=trig[1];
+	simple+=trig[0];
+	e+=")=?";
+	var ans=0;
+	if(simple.includes("x")){
+		ans=math.rationalize(math.derivative(simple,"x")).toString();
+	}
+	currentAns=ans;
+	ask(q,e);
 }
 var tlDiffs=[]; tlDiffs[1]=[2,1,5,3]; tlDiffs[2]=[3,2,5,10]; 
 function t_l(diff){
@@ -385,8 +529,110 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 	}
 	return result;
 }
+function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig){
+	//Ok, so all of these variables are because you can have: a*sin^c(bx^d)
+	//'max' is just there to be descriptive
+	//'T' is for 'Trig', so it is a modifier for the trig (a and c)
+	//'X' is for 'x', so it is a modifier for the indepenent variable (b and d)
+	//'Co' is 'Coefficient', so it is a and b
+	//'Pow' is 'Power', so it is c and d
+	//So: maxTCo*sin^maxTPow(maxXCo*x^maxXPow) would be what it is, if it rolled 'sin' and 1 for every random thing
+	//diff is an array of all of the trig functions that can be used, which are kindly listed in a few arrays above this function
+	//Default is just sin, cos and tan
+	var latex="";
+	var simple="";
+	var trigs=diff.filter(function (trig){
+		return allTrig.includes(trig);
+	});
+	//Ok, since I seem to already be writing a lot of comments for this, might as well plan out the logic:
+	//Generate a random coefficient within the range and !=0, print it, accounting for possibly =+-1
+	//Pick a random power within the range, thought I may want to make it !=0
+		//If it is 1, don't need to worry about it anymore
+		//Otherwise, print a parenthese and later on print the exponent
+		//May just drop this part...
+		//Dropping it for now
+	//Pick a random trig function within the checked list, print it 
+		//(latex for trig stuff is \trig, with 'trig' being an actual trig function, makes it not an italicized variable)
+	//Pick a random coefficient within the second range, print it, accounting for =+-1
+	//Pick a random exponent for x, possible checking !=0, but we may want that... Do I need another argument for having x^0?
+		//Yeah, print it according to the normal printing rules
+	//Close the parens, put in the ^pow if it should be there
+	//Why am I writing so many comments right now?
+	var tc=0;
+	while(tc==0){
+		tc=((Math.random()*maxTCo*2)-maxTCo).toFixed(0);
+	}
+	if(Math.abs(tc)==1){
+		if(tc==-1){
+			simple+="-";
+			latex+="-";
+		}
+	}
+	else{
+		simple+=tc;
+		latex+=tc;
+	}
+	var t=Math.floor(Math.random()*trigs.length);
+	var tr=trigs[t];
+	simple+=tr+"(";
+	latex+="\\"+tr+"(";//If it was just "sin", it LaTeX would italicize it because it thinks it is a variable, so it needs to be"\sin"
+	var xc=0;
+	while(xc==0){
+		xc=((Math.random()*maxXCo*2)-maxXCo).toFixed(0);
+	}
+	if(xc==-1){
+		simple+="-";
+		latex+="-";
+	}
+	else if(xc!=1){
+		simple+=xc;
+		latex+=xc;
+	}
+	var xp=(Math.random()*maxXPow).toFixed(0);
+	if(xp==0){
+		if(Math.abs(xc)==1){//If it had just printed a - or nothing at all for the coefficient, print 1
+			simple+="1";
+			latex+="1";
+		}
+	}
+	else{
+		simple+="x";
+		latex+="x";
+		if(xp>1){
+			simple+="^"+xp;
+			latex+="^{"+xp+"}";
+		}
+	}
+	simple+=")";
+	latex+=")";
+	return [simple, latex];
+}
 function test(){
 	console.log("test");
+}
+function testRandom(max, limit=100){
+	//Just a check that I was doing random numbers properly
+	//I think it might be rolling both + and - 0 though?
+	var full=[];
+	for (var i=0; i<=max; i++){
+		full[i]=false;
+	}
+	var cont=true;
+	var count=0;
+	while(cont&&count<limit){
+		count++;
+		var a=((Math.random()*max)).toFixed(0);
+		if(a>max||a<-max){
+			console.log("Problem:"+a);
+		}
+		full[a]=true;
+		cont=!full.every(function (i){
+			return i;
+		})
+	}
+	console.log("All were generated?"+!cont);
+	console.log("Times rolled: "+count);
+	console.log(full);
 }
 ///////
 //Numpad stuff (I would move this into a separate file, but they work so closely together that they might as well be in the same file)
