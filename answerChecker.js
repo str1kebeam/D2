@@ -393,6 +393,18 @@ function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a functio
 	currentAns=ans;
 	ask("Evaluate the following integral:",latex);
 }
+function newTrigIntegral(maxTCo, maxXCo, maxXPow, trig=nTrig){
+	var latex="\\int(";
+	var simple="";
+	var t=trig_term(maxTCo, maxXCo, maxXPow, trig, true);
+	latex+=t[1];
+	simple+=t[0];
+	latex+=")dx";
+	raw=t[2];
+	ans=integrateTrig(raw[0], raw[1],raw[2],raw[3]);
+	currentAns=ans;
+	ask("Evaluate the following integral:",latex);
+}
 function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we need is integration, so this will handle the simple rule for it
 	var simple="";//This doesn't make latex right now, but I could easily edit it to do that
 	for(var i=0; i<pows.length; i++){
@@ -414,6 +426,10 @@ function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we
 		simple+="+c";
 	}
 	return simple;
+}
+function integrateTrig(tCo, trig, xCo, xPow){
+	console.log("Not finishing this now...");
+	return 1;//so that it won't crash, at least...
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
@@ -571,7 +587,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 	}
 	return result;
 }
-function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig){
+function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig, raw=false){
 	//Ok, so all of these variables are because you can have: a*sin^c(bx^d)
 	//'max' is just there to be descriptive
 	//'T' is for 'Trig', so it is a modifier for the trig (a and c)
@@ -647,7 +663,11 @@ function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig){
 	}
 	simple+=")";
 	latex+=")";
-	return [simple, latex];
+	var val=[simple, latex]
+	if(raw){
+		val.push([tc, tr, xc, xp]);//Add in the values to the return statement so that the integral can be found
+	}
+	return val;
 }
 function test(){
 	console.log("test");
