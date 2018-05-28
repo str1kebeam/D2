@@ -14,6 +14,7 @@ var oldMaxDiff=2;//For updating the dropdown
 /////
 //Difficulty settings
 /////
+var sTrig=['sin','cos'];//The ones that can actually be used now
 var nTrig=['sin','cos','tan'];
 var rTrig=['csc','sec','cot'];
 var inTrig=['arcsin','arccos','arctan'];
@@ -22,7 +23,7 @@ var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
 var diffs=[];
 diffs["derivative"]=[
 	[2,1,5], [3,2,5], //Polynomial difficulty levels
-	[1,1,1,nTrig], [2,2,2,nTrig.concat(rTrig)]//The trig difficulty levels
+	[1,1,1,sTrig], [2,2,2,sTrig]//The trig difficulty levels
 ];
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
 diffs["integral"]=[[2,1,5],[3,2,5]];
@@ -340,8 +341,9 @@ function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
 	simple+=trig[0];
 	e+=")=?";
 	var ans=0;
+	console.log(simple);
 	if(simple.includes("x")){
-		ans=math.rationalize(math.derivative(simple,"x")).toString();
+		ans=math.derivative(simple,"x").toString();
 	}
 	currentAns=ans;
 	ask(q,e);
