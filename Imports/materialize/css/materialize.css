@@ -3,6 +3,11 @@
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
+:root {
+  --color1: green;
+  --color2: lightblue;
+}
+
 .materialize-red {
   background-color: #e51c23 !important;
 }
@@ -3087,7 +3092,7 @@ td, th {
 }
 
 .collection .collection-item {
-  background-color: #fff;
+  background-color: #fffb;
   line-height: 1.5rem;
   padding: 10px 20px;
   margin: 0;
@@ -3138,7 +3143,7 @@ td, th {
 }
 
 .collection .collection-item.active {
-  background-color: #26a69a;
+  background-color: #060b;
   color: #eafaf9;
 }
 
@@ -3150,7 +3155,7 @@ td, th {
   display: block;
   -webkit-transition: .25s;
   transition: .25s;
-  color: #26a69a;
+  color: var(--color1);
 }
 
 .collection a.collection-item:not(.active):hover {
@@ -5035,7 +5040,9 @@ small {
 .tabs.tabs-transparent {
   background-color: transparent;
 }
-
+.tabs.tabs-transparent.light-tabs {
+  background-color: rgba(0,127,0,0.8);
+}
 .tabs.tabs-transparent .tab a,
 .tabs.tabs-transparent .tab.disabled a,
 .tabs.tabs-transparent .tab.disabled a:hover {
@@ -5076,7 +5083,7 @@ small {
 }
 
 .tabs .tab a {
-  color: rgba(238, 110, 115, 0.7);
+  color: rgba(127, 127, 255, 0.7);
   display: block;
   width: 100%;
   height: 100%;
@@ -5095,7 +5102,7 @@ small {
 
 .tabs .tab a:hover, .tabs .tab a.active {
   background-color: transparent;
-  color: #ee6e73;
+  color: var(--color2);
 }
 
 .tabs .tab.disabled a,
@@ -5108,7 +5115,7 @@ small {
   position: absolute;
   bottom: 0;
   height: 2px;
-  background-color: #f6b2b5;
+  background-color: var(--color2);
   will-change: left, right;
 }
 

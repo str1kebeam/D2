@@ -57,9 +57,14 @@ latex-eqn { /* latex equation formatting (custom tag) */
 	color: inherit;
 }
 
+#main-content {
+	padding-left: 75px;
+	padding-right: 75px;
+}
+
 #side-content {
 	background-color: #f1d592;
-	
+
 }
 
 #body { /* body div attributes */
@@ -101,6 +106,10 @@ h6 {
 	font-size: 18px;
 
 	text-align: center;
+}
+
+.thin-content {
+	margin: auto 100px;
 }
 
 #body-text { /* center align text and add a margin at the bottom of webpage */
@@ -145,4 +154,4 @@ p { /* default paragraph font and color */
 #sitemap a {
 	color: black;
 	text-decoration: none;
-} 
+}
