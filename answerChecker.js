@@ -34,18 +34,22 @@ var loadFunc = function(){
 	//console.log("test");
 	var query=window.location.search.substring(1);//Based off of an example I found online, this will give me a string to use
 	var vars=query.split("&");
+	var welcome=document.getElementById("welcome-text");
 	//var start_diff=1;
 	for(var v=0; v<vars.length; v++){
 		var stuff=vars[v].split("=");
 		if(stuff[0]=="type"){
 			if(stuff[1]=="derivative"){
 				qType="derivative";
+				welcome.innerHTML="Now that you've learned derivatives, practice your skills with these problems";
 			}
 			else if(stuff[1]=="integral"){
 				qType="integral";
+				welcome.innerHTML="Now that you've learned integrals, practice your skills with these problems";
 			}
 			else if(stuff[1]=="tangent"){
 				qType="tangent";
+				welcome.innerHTML="Now that you've learned tangent lines, practice your skills with these problems";
 			}
 		}
 		if(stuff[0]=="difficulty"){
@@ -225,6 +229,8 @@ function newQ(){
 }
 function ask(question, expression){
 	var q=document.getElementById("question");
+	//console.log(question);
+	//console.log(expression);
 	//var e=document.getElementById("expression");
 	q.innerHTML=question;
 	//e.innerHTML=expression;
