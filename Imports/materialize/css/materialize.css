@@ -6094,16 +6094,16 @@ label {
    ========================================================================== */
 /* Style Placeholders */
 ::-webkit-input-placeholder {
-  color: #d1d1d1;
+  color: #555;
 }
 ::-moz-placeholder {
-  color: #d1d1d1;
+  color: #555;
 }
 :-ms-input-placeholder {
-  color: #d1d1d1;
+  color: #555;
 }
 ::placeholder {
-  color: #d1d1d1;
+  color: #555;
 }
 
 /* Text inputs */
@@ -6211,9 +6211,9 @@ input[type=tel]:not(.browser-default):focus:not([readonly]),
 input[type=number]:not(.browser-default):focus:not([readonly]),
 input[type=search]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
-  border-bottom: 1px solid #26a69a;
-  -webkit-box-shadow: 0 1px 0 0 #26a69a;
-          box-shadow: 0 1px 0 0 #26a69a;
+  border-bottom: 1px solid #070;
+  -webkit-box-shadow: 0 1px 0 0 #070;
+          box-shadow: 0 1px 0 0 #070;
 }
 
 input:not([type]):focus:not([readonly]) + label,

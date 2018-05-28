@@ -52,7 +52,9 @@
 					<option value=2>2</option>
 				</select>
 				</div>
-				<button class="btn" id="new-question" onclick="newQ();">New Question</button>
+				<div class="t-cen">
+					<button class="btn" id="new-question" onclick="newQ();">New Question</button>
+				</div>
 			</div>
 			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
 				<h1 id="body-title"> <!-- Title -->
@@ -64,7 +66,9 @@
 				<div id="problem">
 					<p class="body-description" id="question">Find the derivative of the following function</p>
 					<latex-eqn class="body-description" id="expression">$$\frac{d}{dx}(x^{4}+2x^{3})=?$$</latex-eqn>
-					<div><input type="text" name="" id="input-answer"></div>
+					<div class="input-field">
+						<input placeholder="Your Answer Here" type="text" name="" id="input-answer">
+					</div>
 					<div><p id="new-entry"></p></div>
 					<div id="calculator">
 						<button id="b1" onclick="numpad(1);" class="btn waves-effect waves-light">1</button>
