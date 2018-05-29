@@ -430,6 +430,17 @@ function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we
 function integrateTrig(tCo, trig, xCo, xPow){
 	console.log("Not finishing this now...");
 	return 1;//so that it won't crash, at least...
+	//Going to start coding this now, but am going to have to leave in a bit
+	//Hopefully I will remember to push this code later
+	//pseudocode:
+	//Oh, great, this is going to need a different random trig generator, to make it work nicely (no integration by parts)
+	//Ok, so the random trig will make it so that it works out somewhat nicely
+	//So do reverse power rule with the coefficient
+	//Do the integration of the trig function
+	//And print it nicely
+	//Yeah, most of the work is going to need to be making the random trig generator
+	//Might just want to generate a trig function, and then find the derivative of that (and print it nicely)
+	//Yeah, do that
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
