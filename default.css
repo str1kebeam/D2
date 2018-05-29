@@ -45,6 +45,11 @@ button { /* remove default formatting from buttons */
 	background-color: var(--btncolor);
 }
 
+button latex-eqn {
+	color: inherit;
+	
+}
+
 p a { /* change link formatting */
 	color: blue;
 	font-weight: bold;
