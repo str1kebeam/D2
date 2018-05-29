@@ -7,13 +7,19 @@
 	margin: 0px 20px 30px 20px;
 	text-align: center;
 }
-.lesson-text { /* center, change width of, and change font of lesson text */
-	font: normal 14pt "Times New Roman", sans-serif;
-	width: 80%;
+#lesson.flow-text {
+	font: 18px "Trebuchet MS";
 }
 #lesson img { /* border and size placeholder imgs */
 	height: 400px;
 	width: auto;
+	display: block;
 	border: 5px dashed gray;
-	margin: 15px;
+	margin: 15px auto;
+}
+#lesson canvas {
+	height: 400px;
+	width: auto;
+	display: block;
+	margin: 15px auto;
 }
