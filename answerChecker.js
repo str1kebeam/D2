@@ -777,9 +777,9 @@ function numpad(key){
 		area.innerHTML+="&pi;";
 		entry_text+="pi";
 	}
-	else if(['sin','cos','tan'].includes(key)){
-		area.innerHTML+=key+"(";
-		entry_text+=key+"(";
+	else if(['sin(','cos(','tan('].includes(key)){
+		area.innerHTML+=key;
+		entry_text+=key;
 	}
 	else if(key=="."){
 		if(isNaN(Number(entry_text.slice(-1)))){
