@@ -23,3 +23,16 @@
 	display: block;
 	margin: 15px auto;
 }
+#lesson table {
+	margin: 15px auto;
+	width: 30%;
+	border: 3px dotted var(--color1);
+}
+#lesson table td {
+	border: 1px solid darkgreen;
+	text-align: center;
+}
+#lesson strong {
+	font-style: bold !important;
+	color: darkgreen;
+}

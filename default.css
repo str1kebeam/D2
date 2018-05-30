@@ -36,6 +36,8 @@ body {
     background-size: 50px 50px;
     background-image: linear-gradient(to right, var(--grid-lines) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-lines) 1px, transparent 1px);
     /* https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css#32861765 */
+	background-attachment: fixed;
+		/* https://www.w3schools.com/css/css_background.asp */
 }
 
 button { /* remove default formatting from buttons */
