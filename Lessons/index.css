@@ -5,8 +5,16 @@
 }
 
 #tabs {
-  width: 80%;
+  display: flex;
+  margin-botton: 25px;
 }
+
 #tabs li {
-  width: 20%;
+  flex-basis: 25%;
+  color: var(--color2);
+  border-bottom-color: var(--color2);
+}
+
+.tabs-content.active {
+  padding-top: 25px;
 }

@@ -8,7 +8,7 @@
 	<![endif]--> <!-- IE compatibility -->
 	<meta charset="utf-8">
 	<title>Derive</title>
-	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.min.css"  media="screen,projection"/>
+	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
 	<link rel="stylesheet" type="text/css" href="index.css"> <!-- Import default css for the whole website -->
 	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
 	<link rel="shortcut icon" href="..\DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
@@ -33,57 +33,61 @@
 		<div class="row">
 			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
 				<div id="side-text">
-					<h2>Available Lessons</h2>
+					<h3>Options</h3>
+					<ul class="collection with-header">
+						<a href="../index.html" class="collection-item">Home</a>
+						<a href="index.html" class="collection-item active">Lessons</a>
+						<a href="../practice.html" class="collection-item">Practice</a>
+						<a href="../about.html" class="collection-item">About</a>
+					</ul>
+				</div>
+			</div>
+			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
+				<h1 id="body-title" class="t-cen">Derive Lessons</h1>
+				<p class="t-cen">Choose from our selection of lessons specifically made for you to learn</p>
+				<ul class="tabs tabs-transparent light-tabs centered blue-text z-depth-2" id="tabs">
+					<li class="tab"><a href="#limits">Limits</a></li>
+					<li class="tab"><a href="#derivatives">Derivatives</a></li>
+					<li class="tab"><a href="#integrals">Integrals</a></li>
+					<li class="tab"><a href="#kinematics">Kinematics</a></li>
+				</ul>
+				<div id="limits" class="col s12 tabs-content">
 					<h4>Limits</h4>
-					<div class="collection sitemap">
-						<a href="#!" class="collection-item active">What is a Limit?</a>
+					<div class="collection t-cen thin-content z-depth-1">
+						<a href="what-is-a-limit.html" class="collection-item">What is a Limit?</a>
 						<a href="#!" class="collection-item">Solving a Limit Graphically</a>
 						<a href="#!" class="collection-item">Left and Right Limits</a>
 						<a href="#!" class="collection-item">Solving a Limit Algebraically</a>
 					</div>
+				</div>
+				<div id="derivatives" class="col s12 tabs-content">
 					<h4>Derivatives</h4>
-					<div class="collection sitemap">
+					<div class="collection t-cen thin-content z-depth-1">
 						<a href="tangentline.html" class="collection-item">Introduction to the Tangent Line</a>
 						<a href="#!" class="collection-item">Lesson 2</a>
 						<a href="#!" class="collection-item">Lesson 3</a>
 						<a href="#!" class="collection-item">Lesson 4</a>
 					</div>
+				</div>
+				<div id="integrals" class="col s12 tabs-content">
 					<h4>Integrals</h4>
-					<div class="collection sitemap">
+					<div class="collection t-cen thin-content z-depth-1">
 						<a href="#!" class="collection-item">Lesson 5</a>
 						<a href="#!" class="collection-item">Lesson 6</a>
 						<a href="#!" class="collection-item">Lesson 7</a>
 					</div>
-					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> <!-- Test for Scroll -->
 				</div>
-			</div>
-			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
-				<h1 id="body-title" class="t-cen">Welcome to Derive!</h1>
-				<p class="t-cen">Changing The Way You Learn Math</p>
-				<ul class="tabs" id="tabs">
-					<li class="tab"><a href="#limits">Limits</a></li>
-					<li class="tab"><a href="#derivatives">Derivatives</a></li>
-				</ul>
-				<div id="limits" class="col s12">
-					Wow Limits
+				<div id="kinematics" class="col s12 tabs-content">
+					<h4>Kinematics</h4>
+					<div class="collection t-cen thin-content z-depth-1">
+						<a href="#!" class="collection-item">Lesson 8</a>
+						<a href="#!" class="collection-item">Lesson 9</a>
+						<a href="#!" class="collection-item">Lesson 10	</a>
+					</div>
 				</div>
-				<div id="derivatives" class="col s12">
-					Wow Derivatives
-				</div>
-				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> <!-- Test for Scroll -->
 			</div>
 			</div>
 		</div>
-		<!--
-		<div id="body">
-			<h1 id="body-title"> <!-- Title
-				Welcome to Derive!
-			</h1>
-			<div id="body-text"> <!-- The body text on the homepage, including images
-
-			</div>
-		</div> -->
-
 	</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

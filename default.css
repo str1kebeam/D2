@@ -36,6 +36,8 @@ body {
     background-size: 50px 50px;
     background-image: linear-gradient(to right, var(--grid-lines) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-lines) 1px, transparent 1px);
     /* https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css#32861765 */
+	background-attachment: fixed;
+		/* https://www.w3schools.com/css/css_background.asp */
 }
 
 button { /* remove default formatting from buttons */
@@ -43,6 +45,11 @@ button { /* remove default formatting from buttons */
 	margin: 0px 0px 0px 0px;
 	text-align: center;
 	background-color: var(--btncolor);
+}
+
+button latex-eqn {
+	color: inherit;
+
 }
 
 p a { /* change link formatting */
@@ -57,9 +64,14 @@ latex-eqn { /* latex equation formatting (custom tag) */
 	color: inherit;
 }
 
+#main-content {
+	padding-left: 75px;
+	padding-right: 75px;
+}
+
 #side-content {
 	background-color: #f1d592;
-	
+
 }
 
 #body { /* body div attributes */
@@ -101,6 +113,10 @@ h6 {
 	font-size: 18px;
 
 	text-align: center;
+}
+
+.thin-content {
+	margin: auto 100px;
 }
 
 #body-text { /* center align text and add a margin at the bottom of webpage */
@@ -145,4 +161,4 @@ p { /* default paragraph font and color */
 #sitemap a {
 	color: black;
 	text-decoration: none;
-} 
+}

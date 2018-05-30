@@ -4,6 +4,29 @@
   --inpBack: #00000033;
 }
 
+#problem { /* center align problem text, and make it the same background color */
+	text-align: center;
+	background-color: inherit;
+}
+
+#check-answer { /* change the color, border, and box model of the check answer bitton */
+	background-color: darkgray;
+
+	border: 1px solid black;
+	padding: 5px 10px 5px 10px;
+
+	margin-top: 15px;
+
+}
+#check-answer:hover { /* change the color of the check answer button upon hovering over it */
+	background-color: lightgray;
+}
+
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
 #input-answer {
   width: 80%;
   background-color: var(--inpBack);

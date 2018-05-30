@@ -1,1 +1,39 @@
 @import url("index.css");
+/* DeriveCSS.Learn.css
+ *
+*/
+
+#lesson { /* change the box model of and center the lesson div (text and imgs) */
+	margin: 0px 20px 30px 20px;
+	text-align: center;
+}
+#lesson.flow-text {
+	font: 18px "Trebuchet MS";
+}
+#lesson img { /* border and size placeholder imgs */
+	height: 400px;
+	width: auto;
+	display: block;
+	border: 5px dashed gray;
+	margin: 15px auto;
+}
+#lesson canvas {
+	height: 400px;
+	width: auto;
+	display: block;
+	margin: 15px auto;
+}
+#lesson table {
+	margin: 15px auto;
+	background-color: #fff4;
+	width: 30%;
+	border: 3px dotted var(--color1);
+}
+#lesson table td {
+	border: 1px solid darkgreen;
+	text-align: center;
+}
+#lesson strong {
+	font-style: bold !important;
+	color: darkgreen;
+}
