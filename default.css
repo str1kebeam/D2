@@ -132,7 +132,7 @@ h6 {
 	margin: 15px;
 }
 
-p { /* default paragraph font and color */
+p span{ /* default paragraph font and color */
 	color: rgb(4,48,34); /* Blue 6 */
 	font: 14px "Cambria", sans-serif;
 }
