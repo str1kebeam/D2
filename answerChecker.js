@@ -734,8 +734,8 @@ var first=0;
 //So, those scenarios can be 0, 1, 2, 3, 4
 var keyWrapper=function keyGuard(event){
 	//Do some modification to the keypress, and then call numpad with it
-	console.log(event.code);
-	console.log(event.key);
+	//console.log(event.code);
+	//console.log(event.key);
 	//event.currentTarget.value ="test";
 	numpad(event.key);
 	event.preventDefault();
@@ -754,11 +754,11 @@ function numpad(key){
 	var num=Number(key);
 	
 	if(!isNaN(num)&&key!=""){//just a workaround for a bug
-		/*if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
+		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
 			area.innerHTML+="*";
 			entry_text+="*";
 			lCharAdd("*");
-		}*/
+		}
 		area.innerHTML+=num;
 		entry_text+=num;
 		lCharAdd(num);
@@ -777,11 +777,11 @@ function numpad(key){
 		lCharAdd("\\frac{}{}");
 	}
 	else if(['x','c','e','z','y'].includes(key)){//any remaining value, not a function
-		/*if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
+		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
 			entry_text+="*";
 			area.innerHTML+="*";
 			lCharAdd("*");
-		}*/
+		}
 		area.innerHTML+=key;
 		entry_text+=key;
 		lCharAdd(key);
@@ -828,7 +828,7 @@ function numpad(key){
 		buff(key,area);
 		//Do nothing, ignored key
 	}
-	console.log(first);
+	//console.log(first);
 	entry.value=entry_text+buffer;
 	if(old!=ltext){
 		var m=MathJax.Hub.getAllJax("latex-entry")[0];
@@ -842,8 +842,7 @@ var lReplaces={//things that need to be replaced
 	"tan(":"\\tan(",
 	"pi":"\\pi"
 };
-var justEnded=false;
-var openParens=0;
+var justEnded=0;
 function lCharAdd(char){
 	var tail=[];
 	while(ltext.slice(-1)=="}"){
@@ -854,8 +853,12 @@ function lCharAdd(char){
 		tail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
 		ltext=ltext.slice(0,d);//remove the trailing part
 	}
-	if(justEnded){
-		justEnded=false;
+	if(justEnded>0){
+		var s=0;
+		if(char==")"){
+			s=justEnded;
+		}
+		justEnded--;
 		if(tail[tail.length-1]=="}{}"){//If a fraction was just closed
 			ltext+="}{";
 			tail[tail.length-1]="}";
@@ -865,6 +868,21 @@ function lCharAdd(char){
 			ltext+="}";
 			tail[tail.length-1]="";
 		}
+		var i=1;
+		while(justEnded>0){//in case something ridiculous, like closing 5 fractions at the same time, or x^2/5, etc.
+			ltext+=tail[tail.length-i];
+			tail[tail.length-i]=="";
+			if(tail[tail.lenght-i-1]=="}{}"){
+				ltext+="}{";
+				tail[tail.length-i-1]="}";
+			}
+			else if(tail[tail.length-1-i]=="}"){
+				ltext+="}";
+				tail[tail.length-1-i]="";
+			}
+			justEnded--;
+		}
+		justEnded=s;
 	}
 	//console.log(char);
 	//console.log(typeof char);
@@ -872,18 +890,18 @@ function lCharAdd(char){
 		ltext+=lReplaces[char];
 	}
 	else if(char=="("||(typeof char=="string"&&char.endsWith("("))){//that second statement is much easier than checking for trig and stuff
-		openParens++;
 		ltext+=char;
 	}
 	else if(char==")"){
-		if(openParens<=0){
-			justEnded=true;
-			if(tail[tail.length-1]=="}{}"){//If a fraction was just closed
-				entry_text+="/(";
-			}
+		//console.log(entry_text.substr(findOpenParen(entry_text),1));
+		if(['^','/'].includes(entry_text.substr(findOpenParen(entry_text)-1,1))){
+			justEnded++;
+		}
+		else if(ltext.substr(findLatexOpen(ltext)-5,5)=="\\frac"){
+			justEnded++;
+			entry_text+="/(";
 		}
 		else{
-			openParens--;
 			ltext+=char;
 		}
 	}
@@ -892,6 +910,36 @@ function lCharAdd(char){
 	}
 	for(var i=tail.length-1;i>=0;i--){//Add back on the removed part
 		ltext+=tail[i];
+	}
+}
+function findOpenParen(text){
+	//Returns the index of the last open parenthese
+	var closes=0;
+	for(var i=text.length-2;i>=0;i--){
+		if(text[i]=="("){
+			closes--;
+		}
+		else if(text[i]==")"){
+			closes++;
+		}
+		if(closes<0){
+			return i;
+		}
+	}
+}
+function findLatexOpen(latex){
+	//goes through the latex code, looks at the { and } as well
+	var closes=0;
+	for(var i=latex.length-2; i>=0; i--){
+		if(["(","{"].includes(latex[i])){
+			closes--;
+		}
+		else if([")","}"].includes(latex[i])){
+			closes++;
+		}
+		if(closes<0){
+			return i;
+		}
 	}
 }
 var fill=[];//What it will check if it can finish to
@@ -985,6 +1033,9 @@ function buff(key, area){
 			return "";
 		}
 	}
+}
+function newBackspace(){
+
 }
 function addExpo(feild){
 	if(!expo){
