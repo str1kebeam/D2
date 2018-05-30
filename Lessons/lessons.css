@@ -22,6 +22,7 @@
 	width: auto;
 	display: block;
 	margin: 15px auto;
+	border: 3px dotted orange;
 }
 #lesson table {
 	margin: 15px auto;
