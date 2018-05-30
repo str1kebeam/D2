@@ -853,6 +853,9 @@ function lCharAdd(char){
 		tail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
 		ltext=ltext.slice(0,d);//remove the trailing part
 	}
+	console.log(tail);
+	console.log(ltext);
+	console.log(justEnded);
 	if(justEnded>0){
 		var s=0;
 		if(char==")"){
@@ -884,6 +887,8 @@ function lCharAdd(char){
 		}
 		justEnded=s;
 	}
+	console.log(ltext);
+	console.log(justEnded);
 	//console.log(char);
 	//console.log(typeof char);
 	if(Object.keys(lReplaces).includes(char)){//I'm not entirely sure why I need to do it that way, but this works
@@ -893,7 +898,7 @@ function lCharAdd(char){
 		ltext+=char;
 	}
 	else if(char==")"){
-		//console.log(entry_text.substr(findOpenParen(entry_text),1));
+		console.log(ltext.substr(findLatexOpen(ltext)-5,5));
 		if(['^','/'].includes(entry_text.substr(findOpenParen(entry_text)-1,1))){
 			justEnded++;
 		}
@@ -910,6 +915,19 @@ function lCharAdd(char){
 	}
 	for(var i=tail.length-1;i>=0;i--){//Add back on the removed part
 		ltext+=tail[i];
+	}
+	console.log(justEnded);
+}
+var num_test;
+function test_numpad(i){
+	var text="1 + 2 * 3 + 5 ^ 3 ) - 6 ^ 3 ^ 2 ) ) + 1 + frac 3 ) 2 ) + frac 3 frac 2 ) 1 ) ) 2 ) + 3 + 3 ^ frac 2 ) 3 ) + 1";
+	var parts=text.split(" ");
+	if(i<0){
+		clearTimeout(num_test);
+	}
+	else if(i<parts.length){
+		numpad(parts[i]);
+		num_test=setTimeout(test_numpad(i+1), 10000)
 	}
 }
 function findOpenParen(text){
@@ -930,7 +948,7 @@ function findOpenParen(text){
 function findLatexOpen(latex){
 	//goes through the latex code, looks at the { and } as well
 	var closes=0;
-	for(var i=latex.length-2; i>=0; i--){
+	for(var i=latex.length-1; i>=0; i--){
 		if(["(","{"].includes(latex[i])){
 			closes--;
 		}
@@ -1035,6 +1053,15 @@ function buff(key, area){
 	}
 }
 function newBackspace(){
+	var temp=ltext;
+	var tail=[];
+	while(temp.slice(-1)=="}"){
+		//if(temp.slice(-3)=="")
+	}
+	if(justEnded>0){
+		justEnded--;
+		entry_text=entry_text.slice(0,-1);
+	}
 
 }
 function addExpo(feild){
