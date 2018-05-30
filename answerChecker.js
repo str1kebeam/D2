@@ -927,7 +927,7 @@ function test_numpad(i){
 	}
 	else if(i<parts.length){
 		numpad(parts[i]);
-		num_test=setTimeout(test_numpad(i+1), 10000)
+		num_test=setTimeout(function () {test_numpad(i+1)}, 1000)
 	}
 }
 function findOpenParen(text){
