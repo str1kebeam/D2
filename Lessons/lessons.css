@@ -25,6 +25,7 @@
 }
 #lesson table {
 	margin: 15px auto;
+	background-color: #fff4;
 	width: 30%;
 	border: 3px dotted var(--color1);
 }
