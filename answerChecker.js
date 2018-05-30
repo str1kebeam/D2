@@ -249,6 +249,9 @@ function ask(question, expression){
 	var ent=document.getElementById("new-entry");
 	ent.innerHTML="";
 	entry_text="";
+	ltext="";
+	var l=MathJax.Hub.getAllJax("latex-entry")[0];
+	MathJax.Hub.Queue(['Text',l,ltext]);
 }
 function reply(text){
 	if(text==""){
@@ -741,7 +744,9 @@ var entry=document.getElementById("input-answer");
 entry.addEventListener('keydown', keyWrapper);
 var buffer="";//what is currently being typed out that is a multi-character function
 var buffering=false;//if it is currently buffering something
+var ltext="";
 function numpad(key){
+	var old=ltext;//to check if latex actuall needs to update, later on
 	var area=document.getElementById("new-entry");
 	if(buffering){
 		key=buff(key,area);
@@ -752,9 +757,11 @@ function numpad(key){
 		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
 			area.innerHTML+="*";
 			entry_text+="*";
+			lCharAdd("*");
 		}
 		area.innerHTML+=num;
 		entry_text+=num;
+		lCharAdd(num);
 	}
 	else if(key=="^"){
 		entry_text+=addExpo(area);
@@ -769,13 +776,16 @@ function numpad(key){
 		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
 			entry_text+="*";
 			area.innerHTML+="*";
+			lCharAdd("*");
 		}
 		area.innerHTML+=key;
 		entry_text+=key;
+		lCharAdd(key);
 	}
 	else if(['*','+',"-",'/',')','('].includes(key)){
 		entry_text+=key;
 		area.innerHTML+=key;
+		lCharAdd(key);
 	}
 	else if(key=='Enter'){
 		functionthing();
@@ -786,23 +796,28 @@ function numpad(key){
 		expo=false;
 		first=0;
 		frac_stage=0;
+		ltext="";
 	}
 	else if(key=="pi"||key=="π"){//You never know what special characters their keyboard might have...
 		area.innerHTML+="&pi;";
 		entry_text+="pi";
+		lCharAdd("pi");
 	}
 	else if(['sin(','cos(','tan('].includes(key)){
 		area.innerHTML+=key;
 		entry_text+=key;
+		lCharAdd(key);
 	}
 	else if(key=="."){
 		console.log(key);
 		if(isNaN(Number(entry_text.slice(-1)))){
 			entry_text+="0";
 			area.innerHTML+="0";
+			lCharAdd("0");
 		}
 		entry_text+=".";
 		area.innerHTML+=".";
+		lCharAdd(".");
 	}
 	else{
 		buff(key,area);
@@ -810,6 +825,31 @@ function numpad(key){
 	}
 	console.log(first);
 	entry.value=entry_text+buffer;
+	if(old!=ltext){
+		var m=MathJax.Hub.getAllJax("latex-entry")[0];
+		MathJax.Hub.Queue(['Text',m, ltext]);
+	}
+}
+var lReplaces={//things that need to be replaced
+	"*":"\\times",
+	"sin(":"\\sin(",
+	"cos(":"\\cos(",
+	"tan(":"\\tan(",
+	"pi":"\\pi"
+};
+function lCharAdd(char){
+	if(expo){
+		ltext=ltext.slice(0,-1);
+	}
+	//if(lReplaces.keys().includes(char)){//yeah, this is broken right now
+	//	ltext+=lReplaces[char];
+	//}
+	//else{
+		ltext+=char;
+	//}
+	if(expo){
+		ltext+="}";
+	}
 }
 var fill=[];//What it will check if it can finish to
 var fill_options=[//List of things that buffer would handle:
@@ -906,6 +946,7 @@ function buff(key, area){
 function addExpo(feild){
 	if(!expo){
 		feild.innerHTML+="^(";
+		ltext+="^{}";
 		expo=true;
 		if (first==0){
 			first=1;
