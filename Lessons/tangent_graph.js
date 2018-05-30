@@ -19,47 +19,47 @@
             var canvas_tanline_y1 = 0;
             var canvas_tanline_x2 = 0;
             var canvas_tanline_y2 = 0;
-            var slope = 0;            
+            var slope = 0;
             var graph_coords = [];
             var n = 3000;
             var dx = 0; // set value w.r.t. n in init()
             var x1 = scene_minx;
             var x2 = scene_maxx;
-            
+
         function canvas_x(x) {
             var u = (x - scene_minx)/(scene_maxx - scene_minx);
             return canvas_minx + u*(canvas_maxx - canvas_minx);
         }
-        
+
         function canvas_y(y) {
             var v = (y - scene_miny)/(scene_maxy - scene_miny);
             return canvas_miny + (1.0 - v)*(canvas_maxy - canvas_miny);
         }
-        
+
         function scene_x(x) {
             var u = (x - canvas_minx)/(canvas_maxx - canvas_minx);
             return scene_minx + u*(scene_maxx - scene_minx);
         }
-        
+
         function scene_y(y) {
             var v = 1.0 - (y - canvas_miny)/(canvas_maxy - canvas_miny);
             return scene_miny + v*(scene_maxy - scene_miny);
         }
-        
-        
+
+
         function point(x, y) {
             this.x = x;
             this.y = y;
         }
-        
+
         function graph_function(x) {
             return Math.pow(x,2);
         }
-        
+
         function graph_function_derivative(x) {
             return 2 * x;
         }
-        
+
         function build_tangent_line() {
             slope = graph_function_derivative(scene_graphx);
             var L = 40;
@@ -74,7 +74,7 @@
             canvas_tanline_x2 = canvas_x(scene_tanline_x2);
             canvas_tanline_y1 = canvas_y(scene_tanline_y1);
             canvas_tanline_y2 = canvas_y(scene_tanline_y2);
-            
+
        }
         function init() {
             var canvas = document.getElementById("myCanvas");
@@ -105,7 +105,7 @@
             // initial tangent line
             build_tangent_line();
             draw_stuff();
-        } 
+        }
         function draw_stuff() {
             var i=0;
             var offsetx = 0;
@@ -148,7 +148,7 @@
             // draw slope value
             if (canvas_graphx > 700) {
                 offsetx = -90.0;
-            } 
+            }
             else {
                 offsetx = 30.0;
             }
@@ -185,15 +185,15 @@
 
         function doMouseMove(event) {
             var canvas = document.getElementById("myCanvas");
-            canvasx = event.clientX - canvas.getBoundingClientRect().left;
-            canvasy = event.clientY - canvas.getBoundingClientRect().top;
+            canvasx = event.offsetX * 2;
+            canvasy = event.offsetY;
             scene_graphx = scene_x(canvasx);
             scene_graphy = graph_function(scene_graphx);
             canvas_graphx = canvas_x(scene_graphx);
             canvas_graphy = canvas_y(scene_graphy);
             build_tangent_line();
             draw_stuff();
-            console.log(event.clientX);
-            console.log(event.clientY);
+            console.log(event.offsetX);
+            console.log(event.offsetY);
             console.log(scene_graphx);
           }
