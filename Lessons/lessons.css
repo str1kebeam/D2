@@ -26,8 +26,10 @@
 #lesson table {
 	margin: 15px auto;
 	background-color: #fff4;
-	width: 30%;
 	border: 3px dotted var(--color1);
+}
+#lesson table .thin {
+	width: 30%;
 }
 #lesson table td {
 	border: 1px solid darkgreen;

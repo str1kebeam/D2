@@ -7,7 +7,7 @@
 	</script>
 	<![endif]--> <!-- IE compatibility -->
 	<meta charset="utf-8">
-	<title>Learn - Solving a Limit Algrbraically</title>
+	<title>Learn - Limits at Infinity</title>
 	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
 	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
 	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
@@ -35,8 +35,8 @@
 				<ul class="collection" id="sitemap">
 					<a href="what-is-a-limit.html" class="collection-item">What is a Limit?</a>
 					<a href="left-and-right-limits.html" class="collection-item">Left and Right Limits</a>
-					<a href="#!" class="collection-item active">Solving a Limit Algebraically</a>
-					<a href="limits-at-infinity.html" class="collection-item">Limits at Infinity</a>
+					<a href="solving-a-limit-algebraically.html" class="collection-item">Solving a Limit Algebraically</a>
+					<a href="#!" class="collection-item active">Limits at Infinity</a>
 				</ul>
 				<div class="t-cen">
 					<a href="./index.html"><button class="btn waves-effect waves-lighten">Back to Lessons</button></a>
@@ -47,35 +47,32 @@
 			</div>
 			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
 				<h1 id="body-title"> <!-- Title -->
-					Solving a Limit Algebraically
+					Limits at Infinity
 				</h1>
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
-					Now that you understand what a limit is, it's time to learn how to use algebra to solve a limit.  Let's take the graph we discussed in the <a href="what-is-a-limit.html">first lesson</a>:
-					<latex-eqn>$$f(x)=\frac{x^3+1}{x+1}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=(x^3+1)/(x+1)">
-					Earlier we mentioned that the domain of this function is \(x\ne -1\).  This is because at \(x=-1\), the denominator is zero.
+					There comes a point in our lives when someone finally tells us the truth about life: infinity is not actually a number.  When we look at a graph, we can try as hard as we can to reach infinity but all we do is approach it.  <i>Do you see where I'm going with this?</i>
 					<br>
 					<br>
-					But something is different this time.  Not only is the denominator 0, but the numerator is 0, too:
-					<latex-eqn>$$f(-1)=\frac{(-1)^3+1}{(-1)+1}=\frac{0}{0}=\textrm{indeterminate}$$</latex-eqn>
-					When the value of a function is \(\frac{0}{0}\), the numbers almost always have a way of "canceling each other out."
-					<br>
-					The function seems to approach the point \((-1,3)\).
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=(x^3+1)/(x+1) zoomed in on -3<x<0">
-					And now we will show you how to remove the zero: factoring it out.
-					In the numerator, \(x^3+1\) can be factored as shown:
-					<latex-eqn>$$\frac{x^3+1}{x+1}=\frac{(x^2-x+1)*(x+1)}{x+1}$$</latex-eqn>
-					The reason the function equals \(\frac{0}{0}\) at -1 is because \(x-1=0\), so now we will cancel it out to get the following function:
-					<latex-eqn>$$g(x)=x^2-x+1$$</latex-eqn>
-					The graph of this function is shown below:
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="g(x)=x^2-x+1">
-					It looks almost identical to the first function, but this time the function has no hole at -1.  It has the point (-1,3).
+					And that's why we use <a href="what-is-a-limit.html">limits</a> to find values of functions at infinity.
 					<br>
 					<br>
-					Plugging -1 into the new function, we get
-					<latex-eqn>$$g(-1)=(-1)^2-(-1)+1 = 3$$</latex-eqn>
-					And that's it!
-					<h3>Think you understand solving limits algebraically? Practice this on our <a href="../practice.html">practice page</a>!</h4>
+					Let's start with the following function:
+					<latex-eqn>$$f(x)=\frac{1}{x}$$</latex-eqn>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=1/x">
+					We can usually look at a graph and predict what it's <strong title="End Behavior: a function's value at ±∞">end behavior</strong> is.  We see in this example that \(\frac{1}{x}\) keeps getting smaller, getting infinitesimaly close to 0 without reaching it.  Try tracing the graph above and see for yourself if you don't believe me.
+					<br>
+					<br>
+					This limit can be written as
+					<latex-eqn title="Note: it is unnecessary to write ∞-, referring to a one sided limit, because infinity can only be approached from one side">$$\lim_{x\to \infty} \frac{1}{x} = 0$$</latex-eqn>
+					Now for the algebra behind this.
+					<br>
+					<br>
+					To figure out the limit of a <strong>rational function</strong> - a fraction with polynomials in the numberator and denominator - we must comapre the <strong title="Highest Degree: biggest exponent">highest degree</strong> term in both the numerator and denominator as shown:
+					<table>
+						<thead>
+							<tr><td>Numerator Degree vs Denominator Degree</td><td>Effect</td><td>Example</td></tr>
+						</thead>
+					</table>
 				</div>
 			</div>
 		</div>
