@@ -8,6 +8,7 @@ var answered=true;
 var strike=false;
 var entry_text="";
 var qType="";
+var rat=false;//should answer checker try to order it(some things will cause errors)
 start_diff=1;
 
 var oldMaxDiff=2;//For updating the dropdown
@@ -268,9 +269,12 @@ function checkAns(ans){
 	//}
 	else{
 		//reply(2);
-		var a=math.rationalize(math.simplify(ans));//really roundabout way to do this, simplify() simplifies it and rationalize() as a side effect puts it in normal order
-		var b=math.rationalize(math.simplify(currentAns));
-
+		var a=math.simplify(ans);//really roundabout way to do this, simplify() simplifies it and rationalize() as a side effect puts it in normal order
+		var b=math.simplify(currentAns);
+		if(rat){
+			a=math.rationalize(a);
+			b=math.rationalize(b);
+		}
 		if(a.toString()==b.toString()){
 			return true;
 		}
@@ -290,9 +294,11 @@ function der(diff){
 	var d=derDiffs[diff-1];
 	if(d.length==3){//The polynomial trig questions
 		newDerivative(d[0],d[1],d[2]);
+		rat=true;
 	}
 	if(d.length==4){//The trig questions have 4 parts of data
 		newTrigDerivative(d[0],d[1],d[2],d[3]);
+		rat=false;
 	}
 }
 function newDerivative(terms, maxPow, maxCo, test=false){
@@ -360,6 +366,7 @@ function t_l(diff){
 	var tlDiffs=diffs["tangent"];
 	var d=tlDiffs[diff-1];
 	tangent_slope(d[0],d[1],d[2],d[3]);
+	rat=true;
 }
 function tangent_slope(terms, maxPow, maxCo, maxX){
 	var q="What is the slope of the following equation at x=";
@@ -386,6 +393,7 @@ function intQ(diff){
 	var intDiffs=diffs["integral"];
 	var d=intDiffs[diff-1];
 	newIntegral(d[0],d[1],d[2]);
+	rat=true;
 }
 function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this
 	//Yeah, this will be pretty much the same thing...
@@ -731,10 +739,16 @@ var keyWrapper=function keyGuard(event){
 }
 var entry=document.getElementById("input-answer");
 entry.addEventListener('keydown', keyWrapper);
+var buffer="";//what is currently being typed out that is a multi-character function
+var buffering=false;//if it is currently buffering something
 function numpad(key){
 	var area=document.getElementById("new-entry");
+	if(buffering){
+		key=buff(key,area);
+	}
 	var num=Number(key);
-	if(!isNaN(num)){
+	
+	if(!isNaN(num)&&key!=""){//just a workaround for a bug
 		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
 			area.innerHTML+="*";
 			entry_text+="*";
@@ -759,7 +773,7 @@ function numpad(key){
 		area.innerHTML+=key;
 		entry_text+=key;
 	}
-	else if(['*','+',"-",'/'].includes(key)){
+	else if(['*','+',"-",'/',')','('].includes(key)){
 		entry_text+=key;
 		area.innerHTML+=key;
 	}
@@ -782,6 +796,7 @@ function numpad(key){
 		entry_text+=key;
 	}
 	else if(key=="."){
+		console.log(key);
 		if(isNaN(Number(entry_text.slice(-1)))){
 			entry_text+="0";
 			area.innerHTML+="0";
@@ -790,12 +805,88 @@ function numpad(key){
 		area.innerHTML+=".";
 	}
 	else{
-		//area.innerHTML+=key;
-		//entry_text+=key;
+		buff(key,area);
 		//Do nothing, ignored key
 	}
 	console.log(first);
-	entry.value=entry_text;
+	entry.value=entry_text+buffer;
+}
+var fill=[];//What it will check if it can finish to
+var fill_options=[//List of things that buffer would handle:
+	'sin(',
+	'cos(',
+	'tan(',
+	'csc(',
+	'sec(',
+	'cot(',
+	'pi'
+	];
+function buff(key, area){
+	if(!buffering){//Start trying to buffer
+		if(key=="o"){//o and s are special, because it could have been c beforehand
+			if(area.innerHTML.slice(-1)=="c"){
+				fill=['cos(','cot('];
+				buffering=true;
+				buffer="co";
+				entry_text=entry_text.slice(0,-1);//remove that "c";
+				area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
+			}
+		}
+		if(key=="s"){
+			if(area.innerHTML.slice(-1)=="c"){
+				fill=['csc('];
+				buffering=true;
+				buffer="cs";
+				entry_text=entry_text.slice(0,-1);//remove that "c";
+				area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
+			}
+			else{
+				fill=['sin(','sec('];
+				buffering=true;
+				buffer="s";
+			}
+		}
+		if(key=="t"){
+			fill=['tan('];
+			buffering=true;
+			buffer="t";
+		}
+		if(key=="p"){
+			fill=['pi'];
+			buffering=true;
+			buffer="p";
+		}
+		return "";
+	}
+	else{//just continue the buffer
+		if(key=='Backspace'){
+			buffer="";
+			buffering=false;
+			fill=[];
+			return "";//later on, make this remove a character from the buffer
+		}
+		else if(key.charCodeAt(0)<=31||key.charCodeAt(0)==127||key.length!=1){
+			return "";//it was some special character, just ignore it
+		}
+		var temp=buffer+key;
+		fill=fill.filter(function (val){
+			return val.includes(temp);
+		});
+		if(fill.length==0){
+			buffer="";
+			buffering=false;
+			return "";//they stopped typing it, clear the buffer
+		}
+		else if(fill.length==1&&fill[0]==temp){
+			buffer="";
+			buffering=false;
+			return temp;//they finished, now give what they typed as a keypress
+		}
+		else{
+			buffer+=key;
+			return "";
+		}
+	}
 }
 function addExpo(feild){
 	if(!expo){
