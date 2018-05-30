@@ -751,7 +751,7 @@ function numpad(key){
 	else if(key=="frac"){
 		entry_text+=addFrac(area);
 	}
-	else if(['x','c'].includes(key)){//any remaining value, not a function
+	else if(['x','c','e'].includes(key)){//any remaining value, not a function
 		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
 			entry_text+="*";
 			area.innerHTML+="*";
@@ -759,12 +759,27 @@ function numpad(key){
 		area.innerHTML+=key;
 		entry_text+=key;
 	}
-	else if(['*','+',"-"].includes(key)){
+	else if(['*','+',"-",'/'].includes(key)){
 		entry_text+=key;
 		area.innerHTML+=key;
 	}
 	else if(key=='Enter'){
 		functionthing();
+	}
+	else if(key=="clr"||key=='Delete'){
+		area.innerHTML="";
+		entry_text="";
+		expo=false;
+		first=0;
+		frac_stage=0;
+	}
+	else if(key=="pi"||key=="π"){//You never know what special characters their keyboard might have...
+		area.innerHTML+="&pi;";
+		entry_text+="pi";
+	}
+	else if(['sin','cos','tan'].includes(key)){
+		area.innerHTML+=key+"(";
+		entry_text+=key+"(";
 	}
 	else{
 		//area.innerHTML+=key;
@@ -773,10 +788,6 @@ function numpad(key){
 	}
 	console.log(first);
 	entry.value=entry_text;
-}
-function newNumpad(key, btn){
-	//key-what key was pressed, using the response from event.key
-	//btn-false if from the text box, true if from the 
 }
 function addExpo(feild){
 	if(!expo){
@@ -963,6 +974,14 @@ function backspace(feild, text){
 		else if(first==2){
 			first=0;
 		}
+	}
+	else if(last=="π"){//It feels like I'm doing something wrong, but it will be π, not &pi;, as I learned with &frasl;
+		feild.innerHTML=feild.innerHTML.slice(0,-1);
+		text=text.slice(0,-2);
+	}
+	else if(last=="("&&['sin(','cos(','tan('].includes(feild.innerHTML.slice(-4))){
+		feild.innerHTML=feild.innerHTML.slice(0,-4);
+		text=text.slice(0,-4);
 	}
 	else{//normal backspace
 		feild.innerHTML=feild.innerHTML.slice(0,-1);
