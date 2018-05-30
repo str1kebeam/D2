@@ -751,7 +751,7 @@ function numpad(key){
 	else if(key=="frac"){
 		entry_text+=addFrac(area);
 	}
-	else if(['x','c','e'].includes(key)){//any remaining value, not a function
+	else if(['x','c','e','z','y'].includes(key)){//any remaining value, not a function
 		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
 			entry_text+="*";
 			area.innerHTML+="*";
@@ -780,6 +780,14 @@ function numpad(key){
 	else if(['sin','cos','tan'].includes(key)){
 		area.innerHTML+=key+"(";
 		entry_text+=key+"(";
+	}
+	else if(key=="."){
+		if(isNaN(Number(entry_text.slice(-1)))){
+			entry_text+="0";
+			area.innerHTML+="0";
+		}
+		entry_text+=".";
+		area.innerHTML+=".";
 	}
 	else{
 		//area.innerHTML+=key;
