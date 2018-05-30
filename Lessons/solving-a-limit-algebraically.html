@@ -7,7 +7,7 @@
 	</script>
 	<![endif]--> <!-- IE compatibility -->
 	<meta charset="utf-8">
-	<title>Learn - What is a Limit?</title>
+	<title>Learn - Solving a Limit Algrbraically</title>
 	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
 	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
 	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
@@ -33,9 +33,9 @@
 			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
 				<h2>Limits</h2> <!-- Sidebar Column Here -->
 				<ul class="collection" id="sitemap">
-					<a href="#!" class="collection-item active">What is a Limit?</a>
+					<a href="what-is-a-limit.html" class="collection-item">What is a Limit?</a>
 					<a href="left-and-right-limits.html" class="collection-item">Left and Right Limits</a>
-					<a href="solving-a-limit-algebraically.html" class="collection-item">Solving a Limit Algebraically</a>
+					<a href="#!" class="collection-item active">Solving a Limit Algebraically</a>
 					<a href="#!" class="collection-item">Limits at Infinity</a>
 				</ul>
 				<div class="t-cen">
@@ -47,40 +47,28 @@
 			</div>
 			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
 				<h1 id="body-title"> <!-- Title -->
-					What Is A Limit?
+					Solving a Limit Algebraically
 				</h1>
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
-					When learning algebra, you probably learned what a <strong>domain</strong> is, and how some functions don't have y-values for all values of x.  Take a look at the graph
+					Now that you understand what a limit is, it's time to learn how to use algebra to solve a limit.  Let's take the graph we discussed in the <a href="what-is-a-limit.html">first lesson</a>:
 					<latex-eqn>$$f(x)=\frac{x^3+1}{x+1}$$</latex-eqn>
 					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=(x^3+1)/(x+1)">
-					Your algebra instincts may tell you that the domain of this function is <latex-eqn>$$x\neq -1$$</latex-eqn>
-					because at -1, the denominator is 0.  And you would be right.  But you may be starting to question yourself after seeing the graph.  Maybe it's just a feeling, but you know that there has to be a value at -1.
+					Earlier we mentioned that the domain of this function is \(x\ne -1\).  This is because at \(x=-1\), the denominator is zero.
 					<br>
 					<br>
-					<i>Doesn't it look like the point \((-1,3)\) is on the graph?  I mean, it's right there!</i>
+					But something is different this time.  Not only is the denominator 0, but the numerator is 0, too:
+					<latex-eqn>$$f(-1)=\frac{(-1)^3+1}{(-1)+1}=\frac{0}{0}=\textrm{indeterminate}$$</latex-eqn>
+					When the value of a function is \(\frac{0}{0}\), the numbers almost always have a way of "canceling each other out."
 					<br>
-					<br>
-					And that's where limits come in.  With limits, the domain can be <i>extended</i> to numbers like -1 by predicting the value of the function at that spot.
+					The function seems to approach the point \((-1,3)\).
 					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=(x^3+1)/(x+1) zoomed in on -3<x<0">
-					In calculus, we push the limits of functions.  \(f(x)\) has no value at -1, but we can test -0.9, -0.99, and other similar numbers that <strong>approach</strong> -1 to find the value of the function.
-					<br>
-					To show this strategy, here's a table of values of \(f(x)\) that approach -1:
-					<table>
-						<thead>
-							<tr><td>\(x\)</td><td>\(f(x)\)</td></tr>
-						</thead>
-						<tbody>
-							<tr><td>\(-0.9\)</td><td>\(2.71\)</td></tr>
-							<tr><td>\(-0.99\)</td><td>\(2.9701\)</td></tr>
-							<tr><td>\(-1\)</td><td>\(\textrm{undefined}\)</td></tr>
-							<tr><td>\(-1.1\)</td><td>\(3.0301\)</td></tr>
-							<tr><td>\(-0.99\)</td><td>\(3.31\)</td></tr>
-						</tbody>
-					</table>
-					As you can see, the function doesn't reach 3 but it gets really close to it.  In calculus, this is a <strong>limit</strong>.  The function might not have a value at 3, but we're telling you that it <i>should</i> be equal to 3 at the point.  This is how it is written in calculus:
-					<latex-eqn>$$\lim_{x \to -1} \frac{x^3+1}{x+1}=3$$</latex-eqn>
-					And that's it!
-					<h3>Think you understand limits? Practice limits on our <a href="../practice.html">practice page</a>!</h4>
+					And now we will show you how to remove the zero: factoring it out.
+					In the numerator, \(x^3+1\) can be factored as shown:
+					<latex-eqn>$$\frac{x^3+1}{x+1}=\frac{(x^2-x+1)*(x+1)}{x+1}$$</latex-eqn>
+					The reason the function equals \(\frac{0}{0}\) at -1 is because \(x-1=0\), so now we will cancel it out to get the following function:
+					<latex-eqn>$$f(x)=x^2-x+1$$</latex-eqn>
+					The graph of this function is shown below:
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^2-x+1">
 				</div>
 			</div>
 		</div>
