@@ -754,30 +754,34 @@ function numpad(key){
 	var num=Number(key);
 	
 	if(!isNaN(num)&&key!=""){//just a workaround for a bug
-		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
+		/*if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
 			area.innerHTML+="*";
 			entry_text+="*";
 			lCharAdd("*");
-		}
+		}*/
 		area.innerHTML+=num;
 		entry_text+=num;
 		lCharAdd(num);
 	}
 	else if(key=="^"){
-		entry_text+=addExpo(area);
+		entry_text+="^(";
+		lCharAdd("^{}");
+		//entry_text+=addExpo(area);
 	}
 	else if(key=="back"||key=="Backspace"){
 		entry_text=backspace(area, entry_text);
 	}
 	else if(key=="frac"){
-		entry_text+=addFrac(area);
+		//entry_text+=addFrac(area);
+		entry_text+="(";
+		lCharAdd("\\frac{}{}");
 	}
 	else if(['x','c','e','z','y'].includes(key)){//any remaining value, not a function
-		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
+		/*if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
 			entry_text+="*";
 			area.innerHTML+="*";
 			lCharAdd("*");
-		}
+		}*/
 		area.innerHTML+=key;
 		entry_text+=key;
 		lCharAdd(key);
@@ -797,6 +801,7 @@ function numpad(key){
 		first=0;
 		frac_stage=0;
 		ltext="";
+		justEnded=false;
 	}
 	else if(key=="pi"||key=="π"){//You never know what special characters their keyboard might have...
 		area.innerHTML+="&pi;";
@@ -837,18 +842,56 @@ var lReplaces={//things that need to be replaced
 	"tan(":"\\tan(",
 	"pi":"\\pi"
 };
+var justEnded=false;
+var openParens=0;
 function lCharAdd(char){
-	if(expo){
-		ltext=ltext.slice(0,-1);
+	var tail=[];
+	while(ltext.slice(-1)=="}"){
+		var d=-1;
+		if(ltext.slice(-3)=="}{}"){//check for the denominator
+			d=-3;
+		}
+		tail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
+		ltext=ltext.slice(0,d);//remove the trailing part
 	}
-	//if(lReplaces.keys().includes(char)){//yeah, this is broken right now
-	//	ltext+=lReplaces[char];
-	//}
-	//else{
+	if(justEnded){
+		justEnded=false;
+		if(tail[tail.length-1]=="}{}"){//If a fraction was just closed
+			ltext+="}{";
+			tail[tail.length-1]="}";
+			//entry_text+=")/(";
+		}
+		else if(tail[tail.length-1]=="}"){
+			ltext+="}";
+			tail[tail.length-1]="";
+		}
+	}
+	//console.log(char);
+	//console.log(typeof char);
+	if(Object.keys(lReplaces).includes(char)){//I'm not entirely sure why I need to do it that way, but this works
+		ltext+=lReplaces[char];
+	}
+	else if(char=="("||(typeof char=="string"&&char.endsWith("("))){//that second statement is much easier than checking for trig and stuff
+		openParens++;
 		ltext+=char;
-	//}
-	if(expo){
-		ltext+="}";
+	}
+	else if(char==")"){
+		if(openParens<=0){
+			justEnded=true;
+			if(tail[tail.length-1]=="}{}"){//If a fraction was just closed
+				entry_text+="/(";
+			}
+		}
+		else{
+			openParens--;
+			ltext+=char;
+		}
+	}
+	else{
+		ltext+=char;
+	}
+	for(var i=tail.length-1;i>=0;i--){//Add back on the removed part
+		ltext+=tail[i];
 	}
 }
 var fill=[];//What it will check if it can finish to
@@ -999,6 +1042,7 @@ function addFrac(feild){
 		else if(first==1){
 			first=3;
 		}
+		ltext+="\\frac{}{}";
 		return "[";
 	}
 	else if(frac_stage==1){
