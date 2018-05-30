@@ -821,6 +821,7 @@ var fill_options=[//List of things that buffer would handle:
 	'cot(',
 	'pi'
 	];
+var preBuff="";
 function buff(key, area){
 	if(!buffering){//Start trying to buffer
 		if(key=="o"){//o and s are special, because it could have been c beforehand
@@ -830,6 +831,7 @@ function buff(key, area){
 				buffer="co";
 				entry_text=entry_text.slice(0,-1);//remove that "c";
 				area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
+				preBuff="c";
 			}
 		}
 		if(key=="s"){
@@ -839,6 +841,7 @@ function buff(key, area){
 				buffer="cs";
 				entry_text=entry_text.slice(0,-1);//remove that "c";
 				area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
+				preBuff="c"
 			}
 			else{
 				fill=['sin(','sec('];
@@ -860,9 +863,18 @@ function buff(key, area){
 	}
 	else{//just continue the buffer
 		if(key=='Backspace'){
-			buffer="";
-			buffering=false;
-			fill=[];
+			buffer=buffer.slice(0,-1);
+			fill=fill_options.filter(function (f){
+				return f.includes(buff);
+			});//find everything that could turn into it again
+			if(buffer==preBuff){//They backspaced out of the buffer
+				entry_text+=preBuff;
+				area.innerHTML+=preBuff;
+				buffer="";
+				buffering=false;
+				fill=[];
+				preBuff="";
+			}
 			return "";//later on, make this remove a character from the buffer
 		}
 		else if(key.charCodeAt(0)<=31||key.charCodeAt(0)==127||key.length!=1){
@@ -875,6 +887,9 @@ function buff(key, area){
 		if(fill.length==0){
 			buffer="";
 			buffering=false;
+			area.innerHTML+=preBuff;
+			entry_text+=preBuff;
+			preBuff=""
 			return "";//they stopped typing it, clear the buffer
 		}
 		else if(fill.length==1&&fill[0]==temp){
