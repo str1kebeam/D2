@@ -8,6 +8,7 @@ var answered=true;
 var strike=false;
 var entry_text="";
 var qType="";
+var rat=false;//should answer checker try to order it(some things will cause errors)
 start_diff=1;
 
 var oldMaxDiff=2;//For updating the dropdown
@@ -177,7 +178,10 @@ function functionthing() {
 	}
 	try{
 		var correct=checkAns(ans);
-		if(correct){
+		if(answered){
+			newQ();
+		}
+		else if(correct){
 			reply("Great!");//+x.toString());
 			answered=true;
 			//x++;
@@ -185,6 +189,7 @@ function functionthing() {
 		else{
 			reply('Aww...');
 		}
+
 	}
 	catch(err){
 		reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
@@ -246,6 +251,9 @@ function ask(question, expression){
 	entry_text="";
 }
 function reply(text){
+	if(text==""){
+		text="<br>";
+	}
 	var response=document.getElementById("response");
 	response.innerHTML=text;
 	response.style.color = "#000";
@@ -261,9 +269,12 @@ function checkAns(ans){
 	//}
 	else{
 		//reply(2);
-		var a=math.rationalize(math.simplify(ans));//really roundabout way to do this, simplify() simplifies it and rationalize() as a side effect puts it in normal order
-		var b=math.rationalize(math.simplify(currentAns));
-
+		var a=math.simplify(ans);//really roundabout way to do this, simplify() simplifies it and rationalize() as a side effect puts it in normal order
+		var b=math.simplify(currentAns);
+		if(rat){
+			a=math.rationalize(a);
+			b=math.rationalize(b);
+		}
 		if(a.toString()==b.toString()){
 			return true;
 		}
@@ -283,9 +294,11 @@ function der(diff){
 	var d=derDiffs[diff-1];
 	if(d.length==3){//The polynomial trig questions
 		newDerivative(d[0],d[1],d[2]);
+		rat=true;
 	}
 	if(d.length==4){//The trig questions have 4 parts of data
 		newTrigDerivative(d[0],d[1],d[2],d[3]);
+		rat=false;
 	}
 }
 function newDerivative(terms, maxPow, maxCo, test=false){
@@ -353,6 +366,7 @@ function t_l(diff){
 	var tlDiffs=diffs["tangent"];
 	var d=tlDiffs[diff-1];
 	tangent_slope(d[0],d[1],d[2],d[3]);
+	rat=true;
 }
 function tangent_slope(terms, maxPow, maxCo, maxX){
 	var q="What is the slope of the following equation at x=";
@@ -379,6 +393,7 @@ function intQ(diff){
 	var intDiffs=diffs["integral"];
 	var d=intDiffs[diff-1];
 	newIntegral(d[0],d[1],d[2]);
+	rat=true;
 }
 function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this
 	//Yeah, this will be pretty much the same thing...
@@ -718,31 +733,39 @@ var keyWrapper=function keyGuard(event){
 	//Do some modification to the keypress, and then call numpad with it
 	console.log(event.code);
 	console.log(event.key);
-	event.currentTarget.value ="test";
+	//event.currentTarget.value ="test";
+	numpad(event.key);
 	event.preventDefault();
 }
 var entry=document.getElementById("input-answer");
-//entry.addEventListener('keydown', keyWrapper);
+entry.addEventListener('keydown', keyWrapper);
+var buffer="";//what is currently being typed out that is a multi-character function
+var buffering=false;//if it is currently buffering something
 function numpad(key){
 	var area=document.getElementById("new-entry");
-	if(typeof key=="number"){
+	if(buffering){
+		key=buff(key,area);
+	}
+	var num=Number(key);
+	
+	if(!isNaN(num)&&key!=""){//just a workaround for a bug
 		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
 			area.innerHTML+="*";
 			entry_text+="*";
 		}
-		area.innerHTML+=key;
-		entry_text+=key;
+		area.innerHTML+=num;
+		entry_text+=num;
 	}
 	else if(key=="^"){
 		entry_text+=addExpo(area);
 	}
-	else if(key=="back"){
+	else if(key=="back"||key=="Backspace"){
 		entry_text=backspace(area, entry_text);
 	}
 	else if(key=="frac"){
 		entry_text+=addFrac(area);
 	}
-	else if(['x','c'].includes(key)){//any remaining value, not a function
+	else if(['x','c','e','z','y'].includes(key)){//any remaining value, not a function
 		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
 			entry_text+="*";
 			area.innerHTML+="*";
@@ -750,15 +773,135 @@ function numpad(key){
 		area.innerHTML+=key;
 		entry_text+=key;
 	}
-	else{
+	else if(['*','+',"-",'/',')','('].includes(key)){
+		entry_text+=key;
+		area.innerHTML+=key;
+	}
+	else if(key=='Enter'){
+		functionthing();
+	}
+	else if(key=="clr"||key=='Delete'){
+		area.innerHTML="";
+		entry_text="";
+		expo=false;
+		first=0;
+		frac_stage=0;
+	}
+	else if(key=="pi"||key=="π"){//You never know what special characters their keyboard might have...
+		area.innerHTML+="&pi;";
+		entry_text+="pi";
+	}
+	else if(['sin(','cos(','tan('].includes(key)){
 		area.innerHTML+=key;
 		entry_text+=key;
 	}
+	else if(key=="."){
+		console.log(key);
+		if(isNaN(Number(entry_text.slice(-1)))){
+			entry_text+="0";
+			area.innerHTML+="0";
+		}
+		entry_text+=".";
+		area.innerHTML+=".";
+	}
+	else{
+		buff(key,area);
+		//Do nothing, ignored key
+	}
 	console.log(first);
+	entry.value=entry_text+buffer;
 }
-function newNumpad(key, btn){
-	//key-what key was pressed, using the response from event.key
-	//btn-false if from the text box, true if from the 
+var fill=[];//What it will check if it can finish to
+var fill_options=[//List of things that buffer would handle:
+	'sin(',
+	'cos(',
+	'tan(',
+	'csc(',
+	'sec(',
+	'cot(',
+	'pi'
+	];
+var preBuff="";
+function buff(key, area){
+	if(!buffering){//Start trying to buffer
+		if(key=="o"){//o and s are special, because it could have been c beforehand
+			if(area.innerHTML.slice(-1)=="c"){
+				fill=['cos(','cot('];
+				buffering=true;
+				buffer="co";
+				entry_text=entry_text.slice(0,-1);//remove that "c";
+				area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
+				preBuff="c";
+			}
+		}
+		if(key=="s"){
+			if(area.innerHTML.slice(-1)=="c"){
+				fill=['csc('];
+				buffering=true;
+				buffer="cs";
+				entry_text=entry_text.slice(0,-1);//remove that "c";
+				area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
+				preBuff="c"
+			}
+			else{
+				fill=['sin(','sec('];
+				buffering=true;
+				buffer="s";
+			}
+		}
+		if(key=="t"){
+			fill=['tan('];
+			buffering=true;
+			buffer="t";
+		}
+		if(key=="p"){
+			fill=['pi'];
+			buffering=true;
+			buffer="p";
+		}
+		return "";
+	}
+	else{//just continue the buffer
+		if(key=='Backspace'){
+			buffer=buffer.slice(0,-1);
+			fill=fill_options.filter(function (f){
+				return f.includes(buff);
+			});//find everything that could turn into it again
+			if(buffer==preBuff){//They backspaced out of the buffer
+				entry_text+=preBuff;
+				area.innerHTML+=preBuff;
+				buffer="";
+				buffering=false;
+				fill=[];
+				preBuff="";
+			}
+			return "";//later on, make this remove a character from the buffer
+		}
+		else if(key.charCodeAt(0)<=31||key.charCodeAt(0)==127||key.length!=1){
+			return "";//it was some special character, just ignore it
+		}
+		var temp=buffer+key;
+		fill=fill.filter(function (val){
+			return val.includes(temp);
+		});
+		if(fill.length==0){
+			buffer="";
+			buffering=false;
+			area.innerHTML+=preBuff;
+			entry_text+=preBuff;
+			preBuff=""
+			return "";//they stopped typing it, clear the buffer
+		}
+		else if(fill.length==1&&fill[0]==temp){
+			buffer="";
+			buffering=false;
+			return temp;//they finished, now give what they typed as a keypress
+		}
+		else{
+			buffer+=key;
+			return "";
+		}
+	}
 }
 function addExpo(feild){
 	if(!expo){
@@ -945,6 +1088,14 @@ function backspace(feild, text){
 		else if(first==2){
 			first=0;
 		}
+	}
+	else if(last=="π"){//It feels like I'm doing something wrong, but it will be π, not &pi;, as I learned with &frasl;
+		feild.innerHTML=feild.innerHTML.slice(0,-1);
+		text=text.slice(0,-2);
+	}
+	else if(last=="("&&['sin(','cos(','tan('].includes(feild.innerHTML.slice(-4))){
+		feild.innerHTML=feild.innerHTML.slice(0,-4);
+		text=text.slice(0,-4);
 	}
 	else{//normal backspace
 		feild.innerHTML=feild.innerHTML.slice(0,-1);
