@@ -177,7 +177,10 @@ function functionthing() {
 	}
 	try{
 		var correct=checkAns(ans);
-		if(correct){
+		if(answered){
+			newQ();
+		}
+		else if(correct){
 			reply("Great!");//+x.toString());
 			answered=true;
 			//x++;
@@ -185,6 +188,7 @@ function functionthing() {
 		else{
 			reply('Aww...');
 		}
+
 	}
 	catch(err){
 		reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
@@ -246,6 +250,9 @@ function ask(question, expression){
 	entry_text="";
 }
 function reply(text){
+	if(text==""){
+		text="<br>";
+	}
 	var response=document.getElementById("response");
 	response.innerHTML=text;
 	response.style.color = "#000";
@@ -718,25 +725,27 @@ var keyWrapper=function keyGuard(event){
 	//Do some modification to the keypress, and then call numpad with it
 	console.log(event.code);
 	console.log(event.key);
-	event.currentTarget.value ="test";
+	//event.currentTarget.value ="test";
+	numpad(event.key);
 	event.preventDefault();
 }
 var entry=document.getElementById("input-answer");
-//entry.addEventListener('keydown', keyWrapper);
+entry.addEventListener('keydown', keyWrapper);
 function numpad(key){
 	var area=document.getElementById("new-entry");
-	if(typeof key=="number"){
+	var num=Number(key);
+	if(!isNaN(num)){
 		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
 			area.innerHTML+="*";
 			entry_text+="*";
 		}
-		area.innerHTML+=key;
-		entry_text+=key;
+		area.innerHTML+=num;
+		entry_text+=num;
 	}
 	else if(key=="^"){
 		entry_text+=addExpo(area);
 	}
-	else if(key=="back"){
+	else if(key=="back"||key=="Backspace"){
 		entry_text=backspace(area, entry_text);
 	}
 	else if(key=="frac"){
@@ -750,11 +759,20 @@ function numpad(key){
 		area.innerHTML+=key;
 		entry_text+=key;
 	}
-	else{
-		area.innerHTML+=key;
+	else if(['*','+',"-"].includes(key)){
 		entry_text+=key;
+		area.innerHTML+=key;
+	}
+	else if(key=='Enter'){
+		functionthing();
+	}
+	else{
+		//area.innerHTML+=key;
+		//entry_text+=key;
+		//Do nothing, ignored key
 	}
 	console.log(first);
+	entry.value=entry_text;
 }
 function newNumpad(key, btn){
 	//key-what key was pressed, using the response from event.key
