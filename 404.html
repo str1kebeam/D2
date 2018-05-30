@@ -7,11 +7,11 @@
 	</script>
 	<![endif]--> <!-- IE compatibility -->
 	<meta charset="utf-8">
-	<title>Learn - The Tangent Line Problem</title>
+	<title>Derive - Page Not Found</title>
 	<link type="text/CSS" rel="stylesheet" href="Imports\materialize\css\materialize.min.css"  media="screen,projection"/>
 	<link rel="stylesheet" type="text/css" href="default.css"> <!-- Import default css for the whole website -->
-	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
-	<link rel="shortcut icon" href="..\DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
+	<link rel="stylesheet" type="text/css" href="Imports/mdi/css/materialdesignicons.min.css">
+	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
 </head>
 <body>
@@ -34,7 +34,7 @@
 		<p class="t-cen">We'll direct you to <a href="/index.html">the homepage</a> in <span id="t">5</span> seconds.</p>
 	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="Imports/materialize/js/materialize.min.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -66,21 +66,19 @@ $(document).ready(function(){
 	    $('.carousel').carousel('next');
 	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
 });
-console.log("height: " + document.getElementById("tootall").style.height);
-</script>
-<script type="text/javascript">
-	t = document.getElementById("t");
-	window.onload = function() {
-		setInterval(timerDown, 1000);
+
+t = document.getElementById("t");
+window.onload = function() {
+	setInterval(timerDown, 1000);
+}
+timerDown = function() {
+	if(t.innerHTML > 0) {
+		t.innerHTML = parseInt(t.innerHTML)-1;
+	} else {
+		t.innerHTML = 0;
+		window.location = "/index.html";
 	}
-	timerDown = function() {
-		if(t.innerHTML > 0) {
-			t.innerHTML = parseInt(t.innerHTML)-1;
-		} else {
-			t.innerHTML = 0;
-			window.location = "/index.html";
-		}
-	}
+}
 </script>
 </body>
 </html>
