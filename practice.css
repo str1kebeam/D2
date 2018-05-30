@@ -170,3 +170,6 @@ sup {
 #dec {
   grid-area: dec;
 }
+#eli-overide {
+  visibility: visible;
+}

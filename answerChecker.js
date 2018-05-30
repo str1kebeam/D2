@@ -9,11 +9,24 @@ var strike=false;
 var entry_text="";
 var qType="";
 start_diff=1;
+
+var oldMaxDiff=2;//For updating the dropdown
+/////
+//Difficulty settings
+/////
+var sTrig=['sin','cos'];//The ones that can actually be used now
 var nTrig=['sin','cos','tan'];
 var rTrig=['csc','sec','cot'];
 var inTrig=['arcsin','arccos','arctan'];
 var irTrig=['arccsc','arcsec', 'arccot'];
 var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
+var diffs=[];
+diffs["derivative"]=[
+	[2,1,5], [3,2,5], //Polynomial difficulty levels
+	[1,1,1,sTrig], [2,2,2,sTrig]//The trig difficulty levels
+];
+diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
+diffs["integral"]=[[2,1,5],[3,2,5]];
 //////
 //Startup stuff
 //////
@@ -22,18 +35,22 @@ var loadFunc = function(){
 	//console.log("test");
 	var query=window.location.search.substring(1);//Based off of an example I found online, this will give me a string to use
 	var vars=query.split("&");
+	var welcome=document.getElementById("welcome-text");
 	//var start_diff=1;
 	for(var v=0; v<vars.length; v++){
 		var stuff=vars[v].split("=");
 		if(stuff[0]=="type"){
 			if(stuff[1]=="derivative"){
 				qType="derivative";
+				welcome.innerHTML="Now that you've learned derivatives, practice your skills with these problems";
 			}
 			else if(stuff[1]=="integral"){
 				qType="integral";
+				welcome.innerHTML="Now that you've learned integrals, practice your skills with these problems";
 			}
 			else if(stuff[1]=="tangent"){
 				qType="tangent";
+				welcome.innerHTML="Now that you've learned tangent lines, practice your skills with these problems";
 			}
 		}
 		if(stuff[0]=="difficulty"){
@@ -115,18 +132,41 @@ function setDropdown(dropdown, val){
 	}
 	//console.log("called");*/
 }
+//document.getElementById("type").onload=setTimeout(document.getElementById("type").style="visibility: visible", 30000)
 function updateDropdowns(){
-	var elms=document.querySelectorAll(".dropdown-trigger");
-	for (var i=0; i<elms.length; i++){
-		var elm=M.Dropdown.getInstance(elms[i]);
-		elm.open();
-		elm.recalculateDimensions();
-		elm.close();
-		console.log(elm.dropdownEl);
+	var type=document.getElementById("type").value;
+	console.log(type);
+	var options=diffs[type].length;
+	console.log(options);
+	var diffDrop=document.getElementById("difficulty");
+	if(options==oldMaxDiff){//No options need to be added or removed
+		console.log("fine");
+		return;
 	}
+	else if(options>oldMaxDiff){//Need to add options
+		console.log("Adding");
+		for(var i=oldMaxDiff+1; i<=options; i++){//Add some options
+			var option=document.createElement("option");
+			option.text=i;
+			option.value=i;
+			diffDrop.add(option);
+			console.log(option);
+		}
+	}
+	else{//need to remove options
+		console.log("removing");
+		for(var i=oldMaxDiff; i>options; i--){//remove some options
+			diffDrop.remove(i-1);//Remove the option at index i-1, so i=4 would remove index 3 (which would be '4')
+		}
+	}
+	oldMaxDiff=options;
+	$('#difficulty').formSelect();
 }
 //window.onload=setTimeout(loadFunc, 2000);
 MathJax.Hub.Register.StartupHook("End", loadFunc);//Wait for MathJax to finish starting up
+document.getElementById("type").addEventListener("change",updateDropdowns());
+setTimeout(document.getElementById("type").addEventListener("change",function(){updateDropdowns()}), 100000000);//I should not have to do this, but materialize is evil
+document.getElementById("type").addEventListener("change",console.log("test"));
 //////
 //Questions
 //////
@@ -190,6 +230,8 @@ function newQ(){
 }
 function ask(question, expression){
 	var q=document.getElementById("question");
+	//console.log(question);
+	//console.log(expression);
 	//var e=document.getElementById("expression");
 	q.innerHTML=question;
 	//e.innerHTML=expression;
@@ -234,12 +276,11 @@ function checkAns(ans){
 	//reply(math.format(math.simplify(currentAns));
 	return false;
 }
-var derDiffs=[]; 
-derDiffs[1]=[2,1,5]; derDiffs[2]=[3,2,5]; //Polynomial difficulty levels
-derDiffs[3]=[1,1,1,nTrig]; derDiffs[4]=[2,2,2,nTrig.concat(rTrig)];//The trig difficulty levels
+
 function der(diff){
 	//I fell bad hardcoding this, but I don't know how to do it in js
-	var d=derDiffs[diff];
+	var derDiffs=diffs["derivative"];
+	var d=derDiffs[diff-1];
 	if(d.length==3){//The polynomial trig questions
 		newDerivative(d[0],d[1],d[2]);
 	}
@@ -300,16 +341,17 @@ function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
 	simple+=trig[0];
 	e+=")=?";
 	var ans=0;
+	console.log(simple);
 	if(simple.includes("x")){
-		ans=math.rationalize(math.derivative(simple,"x")).toString();
+		ans=math.derivative(simple,"x").toString();
 	}
 	currentAns=ans;
 	ask(q,e);
 }
-var tlDiffs=[]; tlDiffs[1]=[2,1,5,3]; tlDiffs[2]=[3,2,5,10]; 
 function t_l(diff){
 	//makes a new tangent line problem, from just the difficulty
-	var d=tlDiffs[diff];
+	var tlDiffs=diffs["tangent"];
+	var d=tlDiffs[diff-1];
 	tangent_slope(d[0],d[1],d[2],d[3]);
 }
 function tangent_slope(terms, maxPow, maxCo, maxX){
@@ -333,9 +375,9 @@ function tangent_slope(terms, maxPow, maxCo, maxX){
 	ask(q,e);
 	currentAns=ans;
 }
-var intDiffs=[]; intDiffs[1]=[2,1,5]; intDiffs[2]=[3,2,5];
 function intQ(diff){
-	var d=intDiffs[diff];
+	var intDiffs=diffs["integral"];
+	var d=intDiffs[diff-1];
 	newIntegral(d[0],d[1],d[2]);
 }
 function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this
@@ -348,6 +390,18 @@ function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a functio
 	latex+=")dx";
 	raw=poly[2];
 	ans=integrate(raw[0],raw[1], true);
+	currentAns=ans;
+	ask("Evaluate the following integral:",latex);
+}
+function newTrigIntegral(maxTCo, maxXCo, maxXPow, trig=nTrig){
+	var latex="\\int(";
+	var simple="";
+	var t=trig_term(maxTCo, maxXCo, maxXPow, trig, true);
+	latex+=t[1];
+	simple+=t[0];
+	latex+=")dx";
+	raw=t[2];
+	ans=integrateTrig(raw[0], raw[1],raw[2],raw[3]);
 	currentAns=ans;
 	ask("Evaluate the following integral:",latex);
 }
@@ -372,6 +426,21 @@ function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we
 		simple+="+c";
 	}
 	return simple;
+}
+function integrateTrig(tCo, trig, xCo, xPow){
+	console.log("Not finishing this now...");
+	return 1;//so that it won't crash, at least...
+	//Going to start coding this now, but am going to have to leave in a bit
+	//Hopefully I will remember to push this code later
+	//pseudocode:
+	//Oh, great, this is going to need a different random trig generator, to make it work nicely (no integration by parts)
+	//Ok, so the random trig will make it so that it works out somewhat nicely
+	//So do reverse power rule with the coefficient
+	//Do the integration of the trig function
+	//And print it nicely
+	//Yeah, most of the work is going to need to be making the random trig generator
+	//Might just want to generate a trig function, and then find the derivative of that (and print it nicely)
+	//Yeah, do that
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
@@ -529,7 +598,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 	}
 	return result;
 }
-function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig){
+function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig, raw=false){
 	//Ok, so all of these variables are because you can have: a*sin^c(bx^d)
 	//'max' is just there to be descriptive
 	//'T' is for 'Trig', so it is a modifier for the trig (a and c)
@@ -605,7 +674,11 @@ function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig){
 	}
 	simple+=")";
 	latex+=")";
-	return [simple, latex];
+	var val=[simple, latex]
+	if(raw){
+		val.push([tc, tr, xc, xp]);//Add in the values to the return statement so that the integral can be found
+	}
+	return val;
 }
 function test(){
 	console.log("test");
