@@ -884,6 +884,7 @@ function handleLatexTail(){
 		justEnded=s;
 	}
 	return tail;
+}
 function lCharAdd(char){
 	var tail=handleLatexTail();
 	/*while(ltext.slice(-1)=="}"){
