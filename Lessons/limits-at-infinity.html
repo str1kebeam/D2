@@ -7,7 +7,7 @@
 	</script>
 	<![endif]--> <!-- IE compatibility -->
 	<meta charset="utf-8">
-	<title>Learn - What is a Limit?</title>
+	<title>Learn - Limits at Infinity</title>
 	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
 	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
 	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
@@ -33,10 +33,10 @@
 			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
 				<h2>Limits</h2> <!-- Sidebar Column Here -->
 				<ul class="collection" id="sitemap">
-					<a href="#!" class="collection-item active">What is a Limit?</a>
+					<a href="what-is-a-limit.html" class="collection-item">What is a Limit?</a>
 					<a href="left-and-right-limits.html" class="collection-item">Left and Right Limits</a>
 					<a href="solving-a-limit-algebraically.html" class="collection-item">Solving a Limit Algebraically</a>
-					<a href="limits-at-infinity.html" class="collection-item">Limits at Infinity</a>
+					<a href="#!" class="collection-item active">Limits at Infinity</a>
 				</ul>
 				<div class="t-cen">
 					<a href="./index.html"><button class="btn waves-effect waves-lighten">Back to Lessons</button></a>
@@ -47,40 +47,32 @@
 			</div>
 			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
 				<h1 id="body-title"> <!-- Title -->
-					What Is A Limit?
+					Limits at Infinity
 				</h1>
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
-					When learning algebra, you probably learned what a <strong>domain</strong> is, and how some functions don't have y-values for all values of x.  Take a look at the graph
-					<latex-eqn>$$f(x)=\frac{x^3+1}{x+1}$$</latex-eqn>
-					<canvas width="800" height="800" id="myCanvas"></canvas>
-					Your algebra instincts may tell you that the domain of this function is <latex-eqn>$$x\neq -1$$</latex-eqn>
-					because at -1, the denominator is 0.  And you would be right.  But you may be starting to question yourself after seeing the graph.  Maybe it's just a feeling, but you know that there has to be a value at -1.
+					There comes a point in our lives when someone finally tells us the truth about life: infinity is not actually a number.  When we look at a graph, we can try as hard as we can to reach infinity but all we do is approach it.  <i>Do you see where I'm going with this?</i>
 					<br>
 					<br>
-					<i>Doesn't it look like the point \((-1,3)\) is on the graph?  I mean, it's right there!</i>
+					And that's why we use <a href="what-is-a-limit.html">limits</a> to find values of functions at infinity.
 					<br>
 					<br>
-					And that's where limits come in.  With limits, the domain can be <i>extended</i> to numbers like -1 by predicting the value of the function at that spot.
-					<canvas width="800" height="800" id="myCanvas2"></canvas>
-					In calculus, we push the limits of functions.  \(f(x)\) has no value at -1, but we can test -0.9, -0.99, and other similar numbers that <strong>approach</strong> -1 to find the value of the function.
+					Let's start with the following function:
+					<latex-eqn>$$f(x)=\frac{1}{x}$$</latex-eqn>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=1/x">
+					We can usually look at a graph and predict what it's <strong title="End Behavior: a function's value at ±∞">end behavior</strong> is.  We see in this example that \(\frac{1}{x}\) keeps getting smaller, getting infinitesimaly close to 0 without reaching it.  Try tracing the graph above and see for yourself if you don't believe me.
 					<br>
-					To show this strategy, here's a table of values of \(f(x)\) that approach -1:
+					<br>
+					This limit can be written as
+					<latex-eqn title="Note: it is unnecessary to write ∞-, referring to a one sided limit, because infinity can only be approached from one side">$$\lim_{x\to \infty} \frac{1}{x} = 0$$</latex-eqn>
+					Now for the algebra behind this.
+					<br>
+					<br>
+					To figure out the limit of a <strong>rational function</strong> - a fraction with polynomials in the numberator and denominator - we must comapre the <strong title="Highest Degree: biggest exponent">highest degree</strong> term in both the numerator and denominator as shown:
 					<table>
 						<thead>
-							<tr><td>\(x\)</td><td>\(f(x)\)</td></tr>
+							<tr><td>Numerator Degree vs Denominator Degree</td><td>Effect</td><td>Example</td></tr>
 						</thead>
-						<tbody>
-							<tr><td>\(-0.9\)</td><td>\(2.71\)</td></tr>
-							<tr><td>\(-0.99\)</td><td>\(2.9701\)</td></tr>
-							<tr><td>\(-1\)</td><td>\(\textrm{undefined}\)</td></tr>
-							<tr><td>\(-1.01\)</td><td>\(3.0301\)</td></tr>
-							<tr><td>\(-1.1\)</td><td>\(3.31\)</td></tr>
-						</tbody>
 					</table>
-					As you can see, the function doesn't reach 3 but it gets really close to it.  In calculus, this is a <strong>limit</strong>.  The function might not have a value at 3, but we're telling you that it <i>should</i> be equal to 3 at the point.  This is how it is written in calculus:
-					<latex-eqn>$$\lim_{x \to -1} \frac{x^3+1}{x+1}=3$$</latex-eqn>
-					And that's it!
-					<h3>Think you understand limits? Practice limits on our <a href="../practice.html">practice page</a>!</h4>
 				</div>
 			</div>
 		</div>
@@ -90,8 +82,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
-<script src="../default.js"></script>
-<script src ="limit1.js"></script> <!-- import default JS for the webpage -->
+<script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.sidenav').sidenav();
@@ -117,8 +108,8 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
-	init();
   $('.materialboxed').materialbox();
+
 	setInterval(autoplay, 5000);
 	function autoplay() {
 	    $('.carousel').carousel('next');
