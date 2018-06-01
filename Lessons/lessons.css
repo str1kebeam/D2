@@ -18,6 +18,7 @@
 	margin: 15px auto;
 }
 #lesson canvas {
+	background-color: #fff3;
 	height: 400px;
 	width: auto;
 	display: block;
