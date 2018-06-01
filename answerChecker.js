@@ -167,7 +167,7 @@ function updateDropdowns(){
 MathJax.Hub.Register.StartupHook("End", loadFunc);//Wait for MathJax to finish starting up
 document.getElementById("type").addEventListener("change",updateDropdowns());
 setTimeout(document.getElementById("type").addEventListener("change",function(){updateDropdowns()}), 100000000);//I should not have to do this, but materialize is evil
-document.getElementById("type").addEventListener("change",console.log("test"));
+//document.getElementById("type").addEventListener("change",console.log("test"));
 //////
 //Questions
 //////
@@ -769,7 +769,8 @@ function numpad(key){
 		//entry_text+=addExpo(area);
 	}
 	else if(key=="back"||key=="Backspace"){
-		entry_text=backspace(area, entry_text);
+		//entry_text=backspace(area, entry_text);
+		newBackspace();
 	}
 	else if(key=="frac"){
 		//entry_text+=addFrac(area);
@@ -991,6 +992,7 @@ function lCharAdd(char){
 	//console.log(justEnded);
 }
 var num_test;
+var test_speed=1000;
 function test_numpad(i){
 	var text="1 + 2 * 3 + 5 ^ 3 ) - 6 ^ 3 ^ 2 ) ) + 1 + frac 3 ) 2 ) + frac 3 frac 2 ) 1 ) ) 2 ) + 3 + 3 ^ frac 2 ) 3 ) ) + 1";
 	var parts=text.split(" ");
@@ -999,7 +1001,18 @@ function test_numpad(i){
 	}
 	else if(i<parts.length){
 		numpad(parts[i]);
-		num_test=setTimeout(function () {test_numpad(i+1)}, 500)
+		num_test=setTimeout(function () {test_numpad(i+1)}, test_speed)
+	}
+}
+function test_backspace(i){
+	var text="1 + 2 * 3 + 5 ^ 3 ) - 6 ^ 3 ^ 2 ) ) + 1 + frac 3 ) 2 ) + frac 3 frac 2 ) 1 ) ) 2 ) + 3 + 3 ^ frac 2 ) 3 ) ) + 1";
+	var parts=text.split(" ");
+	if(i<0){
+		clearTimeout(num_test);
+	}
+	else if(i<parts.length){
+		numpad("back");
+		num_test=setTimeout(function() {test_backspace(i+1)},test_speed);
 	}
 }
 function findOpenParen(text){
@@ -1128,28 +1141,75 @@ function newBackspace(){
 	//var temp=ltext;
 	var tail=handleLatexTail();
 	var last=ltext.slice(-1);
-	if(last=="}"){
+	if(justEnded>0){
+		if(entry_text.slice(-3)==")/("){
+			justEnded--;
+			entry_text=entry_text.slice(0,-3);
+		}
+		else{
+			justEnded--;
+			entry_text=entry_text.slice(0,-1);
+		}
+	}
+	/*if(last=="}"){
 		justEnded--;
-		entry_text=entry_text.slice(0,-1);//need to think about this part a bit more
+		entry_text=entry_text.slice(0,-1);//
 	}
 	else if(ltext.slice(-2)=="}{"){
 		justEnded--;
-		entry_text=entry_text.slice(0,-1);
-	}
-	else if(last=="("&&ltext.slice(-5)=="\\sin("){ //Oh, need to add in the other functions
+		entry_text=entry_text.slice(0,-3);//)/(
+	}*/
+	else if(last=="("&&['\\sin(','\\cos(','\\tan('].includes(ltext.slice(-5))){ //Oh, need to add in the other functions
 		ltext=ltext.slice(0,-5);
 		entry_text=entry_text.slice(0,-4);//entry_text won't have the \
 	}
+	else if(ltext.slice(-3)=="\\pi"){
+		ltext=ltext.slice(0,-3);
+		entry_text=entry_text.slice(0,-2);
+	}
+	else if(ltext.slice(-6)=="\\frac{"){//"\frac{"
+		ltext=ltext.slice(0,-6);
+		entry_text=entry_text.slice(0,-1);//just has a paren
+		tail.splice(0,1);//remove the }{} as well, which should be the first thing in the tail
+	}
+	else if(ltext.slice(-2)=="^{"){
+		ltext=ltext.slice(0,-2);
+		entry_text=entry_text.slice(0,-2);
+		tail.splice(0,1);//remove the } that matches the ^{
+	}
+	else if(ltext.slice(-6)=="\\times"){//"\times"
+		ltext=ltext.slice(0,-6);
+		entry_text=entry_text.slice(0,-1);
+	}
+	else{
+		ltext=ltext.slice(0,-1);
+		entry_text=entry_text.slice(0,-1);
+	}
+	redoJustEnded();
 	//test for pi
 	//test for the \frac
 	//normal replace
-	//Finish the trig
 	//Probably a few other things that I forgot, then:
 	for(var i=tail.length-1; i>=0; i--){
 		ltext+=tail[i];
+	}	
+}
+function redoJustEnded(){
+	justEnded=0;
+	for(var i=1;i<entry_text.length;i++){
+		if(entry_text.substr(-i-2,3)==")/("){
+			justEnded++;
+		}
+		else if(entry_text.substr(-i,1)!=")"){
+			return;
+		}
+		else if(['^','/'].includes(entry_text.substr(findOpenParen(entry_text.slice(0,-i))-1,1))){
+			justEnded++;
+		}
+		else if(ltext.substr(findLatexOpen(ltext.slice(0,-i))-5,5)=="\\frac"){
+			justEnded++;
+		}
 	}
-	
-	
 }
 function addExpo(feild){
 	if(!expo){
