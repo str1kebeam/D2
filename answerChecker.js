@@ -136,26 +136,26 @@ function setDropdown(dropdown, val){
 //document.getElementById("type").onload=setTimeout(document.getElementById("type").style="visibility: visible", 30000)
 function updateDropdowns(){
 	var type=document.getElementById("type").value;
-	console.log(type);
+	//console.log(type);
 	var options=diffs[type].length;
-	console.log(options);
+	//console.log(options);
 	var diffDrop=document.getElementById("difficulty");
 	if(options==oldMaxDiff){//No options need to be added or removed
-		console.log("fine");
+		//console.log("fine");
 		return;
 	}
 	else if(options>oldMaxDiff){//Need to add options
-		console.log("Adding");
+		//console.log("Adding");
 		for(var i=oldMaxDiff+1; i<=options; i++){//Add some options
 			var option=document.createElement("option");
 			option.text=i;
 			option.value=i;
 			diffDrop.add(option);
-			console.log(option);
+			//console.log(option);
 		}
 	}
 	else{//need to remove options
-		console.log("removing");
+		//console.log("removing");
 		for(var i=oldMaxDiff; i>options; i--){//remove some options
 			diffDrop.remove(i-1);//Remove the option at index i-1, so i=4 would remove index 3 (which would be '4')
 		}
@@ -317,11 +317,11 @@ function newDerivative(terms, maxPow, maxCo, test=false){
 	poly=makePolynomial(terms, maxPow, maxCo, test);
 	if(test){
 		for(var i=0; i<poly[2][0].length; i++){
-			console.log(poly[2][0][i]);
+			//console.log(poly[2][0][i]);
 		}
-		console.log("pows:");
+		//console.log("pows:");
 		for(var i=0; i<poly[2][1].length; i++){
-			console.log(poly[2][1][i]);
+			//console.log(poly[2][1][i]);
 		}
 	}
 	e+=poly[0];
@@ -357,7 +357,7 @@ function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
 	simple+=trig[0];
 	e+=")=?";
 	var ans=0;
-	console.log(simple);
+	//console.log(simple);
 	if(simple.includes("x")){
 		ans=math.derivative(simple,"x").toString();
 	}
@@ -446,7 +446,7 @@ function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we
 	return simple;
 }
 function integrateTrig(tCo, trig, xCo, xPow){
-	console.log("Not finishing this now...");
+	//console.log("Not finishing this now...");
 	return 1;//so that it won't crash, at least...
 	//Going to start coding this now, but am going to have to leave in a bit
 	//Hopefully I will remember to push this code later
@@ -532,25 +532,25 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 		for(var pow=0; pow<=maxPow; pow++){
 			possiblePows.push(pow);
 		}
-		console.log(possiblePows);
+		//console.log(possiblePows);
 		var pows=[];
 		var cos=[];
 		for(var i=0; i<terms; i++){
 			var pi=Math.floor((Math.random()*possiblePows.length));
-			console.log(pi);
+			//console.log(pi);
 			var c=0;
 			while(c==0){
 				c=((Math.random()*maxCo*2)-maxCo).toFixed(0);
 			}
 			var p=possiblePows[pi];
 			possiblePows.splice(pi, 1);
-			console.log(possiblePows);
+			//console.log(possiblePows);
 			pows.push(p);
 			cos[p]=c;
-			console.log(p);
+			//console.log(p);
 		}
 		pows.sort(function(a,b){return b-a});//Javascript tutorial says this should be reverse order
-		console.log(pows);
+		//console.log(pows);
 		for(var i=0; i<pows.length; i++){
 			var p=pows[i];
 			/*if((cos[p]==-1)&&(p!=0)){
@@ -607,7 +607,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 			}
 			raws[0].push(p);
 			raws[1].push(cos[p]);
-			console.log("Co:"+cos[p]+" Pow:"+p);
+			//console.log("Co:"+cos[p]+" Pow:"+p);
 		}
 	}
 	var result=[latex, simple];
@@ -721,9 +721,9 @@ function testRandom(max, limit=100){
 			return i;
 		})
 	}
-	console.log("All were generated?"+!cont);
-	console.log("Times rolled: "+count);
-	console.log(full);
+	//console.log("All were generated?"+!cont);
+	//console.log("Times rolled: "+count);
+	//console.log(full);
 }
 ///////
 //Numpad stuff (I would move this into a separate file, but they work so closely together that they might as well be in the same file)
@@ -814,7 +814,7 @@ function numpad(key){
 		lCharAdd(key);
 	}
 	else if(key=="."){
-		console.log(key);
+		//console.log(key);
 		if(isNaN(Number(entry_text.slice(-1)))){
 			entry_text+="0";
 			area.innerHTML+="0";
@@ -854,8 +854,10 @@ function handleLatexTail(){
 		ltext=ltext.slice(0,d);//remove the trailing part
 	}
 	if(justEnded>0){
-		var s=0;
+		var s=justEnded;
 		justEnded--;
+		//console.log(tail);
+		//console.log(tail[tail.length-1]);
 		if(tail[tail.length-1]=="}{}"){//If a fraction was just closed
 			ltext+="}{";
 			tail[tail.length-1]="}";
@@ -866,11 +868,14 @@ function handleLatexTail(){
 			//tail[tail.length-1]="";
 			tail.pop();
 		}
+
 		//var i=1;
 		while(justEnded>0){//in case something ridiculous, like closing 5 fractions at the same time, or x^2/5, etc.
+			//console.log(tail);
+			//console.log(tail[tail.length-1]);
 			//ltext+=tail[tail.length-i];
 			//tail[tail.length-i]=="";
-			if(tail[tail.lenght-1]=="}{}"){
+			if(tail[tail.length-1]=="}{}"){//I spent at least an hour trying to debug my code, until I realized that this had been tail.lenghT not tail.lengTh
 				ltext+="}{";
 				tail[tail.length-1]="}";
 			}
@@ -884,6 +889,29 @@ function handleLatexTail(){
 		justEnded=s;
 	}
 	return tail;
+}
+var testTail=[]
+function latexTailStart(){
+	while(ltext.slice(-1)=="}"){
+		var d=-1;
+		if(ltext.slice(-3)=="}{}"){//check for the denominator
+			d=-3;
+		}
+		testTail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
+		ltext=ltext.slice(0,d);//remove the trailing part
+	}
+}
+function latexTailStep(){
+	if(testTail[testTail.lenght-1]=="}{}"){
+		ltext+="}{";
+		testTail[testTail.length-1]="}";
+	}
+	else if(testTail[testTail.length-1]=="}"){
+		ltext+="}";
+		//testTail[testTail.length-1]="";
+		testTail.pop();
+	}
+	justEnded--;
 }
 function lCharAdd(char){
 	var tail=handleLatexTail();
@@ -941,6 +969,7 @@ function lCharAdd(char){
 	}
 	if(char==")"){
 		//console.log(ltext.substr(findLatexOpen(ltext)-5,5));
+		//console.log((entry_text.substr(findOpenParen(entry_text)-1,1)));
 		if(['^','/'].includes(entry_text.substr(findOpenParen(entry_text)-1,1))){
 			justEnded++;
 		}
@@ -963,14 +992,14 @@ function lCharAdd(char){
 }
 var num_test;
 function test_numpad(i){
-	var text="1 + 2 * 3 + 5 ^ 3 ) - 6 ^ 3 ^ 2 ) ) + 1 + frac 3 ) 2 ) + frac 3 frac 2 ) 1 ) ) 2 ) + 3 + 3 ^ frac 2 ) 3 ) + 1";
+	var text="1 + 2 * 3 + 5 ^ 3 ) - 6 ^ 3 ^ 2 ) ) + 1 + frac 3 ) 2 ) + frac 3 frac 2 ) 1 ) ) 2 ) + 3 + 3 ^ frac 2 ) 3 ) ) + 1";
 	var parts=text.split(" ");
 	if(i<0){
 		clearTimeout(num_test);
 	}
 	else if(i<parts.length){
 		numpad(parts[i]);
-		num_test=setTimeout(function () {test_numpad(i+1)}, 1000)
+		num_test=setTimeout(function () {test_numpad(i+1)}, 500)
 	}
 }
 function findOpenParen(text){
@@ -1143,7 +1172,7 @@ function addExpo(feild){
 			first=0;
 		}
 		else{
-			console.log("Need to let the user know this");
+			//console.log("Need to let the user know this");
 			reply("<You need to close the fraction before you can close the exponent");
 			response.style.color = "#f00";
 			return "";
@@ -1218,12 +1247,12 @@ function addFrac(feild){
 		var before=feild.innerHTML.slice(0,start);
 		var num=feild.innerHTML.slice(start+1,mid);
 		var den=feild.innerHTML.slice(mid+3);
-		console.log(before);
-		console.log(num);
-		console.log(den);
+		//console.log(before);
+		//console.log(num);
+		//console.log(den);
 		val="";
 		if(den==""){
-			console.log("Yeah, actually setting the denominator to 1");
+			//console.log("Yeah, actually setting the denominator to 1");
 			den="1";
 			val="1";
 		}
@@ -1280,9 +1309,9 @@ function backspace(feild, text){
 		var before=feild.innerHTML.slice(0, start);
 		var num=feild.innerHTML.slice(start+5,middle);
 		var den=feild.innerHTML.slice(middle+12, -6);//found part of the problem- .innerHTML is returing the specail /, not &frasl;
-		console.log(before);
-		console.log(num);
-		console.log(den);
+		//console.log(before);
+		//console.log(num);
+		//console.log(den);
 		//return text;
 		feild.innerHTML=before+"["+num+"]/["+den;
 		text=text.slice(0,-1);
