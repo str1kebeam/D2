@@ -843,7 +843,7 @@ var lReplaces={//things that need to be replaced
 	"pi":"\\pi"
 };
 var justEnded=0;
-function lCharAdd(char){
+function handleLatexTail(){
 	var tail=[];
 	while(ltext.slice(-1)=="}"){
 		var d=-1;
@@ -853,9 +853,50 @@ function lCharAdd(char){
 		tail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
 		ltext=ltext.slice(0,d);//remove the trailing part
 	}
-	console.log(tail);
-	console.log(ltext);
-	console.log(justEnded);
+	if(justEnded>0){
+		var s=0;
+		justEnded--;
+		if(tail[tail.length-1]=="}{}"){//If a fraction was just closed
+			ltext+="}{";
+			tail[tail.length-1]="}";
+			//entry_text+=")/(";
+		}
+		else if(tail[tail.length-1]=="}"){
+			ltext+="}";
+			//tail[tail.length-1]="";
+			tail.pop();
+		}
+		//var i=1;
+		while(justEnded>0){//in case something ridiculous, like closing 5 fractions at the same time, or x^2/5, etc.
+			//ltext+=tail[tail.length-i];
+			//tail[tail.length-i]=="";
+			if(tail[tail.lenght-1]=="}{}"){
+				ltext+="}{";
+				tail[tail.length-1]="}";
+			}
+			else if(tail[tail.length-1]=="}"){
+				ltext+="}";
+				//tail[tail.length-1]="";
+				tail.pop();
+			}
+			justEnded--;
+		}
+		justEnded=s;
+	}
+	return tail;
+function lCharAdd(char){
+	var tail=handleLatexTail();
+	/*while(ltext.slice(-1)=="}"){
+		var d=-1;
+		if(ltext.slice(-3)=="}{}"){//check for the denominator
+			d=-3;
+		}
+		tail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
+		ltext=ltext.slice(0,d);//remove the trailing part
+	}
+	//console.log(tail);
+	//console.log(ltext);
+	//console.log(justEnded);
 	if(justEnded>0){
 		var s=0;
 		if(char==")"){
@@ -888,18 +929,16 @@ function lCharAdd(char){
 			justEnded--;
 		}
 		justEnded=s;
-	}
+	}*/
+	
 	//console.log(ltext);
 	//console.log(justEnded);
 	//console.log(char);
 	//console.log(typeof char);
 	if(Object.keys(lReplaces).includes(char)){//I'm not entirely sure why I need to do it that way, but this works
-		ltext+=lReplaces[char];
+		char=lReplaces[char];
 	}
-	else if(char=="("||(typeof char=="string"&&char.endsWith("("))){//that second statement is much easier than checking for trig and stuff
-		ltext+=char;
-	}
-	else if(char==")"){
+	if(char==")"){
 		//console.log(ltext.substr(findLatexOpen(ltext)-5,5));
 		if(['^','/'].includes(entry_text.substr(findOpenParen(entry_text)-1,1))){
 			justEnded++;
@@ -914,6 +953,7 @@ function lCharAdd(char){
 	}
 	else{
 		ltext+=char;
+		justEnded=0;
 	}
 	for(var i=tail.length-1;i>=0;i--){//Add back on the removed part
 		ltext+=tail[i];
@@ -1055,16 +1095,31 @@ function buff(key, area){
 	}
 }
 function newBackspace(){
-	var temp=ltext;
-	var tail=[];
-	while(temp.slice(-1)=="}"){
-		//if(temp.slice(-3)=="")
+	//var temp=ltext;
+	var tail=handleLatexTail();
+	var last=ltext.slice(-1);
+	if(last=="}"){
+		justEnded--;
+		entry_text=entry_text.slice(0,-1);//need to think about this part a bit more
 	}
-	if(justEnded>0){
+	else if(ltext.slice(-2)=="}{"){
 		justEnded--;
 		entry_text=entry_text.slice(0,-1);
 	}
-
+	else if(last=="("&&ltext.slice(-5)=="\\sin("){ //Oh, need to add in the other functions
+		ltext=ltext.slice(0,-5);
+		entry_text=entry_text.slice(0,-4);//entry_text won't have the \
+	}
+	//test for pi
+	//test for the \frac
+	//normal replace
+	//Finish the trig
+	//Probably a few other things that I forgot, then:
+	for(var i=tail.length-1; i>=0; i--){
+		ltext+=tail[i];
+	}
+	
+	
 }
 function addExpo(feild){
 	if(!expo){
