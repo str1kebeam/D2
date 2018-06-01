@@ -1053,18 +1053,38 @@ var fill_options=[//List of things that buffer would handle:
 	'csc(',
 	'sec(',
 	'cot(',
-	'pi'
+	'pi',
+	'frac'
 	];
 var preBuff="";
 function buff(key, area){
 	if(!buffering){//Start trying to buffer
-		if(key=="o"){//o and s are special, because it could have been c beforehand
+		if(entry_text.slice(-1)=="c"){
+			numpad("back");//Later on, I'll make this nicer
+			preBuff="c";
+			buffer="c";
+		}
+		buffer+=key;
+		fill=fill_options.filter(function(f){
+			return f.startsWith(buffer);
+		})
+		if(fill.length==0){
+			lCharAdd(preBuff);
+			entry_text+=preBuff;
+			buffer="";
+			preBuff="";
+			return "";
+		}
+		buffering=true;
+		return "";
+		/*if(key=="o"){//o and s are special, because it could have been c beforehand
 			if(area.innerHTML.slice(-1)=="c"){
 				fill=['cos(','cot('];
 				buffering=true;
 				buffer="co";
 				entry_text=entry_text.slice(0,-1);//remove that "c";
-				area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
+				//area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
+
 				preBuff="c";
 			}
 		}
@@ -1093,7 +1113,7 @@ function buff(key, area){
 			buffering=true;
 			buffer="p";
 		}
-		return "";
+		return "";*/
 	}
 	else{//just continue the buffer
 		if(key=='Backspace'){
@@ -1103,9 +1123,11 @@ function buff(key, area){
 			});//find everything that could turn into it again
 			if(buffer==preBuff){//They backspaced out of the buffer
 				entry_text+=preBuff;
-				area.innerHTML+=preBuff;
+				//area.innerHTML+=preBuff;
 				buffer="";
 				buffering=false;
+				lCharAdd(preBuff);
+
 				fill=[];
 				preBuff="";
 			}
@@ -1121,8 +1143,10 @@ function buff(key, area){
 		if(fill.length==0){
 			buffer="";
 			buffering=false;
-			area.innerHTML+=preBuff;
+			
+			//area.innerHTML+=preBuff;
 			entry_text+=preBuff;
+			lCharAdd(preBuff);
 			preBuff=""
 			return "";//they stopped typing it, clear the buffer
 		}
