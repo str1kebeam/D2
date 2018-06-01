@@ -52,7 +52,7 @@
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
 					When learning algebra, you probably learned what a <strong>domain</strong> is, and how some functions don't have y-values for all values of x.  Take a look at the graph
 					<latex-eqn>$$f(x)=\frac{x^3+1}{x+1}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=(x^3+1)/(x+1)">
+					<canvas width="800" height="800" id="myCanvas"></canvas>
 					Your algebra instincts may tell you that the domain of this function is <latex-eqn>$$x\neq -1$$</latex-eqn>
 					because at -1, the denominator is 0.  And you would be right.  But you may be starting to question yourself after seeing the graph.  Maybe it's just a feeling, but you know that there has to be a value at -1.
 					<br>
@@ -61,7 +61,7 @@
 					<br>
 					<br>
 					And that's where limits come in.  With limits, the domain can be <i>extended</i> to numbers like -1 by predicting the value of the function at that spot.
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=(x^3+1)/(x+1) zoomed in on -3<x<0">
+					<canvas width="800" height="800" id="myCanvas2"></canvas>
 					In calculus, we push the limits of functions.  \(f(x)\) has no value at -1, but we can test -0.9, -0.99, and other similar numbers that <strong>approach</strong> -1 to find the value of the function.
 					<br>
 					To show this strategy, here's a table of values of \(f(x)\) that approach -1:
@@ -73,8 +73,8 @@
 							<tr><td>\(-0.9\)</td><td>\(2.71\)</td></tr>
 							<tr><td>\(-0.99\)</td><td>\(2.9701\)</td></tr>
 							<tr><td>\(-1\)</td><td>\(\textrm{undefined}\)</td></tr>
-							<tr><td>\(-1.1\)</td><td>\(3.0301\)</td></tr>
-							<tr><td>\(-0.99\)</td><td>\(3.31\)</td></tr>
+							<tr><td>\(-1.01\)</td><td>\(3.0301\)</td></tr>
+							<tr><td>\(-1.1\)</td><td>\(3.31\)</td></tr>
 						</tbody>
 					</table>
 					As you can see, the function doesn't reach 3 but it gets really close to it.  In calculus, this is a <strong>limit</strong>.  The function might not have a value at 3, but we're telling you that it <i>should</i> be equal to 3 at the point.  This is how it is written in calculus:
@@ -90,7 +90,8 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
-<script src="../default.js"></script> <!-- import default JS for the webpage -->
+<script src="../default.js"></script>
+<script src ="limit1.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.sidenav').sidenav();
@@ -116,8 +117,8 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
+	init();
   $('.materialboxed').materialbox();
-
 	setInterval(autoplay, 5000);
 	function autoplay() {
 	    $('.carousel').carousel('next');
