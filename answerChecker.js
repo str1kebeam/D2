@@ -869,26 +869,28 @@ function lCharAdd(char){
 		}
 		else if(tail[tail.length-1]=="}"){
 			ltext+="}";
-			tail[tail.length-1]="";
+			//tail[tail.length-1]="";
+			tail.pop();
 		}
-		var i=1;
+		//var i=1;
 		while(justEnded>0){//in case something ridiculous, like closing 5 fractions at the same time, or x^2/5, etc.
-			ltext+=tail[tail.length-i];
-			tail[tail.length-i]=="";
-			if(tail[tail.lenght-i-1]=="}{}"){
+			//ltext+=tail[tail.length-i];
+			//tail[tail.length-i]=="";
+			if(tail[tail.lenght-1]=="}{}"){
 				ltext+="}{";
-				tail[tail.length-i-1]="}";
+				tail[tail.length-1]="}";
 			}
-			else if(tail[tail.length-1-i]=="}"){
+			else if(tail[tail.length-1]=="}"){
 				ltext+="}";
-				tail[tail.length-1-i]="";
+				//tail[tail.length-1]="";
+				tail.pop();
 			}
 			justEnded--;
 		}
 		justEnded=s;
 	}
-	console.log(ltext);
-	console.log(justEnded);
+	//console.log(ltext);
+	//console.log(justEnded);
 	//console.log(char);
 	//console.log(typeof char);
 	if(Object.keys(lReplaces).includes(char)){//I'm not entirely sure why I need to do it that way, but this works
@@ -898,7 +900,7 @@ function lCharAdd(char){
 		ltext+=char;
 	}
 	else if(char==")"){
-		console.log(ltext.substr(findLatexOpen(ltext)-5,5));
+		//console.log(ltext.substr(findLatexOpen(ltext)-5,5));
 		if(['^','/'].includes(entry_text.substr(findOpenParen(entry_text)-1,1))){
 			justEnded++;
 		}
@@ -916,7 +918,7 @@ function lCharAdd(char){
 	for(var i=tail.length-1;i>=0;i--){//Add back on the removed part
 		ltext+=tail[i];
 	}
-	console.log(justEnded);
+	//console.log(justEnded);
 }
 var num_test;
 function test_numpad(i){
