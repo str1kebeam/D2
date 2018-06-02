@@ -58,7 +58,7 @@
 					<br>
 					Let's start with the following function:
 					<latex-eqn>$$f(x)=\frac{1}{x}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=1/x">
+					<canvas width="800" height="800" id="myCanvas"></canvas>
 					We can usually look at a graph and predict what it's <strong title="End Behavior: a function's value at ±∞">end behavior</strong> is.  We see in this example that \(\frac{1}{x}\) keeps getting smaller, getting infinitesimaly close to 0 without reaching it.  Try tracing the graph above and see for yourself if you don't believe me.
 					<br>
 					<br>
@@ -82,6 +82,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src = "limit-infinity1.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -108,6 +109,7 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
+	init();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
@@ -118,3 +120,4 @@ $(document).ready(function(){
 </script>
 </body>
 </html>
+
