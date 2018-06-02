@@ -134,7 +134,12 @@ var canvas_minx = 0;
             // draw tangent line
             ctx.strokeStyle = "blue";
             ctx.font = f;
-            ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
+            if (isNaN(scene_graphy)){
+	     ctx.fillText("Hole: x = " + scene_graphx.toFixed(4),620,750);
+	}
+	else{
+	     ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
+	}
         }
 
         function doMouseMove(event) {
