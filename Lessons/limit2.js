@@ -128,12 +128,12 @@ var canvas_minx2 = 0;
             // draw tangent line
             ctx2.strokeStyle = "blue";
             ctx2.font = f;
-			if (scene_graphy == null) {
-				ctx2.fillText("Hole: x = " + scene_graphx.toFixed(4),620,750);
-			}
-			else{
-				ctx2.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
-			}
+	    if (scene_graphy == null) {
+		 ctx2.fillText("Hole: x = " + scene_graphx.toFixed(4),620,750);
+	    }
+	    else{
+		ctx2.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
+	    }
         }
 
         function doMouseMove2(event) {
