@@ -55,7 +55,7 @@
 					<br>
 					But sometimes limits depend on the way we look at a function.  Look at the following function:
 					<latex-eqn>$$f(x)=\frac{|x|}{x}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=|x|/x">
+					<canvas width="800" height="800" id="myCanvas"></canvas>
 					Here, there is no y value at \(x=0\).  But something interesting is going on with the <i>limits</i>.
 					<br>
 					<br>
@@ -104,7 +104,7 @@
 					Let's look at another example.
 					<latex-eqn>$$f(x)=x^2\ |\ x&lt; 0$$</latex-eqn>
 					<latex-eqn>$$f(x)=x + 1\ |\ x \geq 0$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="see above function">
+					<canvas width="800" height="800" id="myCanvas2"></canvas>
 					This is a tougher example.
 					<br>
 					<br>
@@ -128,7 +128,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
-<script src="../default.js"></script> <!-- import default JS for the webpage -->
+<script src="../default.js"></script><!-- import default JS for the webpage -->
+<script src = "left-limit1.js"></script>
+<script src = "left-limit2.js"></script> 
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.sidenav').sidenav();
@@ -154,6 +156,8 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
+	init();
+	init2();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
