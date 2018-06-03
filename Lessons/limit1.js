@@ -1,26 +1,25 @@
 var canvas_minx = 0;
-            var canvas_maxx = 800;
-            var canvas_miny = 0;
-            var canvas_maxy = 800;
-            var scene_size = 10.0
-            var scene_minx = -1 * scene_size;
-            var scene_maxx = scene_size;
-            var scene_miny = -1 * scene_size;
-            var scene_maxy = scene_size;
-            var canvas_graphx = 0;
-            var canvas_graphy = 0;
-            var canvas_xaxis_minx = 0;
-            var canvas_xaxis_maxx = 0;
-            var canvas_xaxis_zeroy = 0;
-            var canvas_yaxis_miny = 0;
-            var canvas_yaxis_maxy = 0;
-            var canvas_yaxis_zerox = 0;
-            var slope = 0;
-            var graph_coords = [];
-            var n = 3000;
-            var dx = 0; // set value w.r.t. n in init()
-            var x1 = scene_minx;
-            var x2 = scene_maxx;
+var canvas_maxx = 800;
+var canvas_miny = 0;
+var canvas_maxy = 800;
+var scene_size = 10.0
+var scene_minx = -1 * scene_size;
+var scene_maxx = scene_size;
+var scene_miny = -1 * scene_size;
+var scene_maxy = scene_size;
+var canvas_graphx = 0;
+var canvas_graphy = 0;
+var canvas_xaxis_minx = 0;
+var canvas_xaxis_maxx = 0;
+var canvas_xaxis_zeroy = 0;
+var canvas_yaxis_miny = 0;
+var canvas_yaxis_maxy = 0;
+var canvas_yaxis_zerox = 0;
+var slope = 0;
+var graph_coords = [];
+var n = 3000;
+var scale = 1;
+var dx = 0; // set value w.r.t. n in init()
 
         function canvas_x(x) {
             var u = (x - scene_minx)/(scene_maxx - scene_minx);
@@ -89,7 +88,7 @@ var canvas_minx = 0;
             var i=0;
             var offsetx = 0;
             var offsety = 0;
-            var f = "18px Verdana";
+            var f = "22px Verdana";
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
             ctx.clearRect(canvas_minx,canvas_miny, canvas_maxx-canvas_minx, canvas_maxy-canvas_miny);
@@ -98,11 +97,13 @@ var canvas_minx = 0;
             // draw tangent marker
             ctx.lineWidth = 0.375;
             ctx.strokeStyle = "rgb(0,0,0,0.5)";
-            for (var i = Math.floor(scene_minx) + 1; i < Math.floor(scene_maxx); i += 1){
+            for (var i = Math.floor(scene_minx) + 1; i < Math.floor(scene_maxx); i += scale){
                 ctx.beginPath();
                 ctx.moveTo(canvas_x(i),canvas_y(scene_miny));
                 ctx.lineTo(canvas_x(i),canvas_y(scene_maxy));
                 ctx.stroke();
+			}
+			for (var i = Math.floor(scene_miny) + 1; i < Math.floor(scene_maxy); i += scale){
                 ctx.beginPath();
                 ctx.moveTo(canvas_x(scene_minx),canvas_y(i));
                 ctx.lineTo(canvas_x(scene_maxx),canvas_y(i));
@@ -126,20 +127,24 @@ var canvas_minx = 0;
             // draw graph of function
             ctx.strokeStyle = "blue";
             ctx.beginPath();
+			ctx.lineWidth = 2.0;
             ctx.moveTo(graph_coords[0].x,graph_coords[0].y);
             for (i=0; i<n; i++) {
                 ctx.lineTo(graph_coords[i].x,graph_coords[i].y);
             }
             ctx.stroke();
+			ctx.lineWidth = 1.0;
             // draw tangent line
-            ctx.strokeStyle = "blue";
+            ctx.fillStyle = "black";
             ctx.font = f;
+			ctx.fillText("x",canvas_maxx-30.0,canvas_xaxis_zeroy-13);
+            ctx.fillText("y",canvas_yaxis_zerox-20.0,canvas_miny+30.0);
             if (isNaN(scene_graphy)){
-	     ctx.fillText("Hole: x = " + scene_graphx.toFixed(4),620,750);
-	}
-	else{
-	     ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
-	}
+				ctx.fillText("Hole: x = " + scene_graphx.toFixed(4),560,750);
+			}
+			else{
+				ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",560,750);
+			}
         }
 
         function doMouseMove(event) {
