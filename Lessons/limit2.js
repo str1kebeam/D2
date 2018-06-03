@@ -2,7 +2,6 @@ var canvas_minx2 = 0;
             var canvas_maxx2 = 800;
             var canvas_miny2 = 0;
             var canvas_maxy2 = 800;
-            var scene_size = 10.0
             var scene_minx2 = -2;
             var scene_maxx2 = 0;
             var scene_miny2 = 0;
@@ -81,7 +80,7 @@ var canvas_minx2 = 0;
             var i=0;
             var offsetx = 0;
             var offsety = 0;
-            var f = "18px Verdana";
+            var f = "22px Trebuchet MS";
             var canvas2 = document.getElementById("myCanvas2");
             var ctx2 = canvas2.getContext("2d");
             ctx2.clearRect(canvas_minx2,canvas_miny2, canvas_maxx2-canvas_minx2, canvas_maxy2-canvas_miny2);
@@ -119,21 +118,23 @@ var canvas_minx2 = 0;
             ctx2.stroke();
             // draw graph of function
             ctx2.strokeStyle = "blue";
+			ctx2.lineWidth = 2.0;
             ctx2.beginPath();
             ctx2.moveTo(graph_coords2[0].x,graph_coords2[0].y);
             for (i=0; i<n; i++) {
                 ctx2.lineTo(graph_coords2[i].x,graph_coords2[i].y);
             }
             ctx2.stroke();
+			ctx2.lineWidth = 1.0;
             // draw tangent line
-            ctx2.strokeStyle = "blue";
             ctx2.font = f;
-	    if (scene_graphy == null) {
-		 ctx2.fillText("Hole: x = " + scene_graphx.toFixed(4),620,750);
-	    }
-	    else{
-		ctx2.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
-	    }
+			ctx2.fillStyle = "black";
+			if (isNaN(scene_graphy)) {
+				ctx2.fillText("Hole: x = " + scene_graphx.toFixed(4),560,750);
+			}
+			else{
+				ctx2.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",560,750);
+			}
         }
 
         function doMouseMove2(event) {
