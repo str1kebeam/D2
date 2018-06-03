@@ -26,12 +26,14 @@ diffs["derivative"]=[
 ];
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
 diffs["integral"]=[[2,1,5],[3,2,5]];
+diffs["limit"]=[[3,3,5,5,5,false],[4,4,5,5,5,true]];
 var diffNames=[];
 diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
 						//Is it bad that I needed to look up what "Trig" was short for?
 diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
 diffNames['integral']=["Easy Polynomial","Hard Polynomial"];
+diffNames['limit']=["Easy Hole","Hard Hole"];
 //////
 //Startup stuff
 //////
@@ -56,6 +58,10 @@ var loadFunc = function(){
 			else if(stuff[1]=="tangent"){
 				qType="tangent";
 				welcome.innerHTML="Now that you've learned tangent lines, practice your skills with these problems";
+			}
+			else if(stuff[1]=="limit"){
+				qType="limit";
+				welcome.innerHTML="Now that you've learned limits, practice your skills with these problems";
 			}
 		}
 		if(stuff[0]=="difficulty"){
@@ -249,6 +255,9 @@ function newQ(){
 		}
 		else if(type=="tangent"){
 			t_l(diff);
+		}
+		else if(type=="limit"){
+			limitQ(diff);
 		}
 		strike=false;
 		var b=document.getElementById("new-question");
@@ -482,6 +491,13 @@ function integrateTrig(tCo, trig, xCo, xPow){
 	//Might just want to generate a trig function, and then find the derivative of that (and print it nicely)
 	//Yeah, do that
 }
+function limitQ(diff){
+	var d=diffs["limit"][diff];
+	if(diffNames['limit'][diff-1].endsWith("Hole")){
+		simpleVisualLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
+		rat=true;
+	}
+}
 function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	var nums=[];
 	var usedMaxNum=Math.floor(Math.random()*maxNum)+1;
@@ -593,6 +609,7 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	console.log(dens);
 	currentAns=ans;
 	ask("Where is there a hole in this function?",latex);
+	//Something to graph simple
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
