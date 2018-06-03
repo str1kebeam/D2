@@ -26,14 +26,14 @@ diffs["derivative"]=[
 ];
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
 diffs["integral"]=[[2,1,5],[3,2,5]];
-diffs["limit"]=[[3,3,5,5,5,false],[4,4,5,5,5,true]];
+diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];
 var diffNames=[];
 diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
 						//Is it bad that I needed to look up what "Trig" was short for?
 diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
 diffNames['integral']=["Easy Polynomial","Hard Polynomial"];
-diffNames['limit']=["Easy Hole","Hard Hole"];
+diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole"];
 //////
 //Startup stuff
 //////
