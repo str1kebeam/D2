@@ -9,8 +9,6 @@ var strike=false;
 var entry_text="";
 var qType="";
 start_diff=1;
-
-var oldMaxDiff=2;//For updating the dropdown
 /////
 //Difficulty settings
 /////
@@ -22,11 +20,17 @@ var irTrig=['arccsc','arcsec', 'arccot'];
 var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
 var diffs=[];
 diffs["derivative"]=[
-	[2,1,5], [3,2,5], //Polynomial difficulty levels
-	[1,1,1,sTrig], [2,2,2,sTrig]//The trig difficulty levels
+	[2,1,5], [3,2,5], [4,5,10], //Polynomial difficulty levels
+	[1,1,1,sTrig], [2,2,2,sTrig], [3,3,sTrig]//The trig difficulty levels
 ];
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
 diffs["integral"]=[[2,1,5],[3,2,5]];
+var diffNames=[];
+diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
+						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
+						//Is it bad that I needed to look up what "Trig" was short for?
+diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
+diffNames['integral']=["Easy Polynomial","Hard Polynomial"];
 //////
 //Startup stuff
 //////
@@ -65,11 +69,11 @@ var loadFunc = function(){
 	if(qType!=""){
 		document.getElementById("type").value=qType;
 		//document.getElementById("type").onload=
-		setTimeout(setDropdown(document.getElementById("type"), qType), 300000);
+		setDropdown(document.getElementById("type"), qType);
 
 		//document.getElementById("type").onload=function(){document.getElementById("type").value=qType;};
 		document.getElementById("difficulty").value=start_diff;
-		setTimeout(setDropdown(document.getElementById("difficulty"), start_diff), 300000);
+		setDropdown(document.getElementById("difficulty"), start_diff);
 		//document.getElementById("difficulty").onload=function(){document.getElementById("difficulty").value=start_diff;};
 		newQ();
 		//console.log("test");
@@ -135,15 +139,15 @@ function setDropdown(dropdown, val){
 //document.getElementById("type").onload=setTimeout(document.getElementById("type").style="visibility: visible", 30000)
 function updateDropdowns(){
 	var type=document.getElementById("type").value;
-	console.log(type);
-	var options=diffs[type].length;
-	console.log(options);
+	//console.log(type);
+	//var options=diffs[type].length;
+	//console.log(options);
 	var diffDrop=document.getElementById("difficulty");
-	if(options==oldMaxDiff){//No options need to be added or removed
+	/*if(options==oldMaxDiff){//No options need to be added or removed
 		console.log("fine");
 		return;
-	}
-	else if(options>oldMaxDiff){//Need to add options
+	}*/
+	/*else if(options>oldMaxDiff){//Need to add options
 		console.log("Adding");
 		for(var i=oldMaxDiff+1; i<=options; i++){//Add some options
 			var option=document.createElement("option");
@@ -159,7 +163,16 @@ function updateDropdowns(){
 			diffDrop.remove(i-1);//Remove the option at index i-1, so i=4 would remove index 3 (which would be '4')
 		}
 	}
-	oldMaxDiff=options;
+	oldMaxDiff=options;*/
+	while(diffDrop.options.length>0){
+		diffDrop.remove(0);
+	}
+	for(var i=0;i<diffNames[type].length; i++){
+		var option=document.createElement("option");
+		option.text=diffNames[type][i];
+		option.value=i+1;
+		diffDrop.add(option);
+	}
 	$('#difficulty').formSelect();
 }
 //window.onload=setTimeout(loadFunc, 2000);
