@@ -1,4 +1,4 @@
-var canvas_minx = 0;
+            var canvas_minx = 0;
             var canvas_maxx = 800;
             var canvas_miny = 0;
             var canvas_maxy = 800;
@@ -89,7 +89,7 @@ var canvas_minx = 0;
             var i=0;
             var offsetx = 0;
             var offsety = 0;
-            var f = "16px Verdana";
+            var f = "22px Trebuchet MS";
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
             ctx.clearRect(canvas_minx,canvas_miny, canvas_maxx-canvas_minx, canvas_maxy-canvas_miny);
@@ -125,16 +125,20 @@ var canvas_minx = 0;
             ctx.stroke();
             // draw graph of function
             ctx.strokeStyle = "blue";
+			ctx.lineWidth = 2.0;
             ctx.beginPath();
             ctx.moveTo(graph_coords[0].x,graph_coords[0].y);
             for (i=0; i<n; i++) {
                 ctx.lineTo(graph_coords[i].x,graph_coords[i].y);
             }
             ctx.stroke();
+			ctx.lineWidth = 1.0;
             // draw tangent line
-            ctx.strokeStyle = "blue";
+            ctx.fillStyle = "black";
             ctx.font = f;
-            ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
+            ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",560,750);
+            ctx.fillText("x",canvas_maxx-30.0,canvas_xaxis_zeroy-13);
+            ctx.fillText("y",canvas_yaxis_zerox-20.0,canvas_miny+30.0);
         }
 
         function doMouseMove(event) {
