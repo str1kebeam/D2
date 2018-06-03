@@ -92,7 +92,7 @@ var canvas_minx2 = 0;
             var i=0;
             var offsetx = 0;
             var offsety = 0;
-            var f = "16px Verdana";
+            var f = "22px Trebuchet MS";
             var canvas2 = document.getElementById("myCanvas2");
             var ctx2 = canvas2.getContext("2d");
             ctx2.clearRect(canvas_minx2,canvas_miny2, canvas_maxx2-canvas_minx2, canvas_maxy2-canvas_miny2);
@@ -128,16 +128,20 @@ var canvas_minx2 = 0;
             ctx2.stroke();
             // draw graph of function
             ctx2.strokeStyle = "blue";
+			ctx2.lineWidth = 2.0;
             ctx2.beginPath();
             ctx2.moveTo(graph_coords2[0].x,graph_coords2[0].y);
             for (i=0; i<n; i++) {
                 ctx2.lineTo(graph_coords2[i].x,graph_coords2[i].y);
             }
             ctx2.stroke();
+			ctx2.lineWidth = 1.0;
             // draw tangent line
-            ctx2.strokeStyle = "blue";
+            ctx2.fillStyle = "black";
             ctx2.font = f;
-            ctx2.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
+            ctx2.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",560,750);
+			ctx2.fillText("x",canvas_maxx-30.0,canvas_xaxis_zeroy-13);
+            ctx2.fillText("y",canvas_yaxis_zerox-20.0,canvas_miny+30.0);
         }
 
         function doMouseMove2(event) {
