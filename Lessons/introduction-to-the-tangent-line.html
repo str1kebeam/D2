@@ -61,19 +61,24 @@
 					<br>
 					<br>
 					To find a tangent line, we make a similar type of line called a <strong>secant line</strong>.
-					A <strong>secant line</strong> is another, less common word used in geometry.  Secant lines, unlike tangent lines, <i>intersect</i> graphs.  Take a look at a secant of the circle below.
-					For example, the graph below is also of <latex-eqn>\(f(x)=x^{2}\)</latex-eqn>
+					A <strong>secant line</strong> is another, less common word used in geometry.  Secant lines, unlike tangent lines, <i>intersect</i> graphs as shown below.
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="circle w/ secant line">
+					The graph of <latex-eqn>\(f(x)=x^{2}\)</latex-eqn> with a secant line is shown here:
 					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with a secant line">
-					The secant line is a line on a curve that intersects the curve at two points.  Let's call them \((x_{1}, y_{1})\) and \((x_{2}, y_{2})\).  You may recall that the slope between two points is rise over run, or <latex-eqn>$$m=\frac{rise}{run}=\frac{Δy}{Δx}=\frac{y_{2}-y_{1}}{x_{2}-x_{1}}$$</latex-eqn>
+					You may recall that the slope between two points is rise over run, or <latex-eqn>$$m=\frac{rise}{run}=\frac{Δy}{Δx}=\frac{y_{2}-y_{1}}{x_{2}-x_{1}}$$</latex-eqn>
 					In this graph, since the secant line goes through \((0,0)\) and \((1,1)\), the slope is <latex-eqn>$$m=\frac{1-0}{1-0}=1$$</latex-eqn>
 					Try using the interactive graph below to make a secant line through different points on the graph.
-    				<canvas width="800" height="800" id="myCanvas"></canvas>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with an interactive secant line">
 					To make this secant line, which goes through two points, become a tangent line, which goes through one point, we must bring both points as close to each other as possible.  For example, the points \((0.9, 0.81)\) and \((1, 1)\) are really close and the secant line between them have a slope of <latex-eqn>$$\frac{1-0.81}{1-0.9}=\frac{0.19}{0.1}=1.9$$</latex-eqn>
-					But what happens if we try to make both points at exactly the same spot?  What if they're both \((1,1)\)?  We can't calculate the slope of this line since the slope equation will give an answer of \(\frac{0}{0}\) — or indeterminate. <latex-eqn>$$\frac{1-1}{1-1}=\frac{0}{0}=\textrm{indeterminate}$$</latex-eqn>
-					Instead, mathematicians make the two points <strong>approach</strong> each other: they become infinitesimally close so that the answer is the same but the denominator is not exactly zero, making the answer defined.  In calculus, this is called a <strong>limit</strong>, represented as <latex-eqn>$$m=\frac{1-y_{1}}{1-x_{1}}=\lim_{x \to 1}\frac{1-f(x)}{1-x}$$</latex-eqn>
-					Do you think you found the answer to the limit above?  At the point \((1,1)\), the slope of \(f(x) = x^{2}\) is exactly 2.  This can be solved by creating the secant line and making the points approach each other, or by <a href="">solving the limit analytically</a>.
-					Just for completeness, let's solve for the equation of the tangent line.  You may remember that the point-slope form of a linear equation is \(y=m(x-x_{1})+y_{1}\).  All we need to do is plug in \(2\) for \(m\) and \((1, 1)\) for \((x_{1}, y_{1})\), as shown below: <latex-eqn>$$y=2(x-1)+1$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with the tangent line">
+					To solve this, we use the following <strong>limit</strong>:
+					<latex-eqn>$$\lim_{h \to 0}\frac{f(x+h)-f(x)}{h}$$</latex-eqn>
+					All you need to do is replace f(x) with the actual function, and then you just solve the limit.  If you don't remember how to do this, view our lessons on limits <a href="what-is-a-limit.html">here</a>.
+					<canvas width="800" height="800" id="myCanvas"></canvas>
+					At the point \((1,1)\), the limit is
+					<latex-eqn>$$\lim_{h \to 0}\frac{(x+h)^2-(x)^2}{h}=\frac{2xh+h^2}{h}=2x$$</latex-eqn>
+					At \(x=1\), the slope is 2.  Using the <a href="https://www.khanacademy.org/math/algebra/two-var-linear-equations/point-slope/v/idea-behind-point-slope-form" target="_blank">point slope form</a> of a linear equation, the tangent line is
+					<latex-eqn>$$y-1=2(x-1)$$</latex-eqn>
+					<br>
 					Think you understand the tangent line?  Test your skills and become a master by <a href="practice.html">practicing tangent lines</a>!
 				</div>
 			</div>
