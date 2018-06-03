@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if lt IE9]>
+	<script>
+		document.createElement("latex-eqn");
+	</script>
+	<![endif]--> <!-- IE compatibility -->
+	<meta charset="utf-8">
+	<title>Learn - Limits at Infinity</title>
+	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
+	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
+	<link rel="shortcut icon" href="..\DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
+</head>
+<body>
+	<div id="container">
+		<div class="navbar-fixed">
+		<nav class="color1" id="topbar">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo center">Logo Here</a>
+				<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="../index.html">Home<i class="material-icons right">home</i></a></li>
+					<li><a href="index.html">Lessons</a></li>
+					<li><a href="../practice.html">Practice</a></li>
+					<li><a href="../about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		</div>
+		<div class="row">
+			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
+				<h2>Limits</h2> <!-- Sidebar Column Here -->
+				<ul class="collection" id="sitemap">
+					<a href="what-is-a-limit.html" class="collection-item">What is a Limit?</a>
+					<a href="left-and-right-limits.html" class="collection-item">Left and Right Limits</a>
+					<a href="solving-a-limit-algebraically.html" class="collection-item">Solving a Limit Algebraically</a>
+					<a href="#!" class="collection-item active">Limits at Infinity</a>
+				</ul>
+				<div class="t-cen">
+					<a href="./index.html"><button class="btn waves-effect waves-lighten">Back to Lessons</button></a>
+					<br>
+					<br>
+					<a href="../practice.html"><button class="btn waves-effect waves-lighten">Practice This</button></a> <!-- add correct link -->
+				</div>
+			</div>
+			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
+				<h1 id="body-title"> <!-- Title -->
+					Limits at Infinity
+				</h1>
+				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
+					There comes a point in our lives when someone finally tells us the truth about life: infinity is not actually a number.  When we look at a graph, we can try as hard as we can to reach infinity but all we do is approach it.  <i>Do you see where I'm going with this?</i>
+					<br>
+					<br>
+					And that's why we use <a href="what-is-a-limit.html">limits</a> to find values of functions at infinity.
+					<br>
+					<br>
+					Let's start with the following function:
+					<latex-eqn>$$f(x)=\frac{1}{x}$$</latex-eqn>
+					<canvas width="800" height="800" id="myCanvas"></canvas>
+					We can usually look at a graph and predict what it's <strong title="End Behavior: a function's value at ±∞">end behavior</strong> is.  We see in this example that \(\frac{1}{x}\) keeps getting smaller, getting infinitesimaly close to 0 without reaching it.  Try tracing the graph above and see for yourself if you don't believe me.
+					<table>
+						<thead>
+							<tr><td>\(x\)</td><td>\(f(x)\)</td></tr>
+						</thead>
+						<tbody>
+							<tr><td>\(10\)</td><td>\(.1\)</td></tr>
+							<tr><td>\(100\)</td><td>\(.01\)</td></tr>
+							<tr><td>\(1000\)</td><td>\(.001\)</td></tr>
+							<tr><td>\(10000\)</td><td>\(.0001\)</td></tr>
+						</tbody>
+					</table>
+					<br>
+					Since the numbers approach zero, this limit can be written as
+					<latex-eqn title="Note: it is unnecessary to write ∞-, referring to a one sided limit, because infinity can only be approached from one side">$$\lim_{x\to \infty} \frac{1}{x} = 0$$</latex-eqn>
+					Now for the algebra behind this.
+					<br>
+					<br>
+					To figure out the limit of a <strong>rational function</strong> - a fraction with polynomials in the numberator and denominator - we must comapre the <strong title="Highest Degree: biggest exponent">highest degree</strong> term in both the numerator and denominator as shown:
+					<table>
+						<thead>
+							<tr><td>Numerator Degree vs Denominator Degree</td><td>Effect</td><td>Example</td></tr>
+						</thead>
+						<tbody>
+							<tr><td>Numerator is Smaller</td><td>Zero</td><td>\(\frac{3x}{x^2+1}\to  \infty = 0\)</td></tr>
+							<tr><td>Equal</td><td>Fraction of <strong title="Coefficient: the number in front of a variable">Coefficients</strong></td><td>\(\frac{3x}{x+1} \to \infty = \frac{3}{1}=3\)</td></tr>
+							<tr><td>Denominator is Smaller</td><td>Infinity</td><td>\(\frac{3x^2}{x+1} \to \infty = \infty\)</td></tr>
+						</tbody>
+					</table>
+					Here are the three functions shown in the table so you can see what happens:
+					<latex-eqn>$$f(x)=\frac{3x}{x^2+1}$$</latex-eqn>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<br>
+					<br>
+					<latex-eqn>$$f(x)=\frac{3x}{x+1}$$</latex-eqn>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<br>
+					<br>
+					<latex-eqn>$$f(x)=\frac{3x^2}{x+1}$$</latex-eqn>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<i>Why does this work?</i>  You may ask...
+					<br>
+					<br>
+					Not all infinities are created equal.  Even though \(x\) and \(x^2\) are both infinity at infinity, \(x^2\) is way bigger.  This is because \(x^2\) gets bigger faster than \(x\) at large numbers.  We know this because \(x^2\) has a higher degree, or exponent.
+					<br>
+					<br>
+					To figure out these limits, we must look at the term of highest degree in the numerator and denominator.  For example, look at the third function above:
+					<latex-eqn>$$f(x)=\frac{3x^2}{x+1}$$</latex-eqn>
+					In the denominator, we could care less about the \(+1\) in \(x+1\) since it is smaller than \(x\) at infinity.  This simplifies the equation to
+					<latex-eqn>$$f(x)=\frac{3x^2}{x}=3x$$</latex-eqn>
+					As \(x\) approaches infinity, \(3x\) also approaches infinity.
+					<h3>Think you understand limits at infinity? Practice this on our <a href="../practice.html">practice page</a>!</h4>
+				</div>
+			</div>
+		</div>
+
+		</div>
+	</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src = "limit-infinity1.js"></script>
+<script src="../default.js"></script> <!-- import default JS for the webpage -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.sidenav').sidenav();
+	$('select').formSelect();
+	$(".dropdown-trigger").dropdown({
+		hover: true,
+		coverTrigger: false,
+		closeOnClick: false
+	});
+	$('.carousel').carousel({
+		duration: 500,
+		dist: 100,
+		shift: 0,
+		fullWidth: true,
+		padding: 50,
+		margin: "auto"
+	});
+	$('.carousel.carousel-slider').carousel({
+		fullWidth: true
+	});
+	$('.carousel-slider').slider();
+	$('.pushpin').pushpin({
+		offset: 50
+	});
+	$('.tabs').tabs();
+	init();
+  $('.materialboxed').materialbox();
+
+	setInterval(autoplay, 5000);
+	function autoplay() {
+	    $('.carousel').carousel('next');
+	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
+});
+</script>
+</body>
+</html>

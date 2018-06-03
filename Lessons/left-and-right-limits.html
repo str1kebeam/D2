@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if lt IE9]>
+	<script>
+		document.createElement("latex-eqn");
+	</script>
+	<![endif]--> <!-- IE compatibility -->
+	<meta charset="utf-8">
+	<title>Learn - Left and Right Limits</title>
+	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
+	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
+	<link rel="shortcut icon" href="..\DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
+</head>
+<body>
+	<div id="container">
+		<div class="navbar-fixed">
+		<nav class="color1" id="topbar">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo center">Logo Here</a>
+				<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="../index.html">Home<i class="material-icons right">home</i></a></li>
+					<li><a href="index.html">Lessons</a></li>
+					<li><a href="../practice.html">Practice</a></li>
+					<li><a href="../about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		</div>
+		<div class="row">
+			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
+				<h2>Limits</h2> <!-- Sidebar Column Here -->
+				<ul class="collection" id="sitemap">
+					<a href="what-is-a-limit.html" class="collection-item">What is a Limit?</a>
+					<a href="#!" class="collection-item active">Left and Right Limits</a>
+					<a href="solving-a-limit-algebraically.html" class="collection-item">Solving a Limit Algebraically</a>
+					<a href="limits-at-infinity.html" class="collection-item">Limits at Infinity</a>
+				</ul>
+				<div class="t-cen">
+					<a href="./index.html"><button class="btn waves-effect waves-lighten">Back to Lessons</button></a>
+					<br>
+					<br>
+					<a href="../practice.html"><button class="btn waves-effect waves-lighten">Practice This</button></a> <!-- add correct link -->
+				</div>
+			</div>
+			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
+				<h1 id="body-title"> <!-- Title -->
+					Left and Right Limits
+				</h1>
+				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
+					You now know that <strong>limits</strong> are times when functions look like they should have a value at a certain spot but really don't.  As seen in the <a href="what-is-a-limit.html">first lesson</a>, a limit can fill these holes in a graph by <i>approaching</i> a value.
+					<br>
+					<br>
+					But sometimes limits depend on the way we look at a function.  Look at the following function:
+					<latex-eqn>$$f(x)=\frac{|x|}{x}$$</latex-eqn>
+					<canvas width="800" height="800" id="myCanvas"></canvas>
+					Here, there is no y value at \(x=0\).  But something interesting is going on with the <i>limits</i>.
+					<br>
+					<br>
+					<br>
+					Let's try to figure out what the value at zero is by looking at numbers less than zero:
+					<table class="thin">
+						<thead>
+							<tr><td>\(x\)</td><td>\(f(x)\)</td></tr>
+						</thead>
+						<tbody>
+							<tr><td>\(-0.1\)</td><td>\(-1\)</td></tr>
+							<tr><td>\(-0.01\)</td><td>\(-1\)</td></tr>
+							<tr><td>\(-0.001\)</td><td>\(-1\)</td></tr>
+							<tr><td>\(0\)</td><td>\(\textrm{undefined}\)</td></tr>
+						</tbody>
+					</table>
+					It appears as if from the left, \(f(0)\) should be -1.  This is shown in calculus as:
+					<latex-eqn>$$\lim_{x\to 0^-}\frac{|x|}{x}=-1$$</latex-eqn>
+					Where the minus sign (-) means that we're looking at numbers lower than zero.
+					<br>
+					<br>
+					<br>
+					Now let's look at numbers greater than zero:
+					<table class="thin">
+						<thead>
+							<tr><td>\(x\)</td><td>\(f(x)\)</td></tr>
+						</thead>
+						<tbody>
+							<tr><td>\(0\)</td><td>\(\textrm{undefined}\)</td></tr>
+							<tr><td>\(0.001\)</td><td>\(1\)</td></tr>
+							<tr><td>\(0.01\)</td><td>\(1\)</td></tr>
+							<tr><td>\(0.1\)</td><td>\(1\)</td></tr>
+						</tbody>
+					</table>
+					On the right, it seems like \(f(0)\) should be +1.  Similar to the previous example, this is shown as:
+					<latex-eqn>$$\lim_{x\to 0^+}\frac{|x|}{x}=1$$</latex-eqn>
+					Where the plus sign (+) means that we're looking at numbers greater than zero.
+					<br>
+					<br>
+					What we just did is called a <strong>one sided limit</strong>.  A one sided limit is the limit of a function only looking at one side of the graph:  a <strong>left limits</strong> focuses on values to the left of the limit, and a <strong>right limit</strong> is based off of those to the right.
+					<br>
+					<br>
+					However, because the limit on the left and right sides don't equal, the two sided limit (for both the left and right sides) does not exist.
+					<latex-eqn>$$\lim_{x\to 0}\frac{|x|}{x}=\textrm{does not exist}$$</latex-eqn>
+					<br>
+					Let's look at another example.
+					<latex-eqn>$$f(x)=x^2\ |\ x&lt; 0$$</latex-eqn>
+					<latex-eqn>$$f(x)=x + 1\ |\ x \geq 0$$</latex-eqn>
+					<canvas width="800" height="800" id="myCanvas2"></canvas>
+					This is a tougher example.
+					<br>
+					<br>
+					From the left, the graph is \(f(x)=x^2\), and the function approaches zero as we approach \(x=0\) from the left side.
+					<br>
+					Therefore,
+					<latex-eqn>$$\lim_{x\to 0^-}f(x)=0$$</latex-eqn>
+					From the right, the graph is \(f(x)=x+1\), and the function approaches 1 from the right side.
+					<br>
+					Therefore,
+					<latex-eqn>$$\lim_{x\to 0^+}f(x)=1$$</latex-eqn>
+					<br>
+					<br>
+					<h3>Think you understand one sided 	limits? Test your skills on our <a href="../practice.html">practice page</a>!</h4>
+				</div>
+			</div>
+		</div>
+
+		</div>
+	</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src="../default.js"></script><!-- import default JS for the webpage -->
+<script src = "left-limit1.js"></script>
+<script src = "left-limit2.js"></script> 
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.sidenav').sidenav();
+	$('select').formSelect();
+	$(".dropdown-trigger").dropdown({
+		hover: true,
+		coverTrigger: false,
+		closeOnClick: false
+	});
+	$('.carousel').carousel({
+		duration: 500,
+		dist: 100,
+		shift: 0,
+		fullWidth: true,
+		padding: 50,
+		margin: "auto"
+	});
+	$('.carousel.carousel-slider').carousel({
+		fullWidth: true
+	});
+	$('.carousel-slider').slider();
+	$('.pushpin').pushpin({
+		offset: 50
+	});
+	$('.tabs').tabs();
+	init();
+	init2();
+  $('.materialboxed').materialbox();
+
+	setInterval(autoplay, 5000);
+	function autoplay() {
+	    $('.carousel').carousel('next');
+	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
+});
+</script>
+</body>
+</html>
