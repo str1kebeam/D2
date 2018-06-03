@@ -482,6 +482,85 @@ function integrateTrig(tCo, trig, xCo, xPow){
 	//Might just want to generate a trig function, and then find the derivative of that (and print it nicely)
 	//Yeah, do that
 }
+function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
+	var nums=[];
+	var usedMaxNum=Math.floor(Math.random()*maxNum)+1;
+	var type=Math.floor(Math.random()*3);//So, I remember 3 ways this can go:
+											//0-no place where it is undefined
+											//1-hole
+											//2-jump, with an asymtote
+	for(var i=0;i<usedMaxNum-1; i++){
+		var num=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
+		nums.push(num);
+	}
+	if(type==1){
+		if(!nums.some(function(n){
+			return !isNaN(n[2][3]);//If all of them don't have a real 0
+		})){
+			var genning=true;
+			while(genning){
+				var num=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
+				if(!isNaN(num[2][3])){
+					nums.push(num);
+					genning=false;
+				}
+			}
+		}
+		else{
+			nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
+		}
+	}
+	else{
+		nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
+	}
+	var dens=[];
+	var usedMaxDen=Math.floor(Math.random()*maxDen)+1;
+	var hole_index=Math.floor(Math.random()*usedMaxDen);
+	for(var i=0; i<usedMaxDen; i++){
+		var genning=true;
+		while(genning){
+			var den=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
+			if(type==0){
+				if(!isNaN(den[2][3])){//Not 0 over all reals
+					dens.push(den);
+					genning=false;
+				}
+			}
+			else if(type==1){
+				if(i==hole_index){
+					var good_nums=nums.filter(function (n){
+						return !isNaN(n[2][3]);
+					})
+					var index=Math.floor(Math.random()*good_nums.length);
+					dens.push(good_nums[index]);
+					genning=false;
+				}
+				else if(!isNaN(den[2][3])){
+					dens.push(den);
+					genning=false;
+				}
+			}
+			else if(type==2){
+				if(!nums.some(function (n){
+					return den[2][3]==n[2][3]&&!isNaN(den[2][3]);//Isn't a hole
+				})){
+					if(i+1==usedMaxDen&&!dens.some(function (d){return !isNaN(d[2][3])})){//Check that there is at least one asymptote
+						if(!isNaN(den[2][3])){
+							dens.push(den);//This one has an asymptote, push it
+							genning=false;
+						}
+					}
+					else{
+						dens.push(den);
+						genning=false;
+					}
+				}
+			}
+		}
+	}
+	console.log(nums);
+	console.log(dens);
+}
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
 	//need to have it return the latex and normal text...
@@ -719,6 +798,39 @@ function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig, raw=false){
 		val.push([tc, tr, xc, xp]);//Add in the values to the return statement so that the integral can be found
 	}
 	return val;
+}
+function generate_factored_part(maxXCo, maxXPow, maxC, neg=false){
+	//Ok, so this will pretty much make a thing like (x^2 +1), etc, so that I can quickly make graphs with holes
+	//neg accounts for if the constants can be negative as well (not counting the power)
+	var xPow=Math.floor(Math.random()*maxXPow)+1;//So that it can't be 0
+	var xCo=Math.floor(Math.random()*maxXCo)+1;
+	var cons=(Math.random()*maxC).toFixed(0);
+	if(neg){
+		if(Math.random()>=0.5){//50% chance of making it negative (Math.random() has domain [0,1), so 0.5 is included in the upper half)
+			xCo=-xCo;
+		}
+		if(Math.random()>=0.5){//Yes, a second roll, because otherwise both would be positive/both would be negative
+			cons=-cons;
+		}
+	}
+	var simple="("+xCo+"x";
+	var latex="("+xCo+"x";
+	if(xPow>1){
+		simple+="^("+xPow+")";
+		latex+="^{"+xPow+"}";
+	}
+	if(cons!=0){
+		if(cons>0){//Don't need to manually add the -, because it will already be printed
+			simple+="+";//Sadly, the + needs to be done manually
+			latex+="+";
+		}
+		simple+=cons;
+		latex+=cons;
+	}
+	simple+=")";
+	latex+=")";
+	var zero=Math.pow(-cons/xCo, 1/xPow)
+	return [simple, latex, [xPow, xCo, cons, zero]];
 }
 function test(){
 	console.log("test");
