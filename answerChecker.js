@@ -198,7 +198,7 @@ function functionthing() {
 	if(entry_text!=""){
 		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance
 	}
-	try{
+	//try{
 		var correct=checkAns(ans);
 		if(answered){
 			newQ();
@@ -212,12 +212,12 @@ function functionthing() {
 			reply('Aww...');
 		}
 
-	}
-	catch(err){
-		reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
-		response.style.color = "#f00";
-		response.style.font_weight="bold";
-	}
+	//}
+	//catch(err){
+		//reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
+		//response.style.color = "#f00";
+		//response.style.font_weight="bold";
+	//}
 }
 function wrongResponse(){
 	//Goes through and comes up with a better response to a wrong answer than "Aww..."
@@ -485,10 +485,11 @@ function integrateTrig(tCo, trig, xCo, xPow){
 function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	var nums=[];
 	var usedMaxNum=Math.floor(Math.random()*maxNum)+1;
-	var type=Math.floor(Math.random()*3);//So, I remember 3 ways this can go:
+	//var type=Math.floor(Math.random()*3);//So, I remember 3 ways this can go:
 											//0-no place where it is undefined
 											//1-hole
 											//2-jump, with an asymtote
+	var type=1;//just going with hole problems, later on I can remove/move around the other code
 	for(var i=0;i<usedMaxNum-1; i++){
 		var num=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
 		nums.push(num);
@@ -510,9 +511,9 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 			nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
 		}
 	}
-	else{
+	/*else{
 		nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
-	}
+	}*/
 	var dens=[];
 	var usedMaxDen=Math.floor(Math.random()*maxDen)+1;
 	var hole_index=Math.floor(Math.random()*usedMaxDen);
@@ -520,26 +521,31 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 		var genning=true;
 		while(genning){
 			var den=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
-			if(type==0){
+			/*if(type==0){
 				if(!isNaN(den[2][3])){//Not 0 over all reals
 					dens.push(den);
 					genning=false;
 				}
 			}
-			else if(type==1){
-				if(i==hole_index){
-					var good_nums=nums.filter(function (n){
+			else if(type==1){*/
+				var good_nums=nums.filter(function (n){
 						return !isNaN(n[2][3]);
 					})
+				if(i==hole_index){
+					console.log(good_nums);
 					var index=Math.floor(Math.random()*good_nums.length);
 					dens.push(good_nums[index]);
+					console.log(good_nums[index]);
+					console.log(dens[i]);
 					genning=false;
 				}
-				else if(!isNaN(den[2][3])){
+				else if(!good_nums.some(function(n){
+					return n[2][3]==den[2][3]&&!isNaN(n[2][3]);//There isn't another hole
+				})){
 					dens.push(den);
 					genning=false;
 				}
-			}
+			/*}
 			else if(type==2){
 				if(!nums.some(function (n){
 					return den[2][3]==n[2][3]&&!isNaN(den[2][3]);//Isn't a hole
@@ -555,11 +561,38 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 						genning=false;
 					}
 				}
-			}
+			}*/
 		}
 	}
-	console.log(nums);
+	//console.log(nums);
+	//console.log(dens);
+	var simple="";
+	var latex="\\frac{";
+	for(var i=0; i<usedMaxNum; i++){
+		simple+=nums[i][0];
+		latex+=nums[i][1];
+		if(i+1<usedMaxNum){
+			simple+="*";
+			latex+="\\times";
+		}
+	}
+	simple+="/";
+	latex+="}{";
+	for(var i=0;i<usedMaxDen; i++){
+		simple+=dens[i][0];
+		latex+=dens[i][1];
+		if(i+1<usedMaxDen){
+			simple+="*";
+			latex+="\\times";
+		}
+	}
+	//Wait a second... I don't actually need 'simple' for this one... Sigh...
+	latex+="}";
+	var ans=dens[hole_index][2][3];
+	console.log(hole_index);
 	console.log(dens);
+	currentAns=ans;
+	ask("Where is there a hole in this function?",latex);
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
@@ -829,7 +862,7 @@ function generate_factored_part(maxXCo, maxXPow, maxC, neg=false){
 	}
 	simple+=")";
 	latex+=")";
-	var zero=Math.pow(-cons/xCo, 1/xPow)
+	var zero=Math.pow(-(cons/xCo), 1/xPow)
 	return [simple, latex, [xPow, xCo, cons, zero]];
 }
 function test(){
