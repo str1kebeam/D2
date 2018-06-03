@@ -204,7 +204,7 @@ function functionthing() {
 	if(entry_text!=""){
 		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance
 	}
-	//try{
+	try{
 		var correct=checkAns(ans);
 		if(answered){
 			newQ();
@@ -218,12 +218,12 @@ function functionthing() {
 			reply('Aww...');
 		}
 
-	//}
-	//catch(err){
-		//reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
-		//response.style.color = "#f00";
-		//response.style.font_weight="bold";
-	//}
+	}
+	catch(err){
+		reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
+		response.style.color = "#f00";
+		response.style.font_weight="bold";
+	}
 }
 function wrongResponse(){
 	//Goes through and comes up with a better response to a wrong answer than "Aww..."
