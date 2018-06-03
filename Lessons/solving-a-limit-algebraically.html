@@ -52,7 +52,7 @@
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
 					Now that you understand what a limit is, it's time to learn how to use algebra to solve a limit.  Let's take the graph we discussed in the <a href="what-is-a-limit.html">first lesson</a>:
 					<latex-eqn>$$f(x)=\frac{x^3+1}{x+1}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=(x^3+1)/(x+1)">
+					<canvas width="800" height="800" id="myCanvas"></canvas>
 					Earlier we mentioned that the domain of this function is \(x\ne -1\).  This is because at \(x=-1\), the denominator is zero.
 					<br>
 					<br>
@@ -61,14 +61,14 @@
 					When the value of a function is \(\frac{0}{0}\), the numbers almost always have a way of "canceling each other out."
 					<br>
 					The function seems to approach the point \((-1,3)\).
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=(x^3+1)/(x+1) zoomed in on -3<x<0">
+					<canvas width="800" height="800" id="myCanvas2"></canvas>
 					And now we will show you how to remove the zero: factoring it out.
 					In the numerator, \(x^3+1\) can be factored as shown:
 					<latex-eqn>$$\frac{x^3+1}{x+1}=\frac{(x^2-x+1)*(x+1)}{x+1}$$</latex-eqn>
 					The reason the function equals \(\frac{0}{0}\) at -1 is because \(x-1=0\), so now we will cancel it out to get the following function:
 					<latex-eqn>$$g(x)=x^2-x+1$$</latex-eqn>
 					The graph of this function is shown below:
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="g(x)=x^2-x+1">
+					<canvas width="800" height="800" id="myCanvas3"></canvas>
 					It looks almost identical to the first function, but this time the function has no hole at -1.  It has the point (-1,3).
 					<br>
 					<br>
@@ -85,6 +85,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src="limit1.js"></script>
+<script src="limit2.js"></script>
+<script src="algebraic-limit3.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -111,6 +114,9 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
+	init();
+	init2();
+	init3();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
@@ -121,3 +127,4 @@ $(document).ready(function(){
 </script>
 </body>
 </html>
+
