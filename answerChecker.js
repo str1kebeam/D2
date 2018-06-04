@@ -623,6 +623,68 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	ask("Where is there a hole in this function?",latex);
 	//Something to graph simple
 }
+function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
+	//So, it will make 2 polynomials, so the first 3 arguments make that.
+	//maxX is how far from x=0 the point it is asking about can be
+	//maxY is how far from y=0 the graph will go around where it is asking about
+	var x=(Math.random()*maxX).toFixed(0);
+	if(Math.random()>=0.5){x=-x;}
+	var left=makePolynomial(terms, maxPow, maxCo);
+	var tries=0;
+	console.log("test");
+	while(Math.abs(math.eval(left[1], {x:x}))>maxY){
+		left=makePolynomial(terms, maxPow, maxCo);
+		tries++;
+		if(tries>100){//By then, something is wrong with the code, so this should stop it very obviously
+			//x=y;//y is undefined, so it will make it clear that it is broken
+			reply("Sorry about this. Something broke in the question generator.<br>Please report this on the about page, saying what question you are doing.");
+			console.log("Dump for reporting this problem:");
+			console.log("Side: left");
+			console.log("x:"+x);
+			return "";
+		}
+	}
+	console.log(left);
+	var right=makePolynomial(terms, maxPow, maxCo);
+	tries=0;
+	while(Math.abs(math.eval(right[1],{x:x}))>maxY){
+		right=makePolynomial(terms, maxPow, maxCo);
+		tries++;
+		if(tries>100){
+			reply("Sorry about this. Something broke in the question generator.<br>Please report this on the about page, saying what question you are doing.");
+			console.log("Dump for reporting this problem:");
+			console.log("Side: right");
+			console.log("x:"+x);
+			return"";
+		}
+	}
+	var leftVal=math.eval(left[1],{x:x});
+	var rightVal=math.eval(right[1],{x:x});
+	var middle=(Math.random()*maxY).toFixed();
+	if(Math.random()>=0.5){middle=-middle;}
+	while(middle==leftVal||middle==rightVal){
+		middle=(Math.random()*maxY).toFixed();
+		if(Math.random()>=0.5){middle=-middle;}
+	}
+	var side;
+	var used;
+	if(Math.random()>=0.5){
+		side="left";
+		used=left;
+	}
+	else{
+		side="right";
+		used=right;
+	}
+	var latex="f(x) = \\begin{cases}\n";
+	latex+=left[0]+"& \\text{if } x<"+x+"\\\\\n";//latex wants \\ and then a new line, so it needs to be \\\\\n
+	latex+=middle+"& \\text{if } x="+x+"\\\\\n";
+	latex+=right[0]+"& \\text{if } x>"+x+"\n";
+	latex+="\\end{cases}";
+	var ans=math.eval(used[1],{x:x});
+	currentAns=ans;
+	ask("What is the value of the following equation as x approaches "+x+" from the "+side+" side?", latex);
+}
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
 	//need to have it return the latex and normal text...
@@ -937,7 +999,7 @@ var keyWrapper=function keyGuard(event){
 			function(){
 		entry_text=event.target.value;//Update entry_text
 		update_ascii();}
-		, 0);//wait a tiny bit to let html update the inner value, and then do update everything (may break on very laggy computers or with a very fast typing bot)
+		, 1);//wait a tiny bit to let html update the inner value, and then do update everything (may break on very laggy computers or with a very fast typing bot)
 	}
 }
 var entry=document.getElementById("input-answer");
