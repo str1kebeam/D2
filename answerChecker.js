@@ -509,6 +509,16 @@ function limitQ(diff){
 		simpleVisualLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
 		rat=true;
 	}
+	else if(diffNames['limit'][diff-1].endsWith("Sided Limit")){
+		if(Math.random()<0.9){
+			sidedLimitQuestionPoly(d[0],d[1],d[2],d[3],d[4]);
+			rat=true;
+		}
+		else{
+			//sidedLimitQuestionAbs(d[0],d[1],d[2],d[3],d[4]);//still needs to be coded
+
+		}
+	}
 }
 function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	var nums=[];
