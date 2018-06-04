@@ -27,14 +27,16 @@ diffs["derivative"]=[
 ];
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
 diffs["integral"]=[[2,1,5],[3,2,5]];
-diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];
+diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole finding
+	10, [2,1,5,5,5],[4,5,10,10,10]];//Left and right limits
 var diffNames=[];
 diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
 						//Is it bad that I needed to look up what "Trig" was short for?
 diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
 diffNames['integral']=["Easy Polynomial","Hard Polynomial"];
-diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole"];
+diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole",
+					"Easy Sided Limit","Medium Sided Limit","Hard Sided Limit"];
 //////
 //Startup stuff
 //////
@@ -504,20 +506,18 @@ function integrateTrig(tCo, trig, xCo, xPow){
 	//Yeah, do that
 }
 function limitQ(diff){
-	var d=diffs["limit"][diff];
+	var d=diffs["limit"][diff-1];
 	if(diffNames['limit'][diff-1].endsWith("Hole")){
 		simpleVisualLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
 		rat=true;
 	}
+	else if(diffNames['limit'][diff-1]=="Easy Sided Limit"){//I feel bad hardcoding this...
+		sidedLimitQuestionAbs(d);//Yeah, these problems aren't that complicated
+		rat=true;
+	}
 	else if(diffNames['limit'][diff-1].endsWith("Sided Limit")){
-		if(Math.random()<0.9){
-			sidedLimitQuestionPoly(d[0],d[1],d[2],d[3],d[4]);
-			rat=true;
-		}
-		else{
-			//sidedLimitQuestionAbs(d[0],d[1],d[2],d[3],d[4]);//still needs to be coded
-
-		}
+		sidedLimitQuestionPoly(d[0],d[1],d[2],d[3],d[4]);
+		rat=true;
 	}
 }
 function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
@@ -694,6 +694,30 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 	var ans=math.eval(used[1],{x:x});
 	currentAns=ans;
 	ask("What is the value of the following equation as x approaches "+x+" from the "+side+" side?", latex);
+}
+function sidedLimitQuestionAbs(maxXCo){
+	var xCo=Math.floor(Math.random()*maxXCo)+1;
+	if(Math.random()>=0.5){xCo=-xCo;}
+	var side;
+	var ans;
+	if(Math.random()>=0.5){
+		side="left";
+		ans=-Math.abs(xCo);
+	}
+	else{
+		side="right";
+		ans=Math.abs(xCo);
+	}
+	currentAns=ans;
+	var latex="f(x) = \\frac{|";
+	if(Math.abs(xCo)>1){
+		latex+=xCo;
+	}
+	else if(xCo=-1){
+		latex+="-";
+	}
+	latex+="x|}{x}";
+	ask("What is the value of the following function as x approaches 0 from the "+side+" side?",latex);
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
