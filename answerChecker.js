@@ -2,7 +2,7 @@
 //mathjs is imported as math in practice.html, but that should be fine
 //el.innerHTML = math.sqrt(9);
 var response=document.getElementById("response");
-var x=1;
+var x=0;//Used for saying 'Maybe you should go to a higher difficulty'
 var currentAns='';
 var answered=true;
 var strike=false;
@@ -202,7 +202,7 @@ setTimeout(document.getElementById("type").addEventListener("change",function(){
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	if(entry_text!=""){
-		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance
+		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance. Replaces [ and ] with ( and ), which used to be used for internal workings of fractions
 	}
 	try{
 		var correct=checkAns(ans);
@@ -212,7 +212,7 @@ function functionthing() {
 		else if(correct){
 			reply("Great!");//+x.toString());
 			answered=true;
-			//x++;
+			x++;
 		}
 		else{
 			reply('Aww...');
@@ -918,9 +918,11 @@ var keyWrapper=function keyGuard(event){
 		functionthing();
 	}
 	else{
-		setTimeout(function(){
+		setTimeout(
+			function(){
 		entry_text=event.target.value;//Update entry_text
-		update_ascii();}, 10);//wait a tiny bit to let html update the inner value, and then do update everything (may break on very laggy computers or with a very fast typing bot)
+		update_ascii();}
+		, 0);//wait a tiny bit to let html update the inner value, and then do update everything (may break on very laggy computers or with a very fast typing bot)
 	}
 }
 var entry=document.getElementById("input-answer");
@@ -975,7 +977,7 @@ function numpad(key){
 		entry_text+=key;
 		//lCharAdd(key);
 	}
-	else if(['*','+',"-",'/',')','('].includes(key)){
+	else if(['*','+',"-",'/',')','(',']','['].includes(key)){
 		entry_text+=key;
 		//area.innerHTML+=key;
 		//lCharAdd(key);
@@ -997,7 +999,7 @@ function numpad(key){
 		entry_text+="pi";
 		//lCharAdd("pi");
 	}
-	else if(['sin(','cos(','tan('].includes(key)){
+	else if(['sin(','cos(','tan(','csc(','sec(','cot('].includes(key)){
 		//area.innerHTML+=key;
 		entry_text+=key;
 		//lCharAdd(key);
@@ -1013,10 +1015,15 @@ function numpad(key){
 		//area.innerHTML+=".";
 		//lCharAdd(".");
 	}
-	else{
-		//buff(key,area);
-		//Do nothing, ignored key
+	else if(key=="^2"){
+		entry_text+="^2";
 	}
+	/*if(key=="2nd"){
+		second(true);
+	}
+	else{
+		second();//turns off second
+	}*/
 	//console.log(first);
 	entry.value=entry_text;
 	/*if(old!=ltext){
@@ -1024,4 +1031,26 @@ function numpad(key){
 		MathJax.Hub.Queue(['Text',m, ltext]);
 	}*/
 	update_ascii();
+}
+//Yeah, we decided to not use this...
+function second(state=false){//by default, it turns second off
+	var sin=document.getElementById('sin');
+	var cos=document.getElementById('cos');
+	var tan=document.getElementById('tan');
+	if(state){//turn on second (set the sin to csc, etc.)
+		sin.innerHTML="csc";
+		sin.onclick=function(){numpad('csc(');};
+		cos.innerHTML="sec";
+		cos.onclick=function(){numpad('sec(');};
+		tan.innerHTML="cot";
+		tan.onclick=function(){numpad('cot(');};
+	}
+	else{
+		sin.innerHTML="sin";
+		sin.onclick=function(){numpad('sin(');};
+		cos.innerHTML="cos";
+		cos.onclick=function(){numpad('cos(');};
+		tan.innerHTML="tan";
+		tan.onclick=function(){numpad('tan(');};
+	}
 }
