@@ -8395,7 +8395,7 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
 .carousel .carousel-item {
   visibility: hidden;
   width: 200px;
-  height: 200px;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;

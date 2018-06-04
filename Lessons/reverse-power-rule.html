@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if lt IE9]>
+	<script>
+		document.createElement("latex-eqn");
+	</script>
+	<![endif]--> <!-- IE compatibility -->
+	<meta charset="utf-8">
+	<title>Learn - Reverse Power Rule</title>
+	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
+	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
+	<link rel="shortcut icon" href="..\Derive.ico"> <!-- Webpage icon -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
+</head>
+<body>
+	<div id="container">
+		<div class="navbar-fixed">
+		<nav class="color1" id="topbar">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo center"><img src="../Derive.png"></a>
+				<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="../index.html">Home<i class="material-icons right">home</i></a></li>
+					<li><a href="index.html">Lessons</a></li>
+					<li><a href="../practice.html">Practice</a></li>
+					<li><a href="../about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		</div>
+		<div class="row">
+			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
+				<h2>Integration</h2> <!-- Sidebar Column Here -->
+				<ul class="collection" id="sitemap">
+					<a href="riemann-sums.html" class="collection-item">Riemann Sums</a>
+					<a href="#!" class="collection-item active">Reverse Power Rule</a>
+				</ul>
+				<div class="t-cen">
+					<a href="./index.html"><button class="btn waves-effect waves-lighten">Back to Lessons</button></a>
+					<br>
+					<br>
+					<a href="../practice.html"><button class="btn waves-effect waves-lighten">Practice This</button></a> <!-- add correct link -->
+				</div>
+			</div>
+			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
+				<h1 id="body-title"> <!-- Title -->
+					Lesson Title
+				</h1>
+				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
+					Lesson Content
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph Title">
+					Lesson Image (above)
+				</div>
+			</div>
+		</div>
+
+		</div>
+	</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src="../default.js"></script> <!-- import default JS for the webpage -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.sidenav').sidenav();
+	$('select').formSelect();
+	$(".dropdown-trigger").dropdown({
+		hover: true,
+		coverTrigger: false,
+		closeOnClick: false
+	});
+	$('.carousel').carousel({
+		duration: 500,
+		dist: 100,
+		shift: 0,
+		fullWidth: true,
+		padding: 50,
+		margin: "auto"
+	});
+	$('.carousel.carousel-slider').carousel({
+		fullWidth: true
+	});
+	$('.carousel-slider').slider();
+	$('.pushpin').pushpin({
+		offset: 50
+	});
+	$('.tabs').tabs();
+  $('.materialboxed').materialbox();
+
+	setInterval(autoplay, 5000);
+	function autoplay() {
+	    $('.carousel').carousel('next');
+	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
+});
+</script>
+</body>
+</html>
