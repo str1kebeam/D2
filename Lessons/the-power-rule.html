@@ -51,29 +51,10 @@
 					The Power Rule
 				</h1>
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
-					If you've ever looked at a linear function in the form \(y=mx+b\), you've probably been told that \(m\) refers to the slope of the function.  And it does.  For example, in the equation \(f(x)=3x+1\), the slope can be written as \(f^\prime (x) = 3\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Function and Derivative in the corner">
-					But how do we get the slope of a nonlinear function?
+					Although we can use the formula mentioned in <a href="introduction-to-derivatives.html">the previous lesson</a> to find the derivative of a function, there is a shortcut to finding the derivatives of <strong title="Polynomial: x raised to a power">polynomial functions</strong>.  Look at the graph of \(f(x)=x^3\)
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^3">
 					<br>
-					<br>
-					A <strong>derivative</strong> of a function states the slope of that function at different x-values.  As seen in the <a href="introduction-to-the-tangent-line">previous lesson</a>, the slope of an equation can be found from the following equation:
-					<latex-eqn>$$\lim_{h \to 0}\frac{f(x+h)-f(x)}{h}$$</latex-eqn>
-					This is because it is based off of the equation for slope, returning the slope of the tangent line of the function at each value of x.
-					<br>
-					<br>
-					Take a look at the graph of \(f(x)=x^3\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^3 with slope printed">
-					The derivative, or slope of the graph, can be represented as
-					<latex-eqn>$$f^\prime (x)=\lim_{h \to 0}\frac{(x+h)^3-(x)^3}{h}$$</latex-eqn>
-					This simplifies to
-					<latex-eqn>$$\lim_{h \to 0}\frac{3x^2h+3xh^2+h^3}{h}=\lim_{h \to 0}(3x^2+3xh+h^2)=3x^2$$</latex-eqn>
-					Look at the two graphs below (the function and its derivative) and observe how the slope of the first curve (\(x^3\)) is always the value of the second curve (\(3x^2\)).
-					<latex-eqn>$$f(x)=x^3$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="show slope">
-					<latex-eqn>$$f^\prime (x)=3x^2$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="show (x,y)">
-					This means that \(3x^2\) is the <strong>derviative</strong> of \(x^3\).
-					<br>
+					
 					<h3>Think you understand derivatives? Practice them <a href="../practice.html">here</a>.</h4>
 				</div>
 			</div>
@@ -110,7 +91,7 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
-  $('.materialboxed').materialbox();
+  	$('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
 	function autoplay() {
