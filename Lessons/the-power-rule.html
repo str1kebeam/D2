@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if lt IE9]>
+	<script>
+		document.createElement("latex-eqn");
+	</script>
+	<![endif]--> <!-- IE compatibility -->
+	<meta charset="utf-8">
+	<title>Learn - The Power Rule</title>
+	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
+	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
+	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
+	<link rel="shortcut icon" href="..\DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
+</head>
+<body>
+	<div id="container">
+		<div class="navbar-fixed">
+		<nav class="color1" id="topbar">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo center">Logo Here</a>
+				<ul id="nav-mobile" class="left hide-on-med-and-down">
+					<li><a href="../index.html">Home<i class="material-icons right">home</i></a></li>
+					<li><a href="index.html">Lessons</a></li>
+					<li><a href="../practice.html">Practice</a></li>
+					<li><a href="../about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+		</div>
+		<div class="row">
+			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
+				<h2>Derivatives</h2>
+				<ul class="collection with-header" id="sitemap">
+					<a href="introduction-to-the-tangent-line.html" class="collection-item">Introduction to the Tangent Line</a>
+					<a href="introduction-to-derivatives.html" class="collection-item">Introduction To Derivatives</a>
+					<a href="#!" class="collection-item active">The Power Rule</a>
+					<a href="derivatives-and-trigonometry.html" class="collection-item">Derivatives and Trigonometry</a>
+					<a href="lhopitals-rule.html" class="collection-item">L'Hôpital's Rule</a>
+				</ul>
+				<div class="t-cen">
+					<a href="./index.html"><button class="btn waves-effect waves-lighten">Back to Lessons</button></a>
+					<br>
+					<br>
+					<a href="../practice.html"><button class="btn waves-effect waves-lighten">Practice This</button></a> <!-- add correct link -->
+				</div>
+			</div>
+			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content">
+				<h1 id="body-title"> <!-- Title -->
+					The Power Rule
+				</h1>
+				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
+					If you've ever looked at a linear function in the form \(y=mx+b\), you've probably been told that \(m\) refers to the slope of the function.  And it does.  For example, in the equation \(f(x)=3x+1\), the slope can be written as \(f^\prime (x) = 3\)
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Function and Derivative in the corner">
+					But how do we get the slope of a nonlinear function?
+					<br>
+					<br>
+					A <strong>derivative</strong> of a function states the slope of that function at different x-values.  As seen in the <a href="introduction-to-the-tangent-line">previous lesson</a>, the slope of an equation can be found from the following equation:
+					<latex-eqn>$$\lim_{h \to 0}\frac{f(x+h)-f(x)}{h}$$</latex-eqn>
+					This is because it is based off of the equation for slope, returning the slope of the tangent line of the function at each value of x.
+					<br>
+					<br>
+					Take a look at the graph of \(f(x)=x^3\)
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^3 with slope printed">
+					The derivative, or slope of the graph, can be represented as
+					<latex-eqn>$$f^\prime (x)=\lim_{h \to 0}\frac{(x+h)^3-(x)^3}{h}$$</latex-eqn>
+					This simplifies to
+					<latex-eqn>$$\lim_{h \to 0}\frac{3x^2h+3xh^2+h^3}{h}=\lim_{h \to 0}(3x^2+3xh+h^2)=3x^2$$</latex-eqn>
+					Look at the two graphs below (the function and its derivative) and observe how the slope of the first curve (\(x^3\)) is always the value of the second curve (\(3x^2\)).
+					<latex-eqn>$$f(x)=x^3$$</latex-eqn>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="show slope">
+					<latex-eqn>$$f^\prime (x)=3x^2$$</latex-eqn>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="show (x,y)">
+					This means that \(3x^2\) is the <strong>derviative</strong> of \(x^3\).
+					<br>
+					<h3>Think you understand derivatives? Practice them <a href="../practice.html">here</a>.</h4>
+				</div>
+			</div>
+		</div>
+
+		</div>
+	</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src="../default.js"></script> <!-- import default JS for the webpage -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.sidenav').sidenav();
+	$('select').formSelect();
+	$(".dropdown-trigger").dropdown({
+		hover: true,
+		coverTrigger: false,
+		closeOnClick: false
+	});
+	$('.carousel').carousel({
+		duration: 500,
+		dist: 100,
+		shift: 0,
+		fullWidth: true,
+		padding: 50,
+		margin: "auto"
+	});
+	$('.carousel.carousel-slider').carousel({
+		fullWidth: true
+	});
+	$('.carousel-slider').slider();
+	$('.pushpin').pushpin({
+		offset: 50
+	});
+	$('.tabs').tabs();
+  $('.materialboxed').materialbox();
+
+	setInterval(autoplay, 5000);
+	function autoplay() {
+	    $('.carousel').carousel('next');
+	}; // https://stackoverflow.com/questions/36581504/materialize-carousel-slider-autoplay#36582585
+});
+</script>
+</body>
+</html>
