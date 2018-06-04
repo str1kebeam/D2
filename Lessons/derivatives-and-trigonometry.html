@@ -37,7 +37,6 @@
 					<a href="introduction-to-derivatives.html" class="collection-item">Introduction To Derivatives</a>
 					<a href="the-power-rule.html" class="collection-item">The Power Rule</a>
 					<a href="#!" class="collection-item active">Derivatives and Trigonometry</a>
-					<a href="lhopitals-rule.html" class="collection-item">L'Hôpital's Rule</a>
 				</ul>
 				<div class="t-cen">
 					<a href="./index.html"><button class="btn waves-effect waves-lighten">Back to Lessons</button></a>
@@ -53,27 +52,37 @@
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
 					Consider the function \(f(x)=\sin(x)\)
 					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
-					The function \(\sin(x)\) is different from polynomial functions because they are <strong title="Periodic: repeating the same values forever">periodic</strong>.  If the function repeats itself, then the derivative repeats itself as well.  The same trusty formula we've used <a href="introduciton-to-derivatives">before</a> to calculate derivatives can be used here.
-					<latex-eqn>$$f^\prime (x)=\lim_{h \to 0}\frac{\sin(x+h)-\sin(x)}{h}$$</latex-eqn>
+					The function \(\sin(x)\) is different from polynomial functions because they are <strong title="Periodic: repeating the same values forever">periodic</strong>.  If the function repeats itself, then the derivative repeats itself as well.  Let's look at a table of slopes to find the derivative:
+					<table>
+					<thead>
+						<tr><td>\(x\)</td><td>\(f(x)\)</td><td>Slope</td></tr>
+					</thead>
+					<tbody>
+						<tr><td>\(0\)</td><td>\(0\)</td><td>\(1\)</td></tr>
+						<tr><td>\(\frac{\pi}{2}\)</td><td>\(1\)</td><td>\(0\)</td></tr>
+						<tr><td>\(\pi\)</td><td>\(0\)</td><td>\(-1\)</td></tr>
+						<tr><td>\(\frac{3\pi}{2}\)</td><td>\(-1\)</td><td>\(0\)</td></tr>
+						<tr><td>\(2\pi\)</td><td>\(0\)</td><td>\(1\)</td></tr>
+					</tbody>
+					</table>
+					You may notice that the slope of \(\sin(x)\) is very similar to \(\sin(x)\) itself!  If you take any value of the function above and shift it up one row, you get the slope of the function.
 					<br>
 					<br>
-					A <strong>derivative</strong> of a function states the slope of that function at different x-values.  As seen in the <a href="introduction-to-the-tangent-line">previous lesson</a>, the slope of an equation can be found from the following equation:
-					<latex-eqn>$$\lim_{h \to 0}\frac{f(x+h)-f(x)}{h}$$</latex-eqn>
-					This is because it is based off of the equation for slope, returning the slope of the tangent line of the function at each value of x.
+					This is because the derivative of \(\sin(x)\) is \(\cos(x)\).  For a more detailed proof, look <a href="https://www.khanacademy.org/math/ap-calculus-ab/ab-derivative-rules/ab-derivtive-rules-opt-vids/v/derivative-of-sin-x" target="_blank">here</a>.
 					<br>
 					<br>
-					Take a look at the graph of \(f(x)=x^3\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^3 with slope printed">
-					The derivative, or slope of the graph, can be represented as
-					<latex-eqn>$$f^\prime (x)=\lim_{h \to 0}\frac{(x+h)^3-(x)^3}{h}$$</latex-eqn>
-					This simplifies to
-					<latex-eqn>$$\lim_{h \to 0}\frac{3x^2h+3xh^2+h^3}{h}=\lim_{h \to 0}(3x^2+3xh+h^2)=3x^2$$</latex-eqn>
-					Look at the two graphs below (the function and its derivative) and observe how the slope of the first curve (\(x^3\)) is always the value of the second curve (\(3x^2\)).
-					<latex-eqn>$$f(x)=x^3$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="show slope">
-					<latex-eqn>$$f^\prime (x)=3x^2$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="show (x,y)">
-					This means that \(3x^2\) is the <strong>derviative</strong> of \(x^3\).
+					Look at the graphs of \(\sin(x)\) and \(\cos(x)\) and observe this.
+					$$f(x)=\sin(x)$$
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					$$f^{\prime}(x)=\cos(x)$$
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					You may notice that the derivative of \(\sin(x)\) is just the function "shifted left" by \(\frac{\pi}{2}\).  And this is correct.  This is true of both sine and cosine.  In fact, because of this, the derivative of \(\cos(x)\) is \(-\sin(x)\), the derivative of \(-\sin(x)\) is \(-\cos(x)\), and the derivative of \(-\cos(x)\) is \(\sin(x)\).  Trig really feels like a small world, sometimes.
+					<br>
+					<br>
+					Look at this table to see the value and slope of all four trig functions at once:
+					<table>
+						<td></td>
+					</table>
 					<br>
 					<h3>Think you understand derivatives? Practice them <a href="../practice.html">here</a>.</h4>
 				</div>
