@@ -11,7 +11,7 @@
 	<link type="text/CSS" rel="stylesheet" href="..\Imports\materialize\css\materialize.css"  media="screen,projection"/>
 	<link rel="stylesheet" type="text/css" href="lessons.css"> <!-- Import default css for the whole website -->
 	<link rel="stylesheet" type="text/css" href="..\Imports/mdi/css/materialdesignicons.min.css">
-	<link rel="shortcut icon" href="..\DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
+	<link rel="shortcut icon" href="..\Derive.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=default'></script> <!-- Import LaTeX -->
 </head>
 <body>
@@ -19,7 +19,7 @@
 		<div class="navbar-fixed">
 		<nav class="color1" id="topbar">
 			<div class="nav-wrapper">
-				<a href="#" class="brand-logo center">Logo Here</a>
+				<a href="#" class="brand-logo center"><img src="../Derive.png"></a>
 				<ul id="nav-mobile" class="left hide-on-med-and-down">
 					<li><a href="../index.html">Home<i class="material-icons right">home</i></a></li>
 					<li><a href="index.html">Lessons</a></li>
@@ -54,8 +54,20 @@
 					Although we can use the formula mentioned in <a href="introduction-to-derivatives.html">the previous lesson</a> to find the derivative of a function, there is a shortcut to finding the derivatives of <strong title="Polynomial: x raised to a power">polynomial functions</strong>.  Look at the graph of \(f(x)=x^3\)
 					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^3">
 					<br>
-					
-					<h3>Think you understand derivatives? Practice them <a href="../practice.html">here</a>.</h4>
+					As shown earlier, the derivative is \(f^\prime (x)=2x^3\).  What you might notice is that the exponent decreases by one, and the derivative is multiplied by the original exponent.  In \(x^3\), the \(x^3\) is replaced with an \(x^2\) and then \(x^2\) is multiplied by \(3\) to become \(3x^2\).  This is a real pattern with derivatives, and it is called the <strong>power rule</strong> because it works for \(x\) raised to any power.  While <a href="https://www.khanacademy.org/math/ap-calculus-ab/ab-derivative-rules/ab-derivtive-rules-opt-vids/v/proof-d-dx-x-n" target="_blank">the proof</a> is somewhat complicating if you are unfamiliar with derivatives, the power rule makes sense when you look at a graph.  Look at the following graphs of \(x^2\) and its derivative, \(2x\).
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^2">
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=2x">
+					This even works for negative numbers!  Take the function
+					<latex-eqn>$$f(x)=\frac{1}{x}$$</latex-eqn>
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=1/x">
+					This is because \(\frac{1}{x}\) can be rewritten as \(x^{-1}\).  The \(-1\) becomes a \(-2\) to make \(x^{-2}\), and the equation is multiplied by \(-1\) because that was the original exponent.  This gives the final answer:
+					<latex-eqn>$$f^{\prime}(x)=-x^{-2}=\frac{-1}{x^2}$$</latex-eqn>
+					See for yourself!  The graph below shows the slope of \(\frac{1}{x}\) at all points.
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=-1/x^2">
+					And that's it!
+					<br>
+					<br>
+					<h3>Think you understand the power rule? Practice it <a href="../practice.html">here</a>.</h4>
 				</div>
 			</div>
 		</div>
