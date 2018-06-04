@@ -90,15 +90,15 @@
 					</table>
 					Here are the three functions shown in the table so you can see what happens:
 					<latex-eqn>$$f(x)=\frac{3x}{x^2+1}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<canvas width="800" height="800" id="myCanvas2"></canvas>
 					<br>
 					<br>
 					<latex-eqn>$$f(x)=\frac{3x}{x+1}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<canvas width="800" height="800" id="myCanvas3"></canvas>
 					<br>
 					<br>
 					<latex-eqn>$$f(x)=\frac{3x^2}{x+1}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<canvas width="800" height="800" id="myCanvas4"></canvas>
 					<i>Why does this work?</i>  You may ask...
 					<br>
 					<br>
@@ -121,6 +121,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
 <script src = "limit-infinity1.js"></script>
+<script src = "limit-infinity2.js"></script>
+<script src = "limit-infinity3.js"></script>
+<script src = "limit-infinity4.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -148,6 +151,9 @@ $(document).ready(function(){
 	});
 	$('.tabs').tabs();
 	init();
+	init2();
+	init3();
+	init4();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
