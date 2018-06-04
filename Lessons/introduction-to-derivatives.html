@@ -51,7 +51,7 @@
 				</h1>
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
 					If you've ever looked at a linear function in the form \(y=mx+b\), you've probably been told that \(m\) refers to the slope of the function.  And it does.  For example, in the equation \(f(x)=3x+1\), the slope can be written as \(f^\prime (x) = 3\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Function and Derivative in the corner">
+					<canvas width="800" height="800" id="myCanvas"></canvas>
 					But how do we get the slope of a nonlinear function?
 					<br>
 					<br>
@@ -61,7 +61,7 @@
 					<br>
 					<br>
 					Take a look at the graph of \(f(x)=x^3\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^3 with slope printed">
+					<canvas width="800" height="800" id="myCanvas2"></canvas>
 					The derivative, or slope of the graph, can be represented as
 					<latex-eqn>$$f^\prime (x)=\lim_{h \to 0}\frac{(x+h)^3-(x)^3}{h}$$</latex-eqn>
 					This simplifies to
@@ -83,6 +83,8 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src="intro-dev1.js"></script>
+<script src="intro-dev2.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -109,6 +111,8 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
+	init();
+	init2();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
