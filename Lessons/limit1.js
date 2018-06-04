@@ -88,7 +88,7 @@ var dx = 0; // set value w.r.t. n in init()
             var i=0;
             var offsetx = 0;
             var offsety = 0;
-            var f = "22px Verdana";
+            var f = "22px Trebuchet MS";
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
             ctx.clearRect(canvas_minx,canvas_miny, canvas_maxx-canvas_minx, canvas_maxy-canvas_miny);
@@ -137,14 +137,14 @@ var dx = 0; // set value w.r.t. n in init()
             // draw tangent line
             ctx.fillStyle = "black";
             ctx.font = f;
-			ctx.fillText("x",canvas_maxx-30.0,canvas_xaxis_zeroy-13);
+	    ctx.fillText("x",canvas_maxx-30.0,canvas_xaxis_zeroy-13);
             ctx.fillText("y",canvas_yaxis_zerox-20.0,canvas_miny+30.0);
             if (isNaN(scene_graphy)){
-				ctx.fillText("Hole: x = " + scene_graphx.toFixed(4),560,750);
-			}
-			else{
-				ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",560,750);
-			}
+		ctx.fillText("Hole: x = " + scene_graphx.toFixed(4),560,750);
+		}
+	    else{
+		ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",560,750);
+	        }
         }
 
         function doMouseMove(event) {
