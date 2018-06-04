@@ -88,7 +88,7 @@ var dx = 0; // set value w.r.t. n in init()
             var i=0;
             var offsetx = 0;
             var offsety = 0;
-            var f = "22px Trebuchet MS";
+            var f = "26px Trebuchet MS";
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
             ctx.clearRect(canvas_minx,canvas_miny, canvas_maxx-canvas_minx, canvas_maxy-canvas_miny);
