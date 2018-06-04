@@ -46,7 +46,7 @@ sup {
     "b1 b2  b3  add  exp  exp  sin sin bksp bksp bksp"
     "b4 b5  b6  subt frac frac cos cos varx vary varz"
     "b7 b8  b9  mult lpar rpar tan tan pi   e    plsc"
-    "b0 dec .   divd lbrc rbrc clr clr entr entr entr";
+    "b0 b0 dec   divd lbrc rbrc clr clr entr entr entr";
   width: 80%;
   height: 40vh;
   background-color: var(--color2);
