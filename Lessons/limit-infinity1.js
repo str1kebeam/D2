@@ -2,7 +2,7 @@ var canvas_minx = 0;
             var canvas_maxx = 800;
             var canvas_miny = 0;
             var canvas_maxy = 800;
-            var scene_size = 5.0
+            var scene_size = 10.0;
             var scene_minx = -1 * scene_size;
             var scene_maxx = scene_size;
             var scene_miny = -1 * scene_size;
@@ -15,16 +15,10 @@ var canvas_minx = 0;
             var canvas_yaxis_miny = 0;
             var canvas_yaxis_maxy = 0;
             var canvas_yaxis_zerox = 0;
-            var canvas_tanline_x1 = 0;
-            var canvas_tanline_y1 = 0;
-            var canvas_tanline_x2 = 0;
-            var canvas_tanline_y2 = 0;
             var slope = 0;
             var graph_coords = [];
             var n = 3000;
             var dx = 0; // set value w.r.t. n in init()
-            var x1 = scene_minx;
-            var x2 = scene_maxx;
 
         function canvas_x(x) {
             var u = (x - scene_minx)/(scene_maxx - scene_minx);
@@ -53,7 +47,8 @@ var canvas_minx = 0;
         }
 
         function graph_function(x) {
-            return 1/x;
+			return 1/x;
+			
         }
         
         function init() {
@@ -89,7 +84,7 @@ var canvas_minx = 0;
             var i=0;
             var offsetx = 0;
             var offsety = 0;
-            var f = "16px Verdana";
+            var f = "22px Trebuchet MS";
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
             ctx.clearRect(canvas_minx,canvas_miny, canvas_maxx-canvas_minx, canvas_maxy-canvas_miny);
@@ -103,6 +98,8 @@ var canvas_minx = 0;
                 ctx.moveTo(canvas_x(i),canvas_y(scene_miny));
                 ctx.lineTo(canvas_x(i),canvas_y(scene_maxy));
                 ctx.stroke();
+			}
+			for (var i = Math.floor(scene_miny) + 1; i < Math.floor(scene_maxy); i += 1){
                 ctx.beginPath();
                 ctx.moveTo(canvas_x(scene_minx),canvas_y(i));
                 ctx.lineTo(canvas_x(scene_maxx),canvas_y(i));
@@ -125,6 +122,7 @@ var canvas_minx = 0;
             ctx.stroke();
             // draw graph of function
             ctx.strokeStyle = "blue";
+			ctx.lineWidth = 2.0;
             ctx.beginPath();
             ctx.moveTo(graph_coords[0].x,graph_coords[0].y);
             for (i=0; i<n; i++) {
@@ -134,7 +132,10 @@ var canvas_minx = 0;
             // draw tangent line
             ctx.strokeStyle = "blue";
             ctx.font = f;
-            ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",620,750);
+			ctx.fillStyle = "black";
+			ctx.fillText("x",canvas_maxx-30.0,canvas_xaxis_zeroy-13);
+            ctx.fillText("y",canvas_yaxis_zerox-20.0,canvas_miny+30.0);
+            ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",560,750);
         }
 
         function doMouseMove(event) {
