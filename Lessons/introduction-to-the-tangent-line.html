@@ -56,7 +56,7 @@
 					When we talk about tangents to a function, we mean a straight line that just barely touches, but does not intersect, a graph at one point.
 					For example, look at the following graph:
 					<latex-eqn>$$f(x)=x^2$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2">
+					<canvas width="800" height="800" id="myCanvas2"></canvas>
 					You may have noticed that the x-axis, in fact, is <strong>tangent</strong> to the parabola above.
 					But how do we find a tangent line to a function?  And how do we know the slope of the line at the tangent?
 					<br>
@@ -91,7 +91,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
-<script src = "tangent_graph.js"></script>
+<script src = "intro-tan3.js"></script>
+<script src = "intro-tan1.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.sidenav').sidenav();
@@ -118,6 +119,7 @@ $(document).ready(function(){
 	});
 	$('.tabs').tabs();
 	init();
+	init2();
 	setInterval(autoplay, 5000);
 	function autoplay() {
 	    $('.carousel').carousel('next');
