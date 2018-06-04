@@ -2,7 +2,7 @@
             var canvas_maxx = 800;
             var canvas_miny = 0;
             var canvas_maxy = 800;
-            var scene_size = 5.0
+            var scene_size = 10.0;
             var scene_minx = -1 * scene_size;
             var scene_maxx = scene_size;
             var scene_miny = -1 * scene_size;
@@ -20,6 +20,7 @@
             var canvas_tanline_x2 = 0;
             var canvas_tanline_y2 = 0;
             var slope = 0;
+            var scale = 1;
             var graph_coords = [];
             var n = 3000;
             var dx = 0; // set value w.r.t. n in init()
@@ -62,7 +63,7 @@
 
         function build_tangent_line() {
             slope = graph_function_derivative(scene_graphx);
-            var L = 40;
+            var L = 400;
             // the stretch value here only works if canvas is a square
             var s = (scene_maxy - scene_miny)/(scene_maxx-scene_minx);
             var delta_x = L/Math.sqrt(1.0 + slope*slope/(s*s));
@@ -108,21 +109,34 @@
         }
         function draw_stuff() {
             var i=0;
-            var offsetx = 0;
-            var offsety = 0;
-            var f = "16px Comic Sans";
+            var f = "26px Trebuchet MS";
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
             ctx.clearRect(canvas_minx,canvas_miny, canvas_maxx-canvas_minx, canvas_maxy-canvas_miny);
             ctx.fillStyle = "white";
             ctx.fillRect(canvas_minx,canvas_miny, canvas_maxx-canvas_minx, canvas_maxy-canvas_miny);
             // draw tangent marker
+            ctx.lineWidth = 0.375;
+            ctx.strokeStyle = "rgb(0,0,0,0.5)";
+            for (var i = Math.floor(scene_minx) + 1; i < Math.floor(scene_maxx); i += scale){
+                ctx.beginPath();
+                ctx.moveTo(canvas_x(i),canvas_y(scene_miny));
+                ctx.lineTo(canvas_x(i),canvas_y(scene_maxy));
+                ctx.stroke();
+            }
+            for (var i = Math.floor(scene_miny) + 1; i < Math.floor(scene_maxy); i += scale){
+                ctx.beginPath();
+                ctx.moveTo(canvas_x(scene_minx),canvas_y(i));
+                ctx.lineTo(canvas_x(scene_maxx),canvas_y(i));
+                ctx.stroke();
+            }
             ctx.beginPath();
             ctx.arc(canvas_graphx,canvas_graphy,4.5,2*Math.PI,false);
             ctx.fillStyle = "blue";
             ctx.fill();
             // draw coord axes
             ctx.strokeStyle = "black";
+            ctx.lineWidth = 1.0;
             ctx.beginPath();
             ctx.moveTo(canvas_xaxis_minx,canvas_xaxis_zeroy);
             ctx.lineTo(canvas_xaxis_maxx,canvas_xaxis_zeroy);
@@ -133,6 +147,7 @@
             ctx.stroke();
             // draw graph of function
             ctx.strokeStyle = "blue";
+            ctx.lineWidth = 2.0;
             ctx.beginPath();
             ctx.moveTo(graph_coords[0].x,graph_coords[0].y);
             for (i=0; i<n; i++) {
@@ -145,42 +160,13 @@
             ctx.moveTo(canvas_tanline_x1,canvas_tanline_y1);
             ctx.lineTo(canvas_tanline_x2,canvas_tanline_y2);
             ctx.stroke();
-            // draw slope value
-            if (canvas_graphx > 700) {
-                offsetx = -90.0;
-            }
-            else {
-                offsetx = 30.0;
-            }
             offsety = 20.0;
-            ctx.font = f;
-            ctx.fillStyle = "black";
-            ctx.fillText("m =",canvas_graphx+offsetx, canvas_graphy+offsety);
-            ctx.fillText(slope.toFixed(4),canvas_graphx+offsetx+30.0, canvas_graphy+offsety);
-            // draw y tick mark and y value
-            ctx.strokeStyle = "black";
-            ctx.beginPath();
-            ctx.moveTo(canvas_yaxis_zerox-10.0,canvas_graphy);
-            ctx.lineTo(canvas_yaxis_zerox+10.0,canvas_graphy);
-            ctx.stroke();
-            ctx.font = f;
-            ctx.fillStyle = "black";
-            ctx.fillText(scene_graphy.toFixed(4),canvas_yaxis_zerox+20.0,canvas_graphy+5.0);
-            // draw x tick mark and x value
-            ctx.strokeStyle = "black";
-            ctx.beginPath();
-            ctx.moveTo(canvas_graphx,canvas_xaxis_zeroy+10.0);
-            ctx.lineTo(canvas_graphx,canvas_xaxis_zeroy-10.0);
-            ctx.stroke();
-            ctx.font = f;
-            ctx.fillStyle = "black";
-            ctx.fillText(scene_graphx.toFixed(4),canvas_graphx-15.0,canvas_xaxis_zeroy+30.0);
-            // draw "x" and "y" labels on axes
             ctx.font = f;
             ctx.fillStyle = "black";
             ctx.fillText("x",canvas_maxx-30.0,canvas_xaxis_zeroy-13);
             ctx.fillText("y",canvas_yaxis_zerox-20.0,canvas_miny+30.0);
-
+            ctx.fillText("m = " + slope.toFixed(4),80,750);
+            ctx.fillText("(" + scene_graphx.toFixed(4) + ", " + scene_graphy.toFixed(4) + ")",560,750);
         }
 
         function doMouseMove(event) {
