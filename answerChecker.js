@@ -9,7 +9,8 @@ var strike=false;
 var entry_text="";
 var qType="";
 var rat=false;//should answer checker try to order it(some things will cause errors)
-start_diff=1;
+var start_diff=1;
+var old_diff=1;
 /////
 //Difficulty settings
 /////
@@ -210,12 +211,18 @@ function functionthing() {
 			newQ();
 		}
 		else if(correct){
-			reply("Great!");//+x.toString());
+			if((x>5&&diffNames[qType][old_diff-1].startsWith("Easy"))||(x>10&&diffNames[qType][old_diff-1].startsWith("Medium"))){
+				reply("Great job! Why don't you try a higher difficulty?");
+			}
+			else{
+				reply("Great!");//+x.toString());
+			}
 			answered=true;
 			x++;
 		}
 		else{
 			reply('Aww...');
+			x=0;
 		}
 
 	}
@@ -246,7 +253,15 @@ function newQ(){
 	}
 	else{
 		var type=document.getElementById("type").value;
+		if(qType!=type){
+			x=0;
+			qType=type;
+		}
 		var diff=document.getElementById("difficulty").value;
+		if(old_diff!=diff){
+			x=0;
+			old_diff=diff;
+		}
 		if(type=="derivative"){
 			der(diff);
 		}
