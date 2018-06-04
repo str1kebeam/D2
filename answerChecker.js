@@ -957,7 +957,7 @@ function numpad(key){
 	}*/
 	var num=Number(key);
 	
-	if(!isNaN(num)&&key!=""){//just a workaround for a bug
+	if(!isNaN(num)){//just a workaround for a bug
 		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
 			//area.innerHTML+="*";
 			entry_text+="*";
