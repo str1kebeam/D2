@@ -71,11 +71,11 @@
 					A <strong>secant line</strong> is another, less common word used in geometry.  Secant lines, unlike tangent lines, <i>intersect</i> graphs as shown below.
 					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="circle w/ secant line">
 					The graph of <latex-eqn>\(f(x)=x^{2}\)</latex-eqn> with a secant line is shown here:
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with a secant line">
+					<canvas width="800" height="800" id="myCanvas3"></canvas>
 					You may recall that the slope between two points is rise over run, or <latex-eqn>$$m=\frac{rise}{run}=\frac{Δy}{Δx}=\frac{y_{2}-y_{1}}{x_{2}-x_{1}}$$</latex-eqn>
 					In this graph, since the secant line goes through \((0,0)\) and \((1,1)\), the slope is <latex-eqn>$$m=\frac{1-0}{1-0}=1$$</latex-eqn>
 					Try using the interactive graph below to make a secant line through different points on the graph.
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph of f(x) = x^2 with an interactive secant line">
+					<canvas width="800" height="800" id="myCanvas4"></canvas>
 					To make this secant line, which goes through two points, become a tangent line, which goes through one point, we must bring both points as close to each other as possible.  For example, the points \((0.9, 0.81)\) and \((1, 1)\) are really close and the secant line between them have a slope of <latex-eqn>$$\frac{1-0.81}{1-0.9}=\frac{0.19}{0.1}=1.9$$</latex-eqn>
 					To solve this, we use the following <strong>limit</strong>:
 					<latex-eqn>$$\lim_{h \to 0}\frac{f(x+h)-f(x)}{h}$$</latex-eqn>
@@ -97,7 +97,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
+<script src = "intro-tan4.js"></script>
 <script src = "intro-tan3.js"></script>
+<script src = "intro-tan2.js"></script>
 <script src = "intro-tan1.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -126,6 +128,8 @@ $(document).ready(function(){
 	$('.tabs').tabs();
 	init();
 	init2();
+	init3();
+	init4();
 	setInterval(autoplay, 5000);
 	function autoplay() {
 	    $('.carousel').carousel('next');
