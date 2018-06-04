@@ -11,8 +11,14 @@
 }
 
 .brand-logo {
+	display: flex;
+	align-items: center;
 	height: 64px;
 	width: auto;
+}
+
+.brand-logo img {
+	margin-top: 5px;
 }
 
 .color1 {
