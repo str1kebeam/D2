@@ -11,7 +11,7 @@
 	<link type="text/CSS" rel="stylesheet" href="Imports\materialize\css\materialize.css"  media="screen,projection"/>
 	<link rel="stylesheet" type="text/css" href="Imports/mdi/css/materialdesignicons.min.css">
 	<link rel="stylesheet" type="text/css" href="practice.css"> <!-- Import default css for the whole website -->
-	<link rel="shortcut icon" href="DeriveLogo.v2.icon.ico"> <!-- Webpage icon -->
+	<link rel="shortcut icon" href="Derive.ico"> <!-- Webpage icon -->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 	 <!-- Import LaTeX and AsciiMath-->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/4.2.2/math.min.js"></script>
@@ -25,6 +25,7 @@
 		<nav class="color1" id="topbar">
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo center"><img src="Derive.png"></a>
+				<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 				<ul id="nav-mobile" class="left hide-on-med-and-down">
 					<li><a href="index.html">Home<i class="material-icons right">home</i></a></li>
 					<li><a href=".\Lessons\index.html">Lessons</a></li>
@@ -34,6 +35,12 @@
 			</div>
 		</nav>
 		</div>
+		<ul class="sidenav" id="mobile-demo">
+	    <li><a href="index.html">Home</a></li>
+	    <li><a href="./Lessons/index.html">Lessons</a></li>
+	    <li><a href="practice.html">Practice</a></li>
+			<li><a href="about.html">About</a></li>
+	  </ul>
 		<div class="row">
 			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
 				<h3>Practice Settings</h3>
@@ -68,7 +75,9 @@
 					<div class="input-field">
 						<input placeholder="Your Answer Here" type="text" name="" id="input-answer">
 					</div>
-					<span id='final-entry'>``</span>
+					<div id="entry-container" class="valign-wrapper">
+						<span id='final-entry'>``</span>
+					</div>
 					<p id="response"></p>
 					<div id="calculator">
 						<button id="b1" onclick="numpad(1);" class="btn waves-effect waves-light">1</button>
