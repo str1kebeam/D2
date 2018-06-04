@@ -220,7 +220,7 @@ function functionthing() {
 
 	}
 	catch(err){
-		reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
+		reply("There was an error with your input, check for empty or unclosed parentheses, implicit multiplication, and characters that don't make sense being there.");
 		response.style.color = "#f00";
 		response.style.font_weight="bold";
 	}
@@ -277,12 +277,9 @@ function ask(question, expression){
 	var ans=document.getElementById("input-answer");
 	ans.value="";
 	answered=false;
-	var ent=document.getElementById("new-entry");
-	ent.innerHTML="";
 	entry_text="";
-	ltext="";
-	var l=MathJax.Hub.getAllJax("latex-entry")[0];
-	MathJax.Hub.Queue(['Text',l,ltext]);
+	var l=MathJax.Hub.getAllJax("final-entry")[0];
+	MathJax.Hub.Queue(['Text',l,entry_text]);
 }
 function reply(text){
 	if(text==""){
@@ -912,113 +909,121 @@ function testRandom(max, limit=100){
 ///////
 //Numpad stuff (I would move this into a separate file, but they work so closely together that they might as well be in the same file)
 ///////
-var expo=false;
-var first=0;
+//var expo=false;
+//var first=0;
 //wait, so you can have [number], [expoenet][/exponent], [fstart][fmid][fend], [exponent][fstart][/exponent], [fstart][exponent][fmid], and also in denominator, but it isn't much of a problem
 //So, those scenarios can be 0, 1, 2, 3, 4
 var keyWrapper=function keyGuard(event){
-	//Do some modification to the keypress, and then call numpad with it
-	//console.log(event.code);
-	//console.log(event.key);
-	//event.currentTarget.value ="test";
-	numpad(event.key);
-	event.preventDefault();
+	if(event.key=="Enter"){
+		functionthing();
+	}
+	else{
+		setTimeout(function(){
+		entry_text=event.target.value;//Update entry_text
+		update_ascii();}, 10);//wait a tiny bit to let html update the inner value, and then do update everything (may break on very laggy computers or with a very fast typing bot)
+	}
 }
 var entry=document.getElementById("input-answer");
 entry.addEventListener('keydown', keyWrapper);
-var buffer="";//what is currently being typed out that is a multi-character function
-var buffering=false;//if it is currently buffering something
-var ltext="";
+//var buffer="";//what is currently being typed out that is a multi-character function
+//var buffering=false;//if it is currently buffering something
+//var ltext="";
+function update_ascii(){
+	var e=MathJax.Hub.getAllJax("final-entry")[0];
+	MathJax.Hub.Queue(['Text',e,entry_text]);
+}
 function numpad(key){
-	var old=ltext;//to check if latex actuall needs to update, later on
-	var area=document.getElementById("new-entry");
-	if(buffering){
+	//var old=ltext;//to check if latex actuall needs to update, later on
+	//var area=document.getElementById("new-entry");
+	/*if(buffering){
 		key=buff(key,area);
-	}
+	}*/
 	var num=Number(key);
 	
 	if(!isNaN(num)&&key!=""){//just a workaround for a bug
 		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
-			area.innerHTML+="*";
+			//area.innerHTML+="*";
 			entry_text+="*";
-			lCharAdd("*");
+			//lCharAdd("*");
 		}
-		area.innerHTML+=num;
+		//area.innerHTML+=num;
 		entry_text+=num;
-		lCharAdd(num);
+		//lCharAdd(num);
 	}
 	else if(key=="^"){
 		entry_text+="^(";
-		lCharAdd("^{}");
+		//lCharAdd("^{}");
 		//entry_text+=addExpo(area);
 	}
-	else if(key=="back"||key=="Backspace"){
+	else if(key=="back"){
 		//entry_text=backspace(area, entry_text);
-		newBackspace();
+		//newBackspace();
+		entry_text=entry_text.slice(0,-1);
 	}
-	else if(key=="frac"){
+	/*else if(key=="frac"){
 		//entry_text+=addFrac(area);
 		entry_text+="(";
-		lCharAdd("\\frac{}{}");
-	}
+		//lCharAdd("\\frac{}{}");
+	}*/
 	else if(['x','c','e','z','y'].includes(key)){//any remaining value, not a function
 		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
 			entry_text+="*";
-			area.innerHTML+="*";
-			lCharAdd("*");
+			//area.innerHTML+="*";
+			//lCharAdd("*");
 		}
-		area.innerHTML+=key;
+		//area.innerHTML+=key;
 		entry_text+=key;
-		lCharAdd(key);
+		//lCharAdd(key);
 	}
 	else if(['*','+',"-",'/',')','('].includes(key)){
 		entry_text+=key;
-		area.innerHTML+=key;
-		lCharAdd(key);
+		//area.innerHTML+=key;
+		//lCharAdd(key);
 	}
 	else if(key=='Enter'){
 		functionthing();
 	}
 	else if(key=="clr"||key=='Delete'){
-		area.innerHTML="";
+		//area.innerHTML="";
 		entry_text="";
-		expo=false;
-		first=0;
-		frac_stage=0;
-		ltext="";
-		justEnded=false;
+		//expo=false;
+		//first=0;
+		//frac_stage=0;
+		//ltext="";
+		//justEnded=false;
 	}
-	else if(key=="pi"||key=="π"){//You never know what special characters their keyboard might have...
-		area.innerHTML+="&pi;";
+	else if(key=="pi"){//You never know what special characters their keyboard might have...
+		//area.innerHTML+="&pi;";
 		entry_text+="pi";
-		lCharAdd("pi");
+		//lCharAdd("pi");
 	}
 	else if(['sin(','cos(','tan('].includes(key)){
-		area.innerHTML+=key;
+		//area.innerHTML+=key;
 		entry_text+=key;
-		lCharAdd(key);
+		//lCharAdd(key);
 	}
 	else if(key=="."){
 		//console.log(key);
 		if(isNaN(Number(entry_text.slice(-1)))){
 			entry_text+="0";
-			area.innerHTML+="0";
-			lCharAdd("0");
+			//area.innerHTML+="0";
+			//lCharAdd("0");
 		}
 		entry_text+=".";
-		area.innerHTML+=".";
-		lCharAdd(".");
+		//area.innerHTML+=".";
+		//lCharAdd(".");
 	}
 	else{
-		buff(key,area);
+		//buff(key,area);
 		//Do nothing, ignored key
 	}
 	//console.log(first);
-	entry.value=entry_text+buffer;
-	if(old!=ltext){
+	entry.value=entry_text;
+	/*if(old!=ltext){
 		var m=MathJax.Hub.getAllJax("latex-entry")[0];
 		MathJax.Hub.Queue(['Text',m, ltext]);
-	}
+	}*/
+	update_ascii();
 }
 var lReplaces={//things that need to be replaced
 	"*":"\\times",
