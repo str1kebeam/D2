@@ -2,7 +2,7 @@
 //mathjs is imported as math in practice.html, but that should be fine
 //el.innerHTML = math.sqrt(9);
 var response=document.getElementById("response");
-var x=1;
+var x=0;//Used for saying 'Maybe you should go to a higher difficulty'
 var currentAns='';
 var answered=true;
 var strike=false;
@@ -202,7 +202,7 @@ setTimeout(document.getElementById("type").addEventListener("change",function(){
 function functionthing() {
 	var ans=document.getElementById("input-answer").value;
 	if(entry_text!=""){
-		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance
+		ans=entry_text.replace(/\[/g,"(").replace(/\]/g,")");//The /[stuff]/g makes it replace all, not just the first instance. Replaces [ and ] with ( and ), which used to be used for internal workings of fractions
 	}
 	try{
 		var correct=checkAns(ans);
@@ -212,7 +212,7 @@ function functionthing() {
 		else if(correct){
 			reply("Great!");//+x.toString());
 			answered=true;
-			//x++;
+			x++;
 		}
 		else{
 			reply('Aww...');
@@ -220,7 +220,7 @@ function functionthing() {
 
 	}
 	catch(err){
-		reply("There was an error with your input, check for empty or unclosed exponents amd fractions, and implicit multiplication.");
+		reply("There was an error with your input, check for empty or unclosed parentheses, implicit multiplication, and characters that don't make sense being there.");
 		response.style.color = "#f00";
 		response.style.font_weight="bold";
 	}
@@ -277,12 +277,9 @@ function ask(question, expression){
 	var ans=document.getElementById("input-answer");
 	ans.value="";
 	answered=false;
-	var ent=document.getElementById("new-entry");
-	ent.innerHTML="";
 	entry_text="";
-	ltext="";
-	var l=MathJax.Hub.getAllJax("latex-entry")[0];
-	MathJax.Hub.Queue(['Text',l,ltext]);
+	var l=MathJax.Hub.getAllJax("final-entry")[0];
+	MathJax.Hub.Queue(['Text',l,entry_text]);
 }
 function reply(text){
 	if(text==""){
@@ -912,712 +909,148 @@ function testRandom(max, limit=100){
 ///////
 //Numpad stuff (I would move this into a separate file, but they work so closely together that they might as well be in the same file)
 ///////
-var expo=false;
-var first=0;
+//var expo=false;
+//var first=0;
 //wait, so you can have [number], [expoenet][/exponent], [fstart][fmid][fend], [exponent][fstart][/exponent], [fstart][exponent][fmid], and also in denominator, but it isn't much of a problem
 //So, those scenarios can be 0, 1, 2, 3, 4
 var keyWrapper=function keyGuard(event){
-	//Do some modification to the keypress, and then call numpad with it
-	//console.log(event.code);
-	//console.log(event.key);
-	//event.currentTarget.value ="test";
-	numpad(event.key);
-	event.preventDefault();
+	if(event.key=="Enter"){
+		functionthing();
+	}
+	else{
+		setTimeout(
+			function(){
+		entry_text=event.target.value;//Update entry_text
+		update_ascii();}
+		, 0);//wait a tiny bit to let html update the inner value, and then do update everything (may break on very laggy computers or with a very fast typing bot)
+	}
 }
 var entry=document.getElementById("input-answer");
 entry.addEventListener('keydown', keyWrapper);
-var buffer="";//what is currently being typed out that is a multi-character function
-var buffering=false;//if it is currently buffering something
-var ltext="";
+//var buffer="";//what is currently being typed out that is a multi-character function
+//var buffering=false;//if it is currently buffering something
+//var ltext="";
+function update_ascii(){
+	var e=MathJax.Hub.getAllJax("final-entry")[0];
+	MathJax.Hub.Queue(['Text',e,entry_text]);
+}
 function numpad(key){
-	var old=ltext;//to check if latex actuall needs to update, later on
-	var area=document.getElementById("new-entry");
-	if(buffering){
+	//var old=ltext;//to check if latex actuall needs to update, later on
+	//var area=document.getElementById("new-entry");
+	/*if(buffering){
 		key=buff(key,area);
-	}
+	}*/
 	var num=Number(key);
 	
 	if(!isNaN(num)&&key!=""){//just a workaround for a bug
 		if(entry_text.slice(-1)=="]"||entry_text.slice(-1)==")"){//fix implicit multiplication
-			area.innerHTML+="*";
+			//area.innerHTML+="*";
 			entry_text+="*";
-			lCharAdd("*");
+			//lCharAdd("*");
 		}
-		area.innerHTML+=num;
+		//area.innerHTML+=num;
 		entry_text+=num;
-		lCharAdd(num);
+		//lCharAdd(num);
 	}
 	else if(key=="^"){
 		entry_text+="^(";
-		lCharAdd("^{}");
+		//lCharAdd("^{}");
 		//entry_text+=addExpo(area);
 	}
-	else if(key=="back"||key=="Backspace"){
+	else if(key=="back"){
 		//entry_text=backspace(area, entry_text);
-		newBackspace();
+		//newBackspace();
+		entry_text=entry_text.slice(0,-1);
 	}
-	else if(key=="frac"){
+	/*else if(key=="frac"){
 		//entry_text+=addFrac(area);
 		entry_text+="(";
-		lCharAdd("\\frac{}{}");
-	}
+		//lCharAdd("\\frac{}{}");
+	}*/
 	else if(['x','c','e','z','y'].includes(key)){//any remaining value, not a function
 		if([")","]"].includes(entry_text.slice(-1))){//just came up with a much better way of doing this logic
 			entry_text+="*";
-			area.innerHTML+="*";
-			lCharAdd("*");
+			//area.innerHTML+="*";
+			//lCharAdd("*");
 		}
-		area.innerHTML+=key;
+		//area.innerHTML+=key;
 		entry_text+=key;
-		lCharAdd(key);
+		//lCharAdd(key);
 	}
-	else if(['*','+',"-",'/',')','('].includes(key)){
+	else if(['*','+',"-",'/',')','(',']','['].includes(key)){
 		entry_text+=key;
-		area.innerHTML+=key;
-		lCharAdd(key);
+		//area.innerHTML+=key;
+		//lCharAdd(key);
 	}
 	else if(key=='Enter'){
 		functionthing();
 	}
 	else if(key=="clr"||key=='Delete'){
-		area.innerHTML="";
+		//area.innerHTML="";
 		entry_text="";
-		expo=false;
-		first=0;
-		frac_stage=0;
-		ltext="";
-		justEnded=false;
+		//expo=false;
+		//first=0;
+		//frac_stage=0;
+		//ltext="";
+		//justEnded=false;
 	}
-	else if(key=="pi"||key=="π"){//You never know what special characters their keyboard might have...
-		area.innerHTML+="&pi;";
+	else if(key=="pi"){//You never know what special characters their keyboard might have...
+		//area.innerHTML+="&pi;";
 		entry_text+="pi";
-		lCharAdd("pi");
+		//lCharAdd("pi");
 	}
-	else if(['sin(','cos(','tan('].includes(key)){
-		area.innerHTML+=key;
+	else if(['sin(','cos(','tan(','csc(','sec(','cot('].includes(key)){
+		//area.innerHTML+=key;
 		entry_text+=key;
-		lCharAdd(key);
+		//lCharAdd(key);
 	}
 	else if(key=="."){
 		//console.log(key);
 		if(isNaN(Number(entry_text.slice(-1)))){
 			entry_text+="0";
-			area.innerHTML+="0";
-			lCharAdd("0");
+			//area.innerHTML+="0";
+			//lCharAdd("0");
 		}
 		entry_text+=".";
-		area.innerHTML+=".";
-		lCharAdd(".");
+		//area.innerHTML+=".";
+		//lCharAdd(".");
+	}
+	else if(key=="^2"){
+		entry_text+="^2";
+	}
+	/*if(key=="2nd"){
+		second(true);
 	}
 	else{
-		buff(key,area);
-		//Do nothing, ignored key
-	}
+		second();//turns off second
+	}*/
 	//console.log(first);
-	entry.value=entry_text+buffer;
-	if(old!=ltext){
+	entry.value=entry_text;
+	/*if(old!=ltext){
 		var m=MathJax.Hub.getAllJax("latex-entry")[0];
 		MathJax.Hub.Queue(['Text',m, ltext]);
-	}
-}
-var lReplaces={//things that need to be replaced
-	"*":"\\times",
-	"sin(":"\\sin(",
-	"cos(":"\\cos(",
-	"tan(":"\\tan(",
-	"pi":"\\pi"
-};
-var justEnded=0;
-function handleLatexTail(){
-	var tail=[];
-	while(ltext.slice(-1)=="}"){
-		var d=-1;
-		if(ltext.slice(-3)=="}{}"){//check for the denominator
-			d=-3;
-		}
-		tail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
-		ltext=ltext.slice(0,d);//remove the trailing part
-	}
-	if(justEnded>0){
-		var s=justEnded;
-		justEnded--;
-		//console.log(tail);
-		//console.log(tail[tail.length-1]);
-		if(tail[tail.length-1]=="}{}"){//If a fraction was just closed
-			ltext+="}{";
-			tail[tail.length-1]="}";
-			//entry_text+=")/(";
-		}
-		else if(tail[tail.length-1]=="}"){
-			ltext+="}";
-			//tail[tail.length-1]="";
-			tail.pop();
-		}
-
-		//var i=1;
-		while(justEnded>0){//in case something ridiculous, like closing 5 fractions at the same time, or x^2/5, etc.
-			//console.log(tail);
-			//console.log(tail[tail.length-1]);
-			//ltext+=tail[tail.length-i];
-			//tail[tail.length-i]=="";
-			if(tail[tail.length-1]=="}{}"){//I spent at least an hour trying to debug my code, until I realized that this had been tail.lenghT not tail.lengTh
-				ltext+="}{";
-				tail[tail.length-1]="}";
-			}
-			else if(tail[tail.length-1]=="}"){
-				ltext+="}";
-				//tail[tail.length-1]="";
-				tail.pop();
-			}
-			justEnded--;
-		}
-		justEnded=s;
-	}
-	return tail;
-}
-var testTail=[]
-function latexTailStart(){
-	while(ltext.slice(-1)=="}"){
-		var d=-1;
-		if(ltext.slice(-3)=="}{}"){//check for the denominator
-			d=-3;
-		}
-		testTail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
-		ltext=ltext.slice(0,d);//remove the trailing part
-	}
-}
-function latexTailStep(){
-	if(testTail[testTail.lenght-1]=="}{}"){
-		ltext+="}{";
-		testTail[testTail.length-1]="}";
-	}
-	else if(testTail[testTail.length-1]=="}"){
-		ltext+="}";
-		//testTail[testTail.length-1]="";
-		testTail.pop();
-	}
-	justEnded--;
-}
-function lCharAdd(char){
-	var tail=handleLatexTail();
-	/*while(ltext.slice(-1)=="}"){
-		var d=-1;
-		if(ltext.slice(-3)=="}{}"){//check for the denominator
-			d=-3;
-		}
-		tail.push(ltext.slice(d));//Add on the part that was about to be removed to the list
-		ltext=ltext.slice(0,d);//remove the trailing part
-	}
-	//console.log(tail);
-	//console.log(ltext);
-	//console.log(justEnded);
-	if(justEnded>0){
-		var s=0;
-		if(char==")"){
-			s=justEnded;
-		}
-		justEnded--;
-		if(tail[tail.length-1]=="}{}"){//If a fraction was just closed
-			ltext+="}{";
-			tail[tail.length-1]="}";
-			//entry_text+=")/(";
-		}
-		else if(tail[tail.length-1]=="}"){
-			ltext+="}";
-			//tail[tail.length-1]="";
-			tail.pop();
-		}
-		//var i=1;
-		while(justEnded>0){//in case something ridiculous, like closing 5 fractions at the same time, or x^2/5, etc.
-			//ltext+=tail[tail.length-i];
-			//tail[tail.length-i]=="";
-			if(tail[tail.lenght-1]=="}{}"){
-				ltext+="}{";
-				tail[tail.length-1]="}";
-			}
-			else if(tail[tail.length-1]=="}"){
-				ltext+="}";
-				//tail[tail.length-1]="";
-				tail.pop();
-			}
-			justEnded--;
-		}
-		justEnded=s;
 	}*/
-	
-	//console.log(ltext);
-	//console.log(justEnded);
-	//console.log(char);
-	//console.log(typeof char);
-	if(Object.keys(lReplaces).includes(char)){//I'm not entirely sure why I need to do it that way, but this works
-		char=lReplaces[char];
-	}
-	if(char==")"){
-		//console.log(ltext.substr(findLatexOpen(ltext)-5,5));
-		//console.log((entry_text.substr(findOpenParen(entry_text)-1,1)));
-		if(['^','/'].includes(entry_text.substr(findOpenParen(entry_text)-1,1))){
-			justEnded++;
-		}
-		else if(ltext.substr(findLatexOpen(ltext)-5,5)=="\\frac"){
-			justEnded++;
-			entry_text+="/(";
-		}
-		else{
-			ltext+=char;
-		}
+	update_ascii();
+}
+//Yeah, we decided to not use this...
+function second(state=false){//by default, it turns second off
+	var sin=document.getElementById('sin');
+	var cos=document.getElementById('cos');
+	var tan=document.getElementById('tan');
+	if(state){//turn on second (set the sin to csc, etc.)
+		sin.innerHTML="csc";
+		sin.onclick=function(){numpad('csc(');};
+		cos.innerHTML="sec";
+		cos.onclick=function(){numpad('sec(');};
+		tan.innerHTML="cot";
+		tan.onclick=function(){numpad('cot(');};
 	}
 	else{
-		ltext+=char;
-		justEnded=0;
+		sin.innerHTML="sin";
+		sin.onclick=function(){numpad('sin(');};
+		cos.innerHTML="cos";
+		cos.onclick=function(){numpad('cos(');};
+		tan.innerHTML="tan";
+		tan.onclick=function(){numpad('tan(');};
 	}
-	for(var i=tail.length-1;i>=0;i--){//Add back on the removed part
-		ltext+=tail[i];
-	}
-	//console.log(justEnded);
-}
-var num_test;
-var test_speed=1000;
-function test_numpad(i){
-	var text="1 + 2 * 3 + 5 ^ 3 ) - 6 ^ 3 ^ 2 ) ) + 1 + frac 3 ) 2 ) + frac 3 frac 2 ) 1 ) ) 2 ) + 3 + 3 ^ frac 2 ) 3 ) ) + 1";
-	var parts=text.split(" ");
-	if(i<0){
-		clearTimeout(num_test);
-	}
-	else if(i<parts.length){
-		numpad(parts[i]);
-		num_test=setTimeout(function () {test_numpad(i+1)}, test_speed)
-	}
-}
-function test_backspace(i){
-	var text="1 + 2 * 3 + 5 ^ 3 ) - 6 ^ 3 ^ 2 ) ) + 1 + frac 3 ) 2 ) + frac 3 frac 2 ) 1 ) ) 2 ) + 3 + 3 ^ frac 2 ) 3 ) ) + 1";
-	var parts=text.split(" ");
-	if(i<0){
-		clearTimeout(num_test);
-	}
-	else if(i<parts.length){
-		numpad("back");
-		num_test=setTimeout(function() {test_backspace(i+1)},test_speed);
-	}
-}
-function findOpenParen(text){
-	//Returns the index of the last open parenthese
-	var closes=0;
-	for(var i=text.length-2;i>=0;i--){
-		if(text[i]=="("){
-			closes--;
-		}
-		else if(text[i]==")"){
-			closes++;
-		}
-		if(closes<0){
-			return i;
-		}
-	}
-}
-function findLatexOpen(latex){
-	//goes through the latex code, looks at the { and } as well
-	var closes=0;
-	for(var i=latex.length-1; i>=0; i--){
-		if(["(","{"].includes(latex[i])){
-			closes--;
-		}
-		else if([")","}"].includes(latex[i])){
-			closes++;
-		}
-		if(closes<0){
-			return i;
-		}
-	}
-}
-var fill=[];//What it will check if it can finish to
-var fill_options=[//List of things that buffer would handle:
-	'sin(',
-	'cos(',
-	'tan(',
-	'csc(',
-	'sec(',
-	'cot(',
-	'pi',
-	'frac'
-	];
-var preBuff="";
-function buff(key, area){
-	if(!buffering){//Start trying to buffer
-		if(entry_text.slice(-1)=="c"){
-			numpad("back");//Later on, I'll make this nicer
-			preBuff="c";
-			buffer="c";
-		}
-		buffer+=key;
-		fill=fill_options.filter(function(f){
-			return f.startsWith(buffer);
-		})
-		if(fill.length==0){
-			lCharAdd(preBuff);
-			entry_text+=preBuff;
-			buffer="";
-			preBuff="";
-			return "";
-		}
-		buffering=true;
-		return "";
-		/*if(key=="o"){//o and s are special, because it could have been c beforehand
-			if(area.innerHTML.slice(-1)=="c"){
-				fill=['cos(','cot('];
-				buffering=true;
-				buffer="co";
-				entry_text=entry_text.slice(0,-1);//remove that "c";
-				//area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
-
-				preBuff="c";
-			}
-		}
-		if(key=="s"){
-			if(area.innerHTML.slice(-1)=="c"){
-				fill=['csc('];
-				buffering=true;
-				buffer="cs";
-				entry_text=entry_text.slice(0,-1);//remove that "c";
-				area.innerHTML=area.innerHTML.slice(0,-1);//remove that "c" in the printed stuff
-				preBuff="c"
-			}
-			else{
-				fill=['sin(','sec('];
-				buffering=true;
-				buffer="s";
-			}
-		}
-		if(key=="t"){
-			fill=['tan('];
-			buffering=true;
-			buffer="t";
-		}
-		if(key=="p"){
-			fill=['pi'];
-			buffering=true;
-			buffer="p";
-		}
-		return "";*/
-	}
-	else{//just continue the buffer
-		if(key=='Backspace'){
-			buffer=buffer.slice(0,-1);
-			fill=fill_options.filter(function (f){
-				return f.includes(buff);
-			});//find everything that could turn into it again
-			if(buffer==preBuff){//They backspaced out of the buffer
-				entry_text+=preBuff;
-				//area.innerHTML+=preBuff;
-				buffer="";
-				buffering=false;
-				lCharAdd(preBuff);
-
-				fill=[];
-				preBuff="";
-			}
-			return "";//later on, make this remove a character from the buffer
-		}
-		else if(key.charCodeAt(0)<=31||key.charCodeAt(0)==127||key.length!=1){
-			return "";//it was some special character, just ignore it
-		}
-		var temp=buffer+key;
-		fill=fill.filter(function (val){
-			return val.includes(temp);
-		});
-		if(fill.length==0){
-			buffer="";
-			buffering=false;
-			
-			//area.innerHTML+=preBuff;
-			entry_text+=preBuff;
-			lCharAdd(preBuff);
-			preBuff=""
-			return "";//they stopped typing it, clear the buffer
-		}
-		else if(fill.length==1&&fill[0]==temp){
-			buffer="";
-			buffering=false;
-			return temp;//they finished, now give what they typed as a keypress
-		}
-		else{
-			buffer+=key;
-			return "";
-		}
-	}
-}
-function newBackspace(){
-	//var temp=ltext;
-	var tail=handleLatexTail();
-	var last=ltext.slice(-1);
-	if(justEnded>0){
-		if(entry_text.slice(-3)==")/("){
-			justEnded--;
-			entry_text=entry_text.slice(0,-3);
-		}
-		else{
-			justEnded--;
-			entry_text=entry_text.slice(0,-1);
-		}
-	}
-	/*if(last=="}"){
-		justEnded--;
-		entry_text=entry_text.slice(0,-1);//
-	}
-	else if(ltext.slice(-2)=="}{"){
-		justEnded--;
-		entry_text=entry_text.slice(0,-3);//)/(
-	}*/
-	else if(last=="("&&['\\sin(','\\cos(','\\tan('].includes(ltext.slice(-5))){ //Oh, need to add in the other functions
-		ltext=ltext.slice(0,-5);
-		entry_text=entry_text.slice(0,-4);//entry_text won't have the \
-	}
-	else if(ltext.slice(-3)=="\\pi"){
-		ltext=ltext.slice(0,-3);
-		entry_text=entry_text.slice(0,-2);
-	}
-	else if(ltext.slice(-6)=="\\frac{"){//"\frac{"
-		ltext=ltext.slice(0,-6);
-		entry_text=entry_text.slice(0,-1);//just has a paren
-		tail.splice(0,1);//remove the }{} as well, which should be the first thing in the tail
-	}
-	else if(ltext.slice(-2)=="^{"){
-		ltext=ltext.slice(0,-2);
-		entry_text=entry_text.slice(0,-2);
-		tail.splice(0,1);//remove the } that matches the ^{
-	}
-	else if(ltext.slice(-6)=="\\times"){//"\times"
-		ltext=ltext.slice(0,-6);
-		entry_text=entry_text.slice(0,-1);
-	}
-	else{
-		ltext=ltext.slice(0,-1);
-		entry_text=entry_text.slice(0,-1);
-	}
-	redoJustEnded();
-	//test for pi
-	//test for the \frac
-	//normal replace
-	//Probably a few other things that I forgot, then:
-	for(var i=tail.length-1; i>=0; i--){
-		ltext+=tail[i];
-	}	
-}
-function redoJustEnded(){
-	justEnded=0;
-	for(var i=1;i<entry_text.length;i++){
-		if(entry_text.substr(-i-2,3)==")/("){
-			justEnded++;
-		}
-		else if(entry_text.substr(-i,1)!=")"){
-			return;
-		}
-		else if(['^','/'].includes(entry_text.substr(findOpenParen(entry_text.slice(0,-i))-1,1))){
-			justEnded++;
-		}
-		else if(ltext.substr(findLatexOpen(ltext.slice(0,-i))-5,5)=="\\frac"){
-			justEnded++;
-		}
-	}
-}
-function addExpo(feild){
-	if(!expo){
-		feild.innerHTML+="^(";
-		ltext+="^{}";
-		expo=true;
-		if (first==0){
-			first=1;
-		}
-		else if(first==2){
-			first=4;
-		}
-		return "^(";
-	}
-	else{
-		if(first==4){
-			first=2;
-		}
-		else if(first==1){
-			first=0;
-		}
-		else{
-			//console.log("Need to let the user know this");
-			reply("<You need to close the fraction before you can close the exponent");
-			response.style.color = "#f00";
-			return "";
-		}
-		var start=feild.innerHTML.indexOf("^(");
-		//console.log(feild.innerHTML.substring(start+2));
-		var inside=feild.innerHTML.substring(start+2);
-		var before=feild.innerHTML.substring(0,start);
-		//console.log(before);
-		val="";
-		if(inside==""){
-			//feild.innerHTML=before;//Yeah, that probably did more bad than good
-			inside="1";//so that it just won't do anything, instead of breaking something
-			//If I have the time to rework the flow of this, I would make it remove the opening exponent instead
-			val="1";
-		}
-		//else{
-		feild.innerHTML=before+"<sup>"+inside+"</sup>";
-		//}
-		expo=false;
-		return val+")";
-	}
-}
-var frac_stage=0;//0=not in fraction, 1=numerator, 2=denominator
-function addFrac(feild){
-	if(frac_stage==0){
-		feild.innerHTML+="[";
-		frac_stage=1;
-		if(first==0){
-			first=2;
-		}
-		else if(first==1){
-			first=3;
-		}
-		ltext+="\\frac{}{}";
-		return "[";
-	}
-	else if(frac_stage==1){
-		if(first!=3&&first!=2){
-			//console.log("Need to let the user know this");
-			reply("You need to close the exponent before you can close the fraction");
-			style.color = "#f00";
-			return "";
-		}
-		//Slightly bad workaround, but I don't think it's worth the effort to find what the numerator is here
-		//This will need to be redone if I ever allow fractions inside of fractions
-		if(feild.innerHTML.slice(-1)=="["){
-			feild.innerHTML+="1]/[";
-			frac_stage=2;
-			return "1]/[";
-			//Oh, I really should redo this part at some point, but I just want to get a better fix out for now
-		}
-		feild.innerHTML+="]/[";
-		frac_stage=2;
-		return "]/[";
-	}
-	else if(frac_stage==2){
-		if (first==3){
-			first=1;
-		}
-		else if(first==2){
-			first=0;
-		}
-		else{
-			//console.log("Need to let the user know this");
-			reply("You need to close the exponent before you can close the fraction");
-			style.color = "#f00";
-			return "";
-		}
-		var start=feild.innerHTML.indexOf("[");
-		var mid=feild.innerHTML.indexOf("]/[");
-		var before=feild.innerHTML.slice(0,start);
-		var num=feild.innerHTML.slice(start+1,mid);
-		var den=feild.innerHTML.slice(mid+3);
-		//console.log(before);
-		//console.log(num);
-		//console.log(den);
-		val="";
-		if(den==""){
-			//console.log("Yeah, actually setting the denominator to 1");
-			den="1";
-			val="1";
-		}
-		feild.innerHTML=before+"<sup>"+num+"</sup>&frasl;<sub>"+den+"</sub>";
-		frac_stage=0;
-		return val+"]";//slightly better, but still kind of painful...
-	}
-}
-function backspace(feild, text){
-	var last=feild.innerHTML.slice(-1);
-	//console.log(last);;
-	if(feild.innerHTML.slice(-6)=="</sup>"){//Check for superscript closing tag, undo formatting
-		var start=feild.innerHTML.lastIndexOf("<sup>");
-		var inside=feild.innerHTML.slice(start+5,-6);
-		var before=feild.innerHTML.slice(0,start);
-		//console.log(inside);
-		//console.log(before);
-		feild.innerHTML=before+"^("+inside;
-		expo=true;
-		if (first==0){
-			first=1;
-		}
-		else if(first==2){
-			first=4;
-		}
-		text=text.slice(0,-1);
-	}
-	else if(last=="("&&feild.innerHTML.slice(-2)=="^("){//check for superscript opening tag, remove entire thing instead of just a single character
-		feild.innerHTML=feild.innerHTML.slice(0,-2);
-		text=text.slice(0,-2);
-		expo=false;
-		if(first==4){
-			first=2;
-		}
-		else if(first==1){
-			first=0;
-		}
-	}
-	else if(last==">"&&feild.innerHTML.slice(-6)=="</sub>"){//check for fraction closing tag, remove formatting
-		//console.log("Yeah, right now this is broken...");
-		//return text;
-		var middle = feild.innerHTML.lastIndexOf("</sup>⁄<sub>");//special note: that is not the normal forward slash, that is &frasl;
-		//console.log(middle);
-		//Oh, this will be fun to code. 3 scenARios:
-			//"<sup>[exponent]</sup>[other stuff]*<sup>*[rest of fraction]"
-			//"*<sup>*[rest of fraction]"
-			//"*<sup>*[numerator stuff]<sup>[exponent]</sup>[rest of fraction]"
-		var temp=feild.innerHTML.slice(0,middle);
-		while(temp.lastIndexOf("</sup>")>temp.lastIndexOf("<sup>")){
-			//Keep on removing any exponents until it's outside of the fraction
-			temp=temp.slice(0, temp.lastIndexOf("<sup>"));
-		}
-		var start=temp.lastIndexOf("<sup>");
-		var before=feild.innerHTML.slice(0, start);
-		var num=feild.innerHTML.slice(start+5,middle);
-		var den=feild.innerHTML.slice(middle+12, -6);//found part of the problem- .innerHTML is returing the specail /, not &frasl;
-		//console.log(before);
-		//console.log(num);
-		//console.log(den);
-		//return text;
-		feild.innerHTML=before+"["+num+"]/["+den;
-		text=text.slice(0,-1);
-		frac_stage=2;
-		if(first==0){
-			first=2;
-		}
-		else if(first==1){
-			first=3;
-		}
-	}
-	else if(last=="["&&feild.innerHTML.slice(-3)=="]/["){//check for the fraction slash
-		feild.innerHTML=feild.innerHTML.slice(0,-3);
-		text=text.slice(0,-3);
-		frac_stage=1;
-	}
-	else if(last=="["){//fraction numerator start
-		feild.innerHTML=feild.innerHTML.slice(0,-1);
-		text=text.slice(0,-1);
-		frac_stage=0;
-		if (first==3){
-			first=1;
-		}
-		else if(first==2){
-			first=0;
-		}
-	}
-	else if(last=="π"){//It feels like I'm doing something wrong, but it will be π, not &pi;, as I learned with &frasl;
-		feild.innerHTML=feild.innerHTML.slice(0,-1);
-		text=text.slice(0,-2);
-	}
-	else if(last=="("&&['sin(','cos(','tan('].includes(feild.innerHTML.slice(-4))){
-		feild.innerHTML=feild.innerHTML.slice(0,-4);
-		text=text.slice(0,-4);
-	}
-	else{//normal backspace
-		feild.innerHTML=feild.innerHTML.slice(0,-1);
-		text=text.slice(0,-1);
-	}
-	return text;
 }
