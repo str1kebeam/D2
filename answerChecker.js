@@ -10,8 +10,6 @@ var entry_text="";
 var qType="";
 var rat=false;//should answer checker try to order it(some things will cause errors)
 start_diff=1;
-
-var oldMaxDiff=2;//For updating the dropdown
 /////
 //Difficulty settings
 /////
@@ -23,11 +21,19 @@ var irTrig=['arccsc','arcsec', 'arccot'];
 var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
 var diffs=[];
 diffs["derivative"]=[
-	[2,1,5], [3,2,5], //Polynomial difficulty levels
-	[1,1,1,sTrig], [2,2,2,sTrig]//The trig difficulty levels
+	[2,1,5], [3,2,5], [4,5,10], //Polynomial difficulty levels
+	[1,1,1,sTrig], [2,2,2,sTrig], [3,3,sTrig]//The trig difficulty levels
 ];
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
 diffs["integral"]=[[2,1,5],[3,2,5]];
+diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];
+var diffNames=[];
+diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
+						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
+						//Is it bad that I needed to look up what "Trig" was short for?
+diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
+diffNames['integral']=["Easy Polynomial","Hard Polynomial"];
+diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole"];
 //////
 //Startup stuff
 //////
@@ -53,6 +59,10 @@ var loadFunc = function(){
 				qType="tangent";
 				welcome.innerHTML="Now that you've learned tangent lines, practice your skills with these problems";
 			}
+			else if(stuff[1]=="limit"){
+				qType="limit";
+				welcome.innerHTML="Now that you've learned limits, practice your skills with these problems";
+			}
 		}
 		if(stuff[0]=="difficulty"){
 			var t=Number(stuff[1]);
@@ -66,11 +76,11 @@ var loadFunc = function(){
 	if(qType!=""){
 		document.getElementById("type").value=qType;
 		//document.getElementById("type").onload=
-		setTimeout(setDropdown(document.getElementById("type"), qType), 300000);
+		setDropdown(document.getElementById("type"), qType);
 
 		//document.getElementById("type").onload=function(){document.getElementById("type").value=qType;};
 		document.getElementById("difficulty").value=start_diff;
-		setTimeout(setDropdown(document.getElementById("difficulty"), start_diff), 300000);
+		setDropdown(document.getElementById("difficulty"), start_diff);
 		//document.getElementById("difficulty").onload=function(){document.getElementById("difficulty").value=start_diff;};
 		newQ();
 		//console.log("test");
@@ -137,6 +147,15 @@ function setDropdown(dropdown, val){
 function updateDropdowns(){
 	var type=document.getElementById("type").value;
 	//console.log(type);
+	//var options=diffs[type].length;
+	//console.log(options);
+	var diffDrop=document.getElementById("difficulty");
+	/*if(options==oldMaxDiff){//No options need to be added or removed
+		console.log("fine");
+		return;
+	}*/
+	/*else if(options>oldMaxDiff){//Need to add options
+		console.log("Adding");
 	var options=diffs[type].length;
 	//console.log(options);
 	var diffDrop=document.getElementById("difficulty");
@@ -160,7 +179,16 @@ function updateDropdowns(){
 			diffDrop.remove(i-1);//Remove the option at index i-1, so i=4 would remove index 3 (which would be '4')
 		}
 	}
-	oldMaxDiff=options;
+	oldMaxDiff=options;*/
+	while(diffDrop.options.length>0){
+		diffDrop.remove(0);
+	}
+	for(var i=0;i<diffNames[type].length; i++){
+		var option=document.createElement("option");
+		option.text=diffNames[type][i];
+		option.value=i+1;
+		diffDrop.add(option);
+	}
 	$('#difficulty').formSelect();
 }
 //window.onload=setTimeout(loadFunc, 2000);
@@ -227,6 +255,9 @@ function newQ(){
 		}
 		else if(type=="tangent"){
 			t_l(diff);
+		}
+		else if(type=="limit"){
+			limitQ(diff);
 		}
 		strike=false;
 		var b=document.getElementById("new-question");
@@ -459,6 +490,126 @@ function integrateTrig(tCo, trig, xCo, xPow){
 	//Yeah, most of the work is going to need to be making the random trig generator
 	//Might just want to generate a trig function, and then find the derivative of that (and print it nicely)
 	//Yeah, do that
+}
+function limitQ(diff){
+	var d=diffs["limit"][diff];
+	if(diffNames['limit'][diff-1].endsWith("Hole")){
+		simpleVisualLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
+		rat=true;
+	}
+}
+function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
+	var nums=[];
+	var usedMaxNum=Math.floor(Math.random()*maxNum)+1;
+	//var type=Math.floor(Math.random()*3);//So, I remember 3 ways this can go:
+											//0-no place where it is undefined
+											//1-hole
+											//2-jump, with an asymtote
+	var type=1;//just going with hole problems, later on I can remove/move around the other code
+	for(var i=0;i<usedMaxNum-1; i++){
+		var num=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
+		nums.push(num);
+	}
+	if(type==1){
+		if(!nums.some(function(n){
+			return !isNaN(n[2][3]);//If all of them don't have a real 0
+		})){
+			var genning=true;
+			while(genning){
+				var num=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
+				if(!isNaN(num[2][3])){
+					nums.push(num);
+					genning=false;
+				}
+			}
+		}
+		else{
+			nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
+		}
+	}
+	/*else{
+		nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
+	}*/
+	var dens=[];
+	var usedMaxDen=Math.floor(Math.random()*maxDen)+1;
+	var hole_index=Math.floor(Math.random()*usedMaxDen);
+	for(var i=0; i<usedMaxDen; i++){
+		var genning=true;
+		while(genning){
+			var den=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
+			/*if(type==0){
+				if(!isNaN(den[2][3])){//Not 0 over all reals
+					dens.push(den);
+					genning=false;
+				}
+			}
+			else if(type==1){*/
+				var good_nums=nums.filter(function (n){
+						return !isNaN(n[2][3]);
+					})
+				if(i==hole_index){
+					console.log(good_nums);
+					var index=Math.floor(Math.random()*good_nums.length);
+					dens.push(good_nums[index]);
+					console.log(good_nums[index]);
+					console.log(dens[i]);
+					genning=false;
+				}
+				else if(!good_nums.some(function(n){
+					return n[2][3]==den[2][3]&&!isNaN(n[2][3]);//There isn't another hole
+				})){
+					dens.push(den);
+					genning=false;
+				}
+			/*}
+			else if(type==2){
+				if(!nums.some(function (n){
+					return den[2][3]==n[2][3]&&!isNaN(den[2][3]);//Isn't a hole
+				})){
+					if(i+1==usedMaxDen&&!dens.some(function (d){return !isNaN(d[2][3])})){//Check that there is at least one asymptote
+						if(!isNaN(den[2][3])){
+							dens.push(den);//This one has an asymptote, push it
+							genning=false;
+						}
+					}
+					else{
+						dens.push(den);
+						genning=false;
+					}
+				}
+			}*/
+		}
+	}
+	//console.log(nums);
+	//console.log(dens);
+	var simple="";
+	var latex="\\frac{";
+	for(var i=0; i<usedMaxNum; i++){
+		simple+=nums[i][0];
+		latex+=nums[i][1];
+		if(i+1<usedMaxNum){
+			simple+="*";
+			latex+="\\times";
+		}
+	}
+	simple+="/";
+	latex+="}{";
+	for(var i=0;i<usedMaxDen; i++){
+		simple+=dens[i][0];
+		latex+=dens[i][1];
+		if(i+1<usedMaxDen){
+			simple+="*";
+			latex+="\\times";
+		}
+	}
+	//Wait a second... I don't actually need 'simple' for this one... Sigh...
+	latex+="}";
+	var ans=dens[hole_index][2][3];
+	console.log(hole_index);
+	console.log(dens);
+	currentAns=ans;
+	ask("Where is there a hole in this function?",latex);
+	//Something to graph simple
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
@@ -697,6 +848,39 @@ function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig, raw=false){
 		val.push([tc, tr, xc, xp]);//Add in the values to the return statement so that the integral can be found
 	}
 	return val;
+}
+function generate_factored_part(maxXCo, maxXPow, maxC, neg=false){
+	//Ok, so this will pretty much make a thing like (x^2 +1), etc, so that I can quickly make graphs with holes
+	//neg accounts for if the constants can be negative as well (not counting the power)
+	var xPow=Math.floor(Math.random()*maxXPow)+1;//So that it can't be 0
+	var xCo=Math.floor(Math.random()*maxXCo)+1;
+	var cons=(Math.random()*maxC).toFixed(0);
+	if(neg){
+		if(Math.random()>=0.5){//50% chance of making it negative (Math.random() has domain [0,1), so 0.5 is included in the upper half)
+			xCo=-xCo;
+		}
+		if(Math.random()>=0.5){//Yes, a second roll, because otherwise both would be positive/both would be negative
+			cons=-cons;
+		}
+	}
+	var simple="("+xCo+"x";
+	var latex="("+xCo+"x";
+	if(xPow>1){
+		simple+="^("+xPow+")";
+		latex+="^{"+xPow+"}";
+	}
+	if(cons!=0){
+		if(cons>0){//Don't need to manually add the -, because it will already be printed
+			simple+="+";//Sadly, the + needs to be done manually
+			latex+="+";
+		}
+		simple+=cons;
+		latex+=cons;
+	}
+	simple+=")";
+	latex+=")";
+	var zero=Math.pow(-(cons/xCo), 1/xPow)
+	return [simple, latex, [xPow, xCo, cons, zero]];
 }
 function test(){
 	console.log("test");
