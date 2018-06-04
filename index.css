@@ -4,6 +4,9 @@
   width: 70%;
   height: auto;
 }
+#biglogo {
+  margin: 25px auto;
+}
 /*
 .carousel .carousel-item {
   display: block;
