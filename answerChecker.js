@@ -327,6 +327,9 @@ function checkAns(ans){
 	if (ans==currentAns){
 		return true;
 	}
+	else if(currentAns=="undefined"){
+		return false;//math.simplify("undefined") or any othe string without numbers gives 0, so need to check for this
+	}
 	//else if(math.equal(math.simplify(ans),math.simplify(currentAns))){
 	//	return true;
 	//}
