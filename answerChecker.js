@@ -43,7 +43,7 @@ diffs["derivative"]=[
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
 diffs["integral"]=[[2,1,5],[3,2,5]];
 diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole finding
-	10, [2,1,5,5,5],[4,5,10,10,10]];//Left and right limits
+	10, [2,1,5,5,5],[3,2,5,10,10]];//Left and right limits
 var diffNames=[];
 diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
@@ -652,6 +652,9 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 	//So, it will make 2 polynomials, so the first 3 arguments make that.
 	//maxX is how far from x=0 the point it is asking about can be
 	//maxY is how far from y=0 the graph will go around where it is asking about
+	if(maxX<1){
+		reply("Sorry about this. Something broke in the question generator.<br>Please report this on the about page, saying what question you are doing.");
+	}
 	var x=(Math.random()*maxX).toFixed(0);
 	if(Math.random()>=0.5){x=-x;}
 	var left=makePolynomial(terms, maxPow, maxCo);
@@ -662,10 +665,11 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 		tries++;
 		if(tries>100){//By then, something is wrong with the code, so this should stop it very obviously
 			//x=y;//y is undefined, so it will make it clear that it is broken
-			reply("Sorry about this. Something broke in the question generator.<br>Please report this on the about page, saying what question you are doing.");
-			console.log("Dump for reporting this problem:");
-			console.log("Side: left");
-			console.log("x:"+x);
+			//reply("Sorry about this. Something broke in the question generator.<br>Please report this on the about page, saying what question you are doing.");
+			//console.log("Dump for reporting this problem:");
+			//console.log("Side: left");
+			//console.log("x:"+x);
+			sidedLimitQuestionPoly(terms, maxPow, maxCo, maxX-1, maxY);
 			return "";
 		}
 	}
@@ -676,10 +680,11 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 		right=makePolynomial(terms, maxPow, maxCo);
 		tries++;
 		if(tries>100){
-			reply("Sorry about this. Something broke in the question generator.<br>Please report this on the about page, saying what question you are doing.");
-			console.log("Dump for reporting this problem:");
-			console.log("Side: right");
-			console.log("x:"+x);
+			//reply("Sorry about this. Something broke in the question generator.<br>Please report this on the about page, saying what question you are doing.");
+			//console.log("Dump for reporting this problem:");
+			//console.log("Side: right");
+			//console.log("x:"+x);
+			sidedLimitQuestionPoly(terms, maxPow, maxCo, maxX-1, maxY);
 			return"";
 		}
 	}
