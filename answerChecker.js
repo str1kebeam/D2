@@ -1436,6 +1436,9 @@ function numpad(key){
 	else if(key=="^2"){
 		entry_text+="^2";
 	}
+	else if(key=="^(1/2)"){
+		entry_text+="^(1/2)";
+	}
 	/*if(key=="2nd"){
 		second(true);
 	}
