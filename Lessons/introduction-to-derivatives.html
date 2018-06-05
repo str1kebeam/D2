@@ -83,8 +83,8 @@
 					<br>
 					Now for some basic properties of derivatives:
 					Look at the functions \(f(x)=x^3\) and \(f(x)=2x^3\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="x^3 with slope">
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="2x^3 with slope">
+					<canvas width="800" height="800" id="myCanvas5"></canvas>
+					<canvas width="800" height="800" id="myCanvas6"></canvas>
 					Try to observe how the slope of \(2x^3\) to the slope of \(x^3\).  Did you see that it doubled?  This is because doubling a function doubles its derivative as well.  In fact, multiplying a function by any number multiplies the derivative by that number, too.
 					<br>
 					<br>
@@ -92,7 +92,7 @@
 					<br>
 					<br>
 					Look at the function \(f(x)=x^3+3x\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="x^3+3x with slope">
+					<canvas width="800" height="800" id="myCanvas7"></canvas>
 					How does the slope of this function compare to that of \(x^3\)?  Because the derivative of \(3x\) is 3, we can add 3 to the slope of \(x^3\) to get the slope of \(x^3+3x\).  This is another property of limits.  If a function is a sum of 2 different things, the derivative of the function is the sum of the derivatives of the things in the function.  Here, the derivative of \(x^3+3x\) is the sum of the derivatives of \(x^3\) and \(3x\), making the derivative equal to
 					$$f^{\prime}(x)=3x^2+3$$
 					<h3>Think you understand derivatives? Practice them <a href="../practice.html?type=derivative&difficulty=1">here</a>.</h4>
@@ -109,6 +109,9 @@
 <script src="intro-dev2.js"></script>
 <script src="intro-dev3.js"></script>
 <script src="intro-dev4.js"></script>
+<script src="intro-dev5.js"></script>
+<script src="intro-dev6.js"></script>
+<script src="intro-dev7.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -139,6 +142,9 @@ $(document).ready(function(){
 	init2();
 	init3();
 	init4();
+	init5();
+	init6();
+	init7();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
