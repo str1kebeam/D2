@@ -1,4 +1,12 @@
 //Creates random problems, checks answers to them
+///////
+//To People coming here for minor tweaks to the interface
+///////
+/*
+Ok, so if you want to change the name of a question, look for it in the variable diffNames
+If you want to change the options of a question (higher or lower range), look at diffs for that...
+You can find out what the function is by looking at newQ to see where that points, then find where that splitter points to
+*/
 //mathjs is imported as math in practice.html, but that should be fine
 //el.innerHTML = math.sqrt(9);
 //Ok, so how all of this code works:
@@ -42,7 +50,7 @@ diffs["derivative"]=[
 	[1,1,1,sTrig], [2,2,2,sTrig], [3,3,sTrig]//The trig difficulty levels
 ];
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
-diffs["integral"]=[[2,1,5],[3,2,5]];
+diffs["integral"]=[[2,1,5],[3,2,5],[4,5,10]];
 diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole finding
 	10, [2,1,5,5,5],[3,2,5,10,10],//Left and right limits
 	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];//algebraic limmits
@@ -52,7 +60,7 @@ diffNames['derivative']=["Easy Introduction Derivative","Normal Introduction Der
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
 						//Is it bad that I needed to look up what "Trig" was short for?
 diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
-diffNames['integral']=["Easy Polynomial","Hard Polynomial"];
+diffNames['integral']=["Easy Reverse Power Rule","Medium Reverse Power Rule","Hard Reverse Power Rule"];
 diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole",
 					"Easy Sided Limit","Medium Sided Limit","Hard Sided Limit",
 					"Easy Algebraic Limit","Medium Algebraic Limit","Hard Algebraic Limit"];
