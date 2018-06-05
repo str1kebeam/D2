@@ -43,7 +43,8 @@ diffs["derivative"]=[
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
 diffs["integral"]=[[2,1,5],[3,2,5]];
 diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole finding
-	10, [2,1,5,5,5],[3,2,5,10,10]];//Left and right limits
+	10, [2,1,5,5,5],[3,2,5,10,10],//Left and right limits
+	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];//Arithmetic limmits
 var diffNames=[];
 diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
@@ -51,7 +52,8 @@ diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial"
 diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
 diffNames['integral']=["Easy Polynomial","Hard Polynomial"];
 diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole",
-					"Easy Sided Limit","Medium Sided Limit","Hard Sided Limit"];
+					"Easy Sided Limit","Medium Sided Limit","Hard Sided Limit",
+					"Easy Arithmetic Limit","Medium Arithmetic Limit","Hard Arithmetic Limit"];
 //////
 //Startup stuff
 //////
@@ -537,6 +539,10 @@ function limitQ(diff){
 		sidedLimitQuestionPoly(d[0],d[1],d[2],d[3],d[4]);
 		rat=true;
 	}
+	else if(diffNames['limit'][diff-1].endsWith("Arithmetic Limit")){
+		arithmeticLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
+		rat=true;
+	}
 }
 function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	/*var nums=[];
@@ -901,8 +907,14 @@ function arithmeticLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	}
 	var ans=lhopital(num, den, x);
 	currentAns=ans;
-	latex="\\lim_{x \\to "+x+"} "+latex;
+	var px=math.rationalize(x).toString();
+	if(px.includes("/")){
+		px=px.replace("/","}{");
+		px="\\frac{"+px+"}";
+	}
+	latex="\\lim_{x \\to "+px+"} "+latex;
 	ask("Evaluate the following limit.<br>If the limit is undefined, just enter 'undefined'.", latex);
+	console.log(lim[0]);
 }
 function lhopital(num, den, x){
 	//Evaluates a limit, which for some reason mathjs can't do...
