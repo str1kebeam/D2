@@ -885,7 +885,10 @@ function arithmeticLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 			}
 			else{
 				x=dens[i][2][3];
-				cons=false;
+				cont=false;
+			}
+			if(dens.length==0){
+				cont=false;
 			}
 		}
 		if(dens.length==0){//If it doesn't equal 0 anywhere, just pick a random point
@@ -895,6 +898,7 @@ function arithmeticLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	}
 	var ans=lhopital(num, den, x);
 	currentAns=ans;
+	latex="\\lim_{x \\to "+x+"} "+latex;
 	ask("Evaluate the following limit.<br>If the limit is undefined, just enter 'undefined'.", latex);
 }
 function lhopital(num, den, x){
