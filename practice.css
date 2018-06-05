@@ -59,11 +59,11 @@ sup {
     "b0 b0 dec   divd lbrc rbrc clr clr entr entr entr";
   width: 80%;
   height: 40vh;
-  background-color: var(--color2);
-  border: 2px solid blue;
+  background-color: #acfa;
+  border: 2px solid #00fa;
   border-radius: 10px;
   padding: 5px;
-  align-items: stretch;
+  align-items: stretch center !important;
 }
 
 
