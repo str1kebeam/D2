@@ -1,5 +1,6 @@
 /* CSS File for the Derive homepage */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://db.onlinewebfonts.com/c/aa526f8c90a71f9a79a289a2b5962e52?family=Trebuchet+MS");
 
 :root {
 	--color1: green;
@@ -79,6 +80,7 @@ a[target="_blank"] {
 
 #body { /* body div attributes */
 	text-align: center;
+	font-family: "Trebuchet MS";
 	color: black;
 	overflow-y: auto; /* create a scroll bar if needed */
 }
@@ -150,6 +152,11 @@ p span{ /* default paragraph font and color */
 
 .t-cen {
 	text-align: center;
+}
+
+#small {
+	color: gray;
+	font: 12px "Trebuchet MS";
 }
 /*
 #sitemap * {
