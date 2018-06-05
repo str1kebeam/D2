@@ -1,6 +1,21 @@
 //Creates random problems, checks answers to them
 //mathjs is imported as math in practice.html, but that should be fine
 //el.innerHTML = math.sqrt(9);
+//Ok, so how all of this code works:
+//functionthing()[named by Andrew when showing how onclick worked] is the main function, when the submit button is pressed
+	//If the question hasn't already been answered, it will call checkAns(), which will check the answer against the variable (string or int) currentAns
+	//If the question has already been answered, newQ() is called
+//newQ() looks at what the dropdowns are, and then will call the corresponding function (so just put some function in there), given the difficutly as an argument
+//That function will look at the difficutly, and then call a question generating function
+//The function will generate a question, set currentAns to the new answer, and call ask(text, latex)
+//ask(text, latex) will set the question's text to the first argument ('What does this equal?'), and set the math expression to the second argument ('2^{3}')
+
+//Other stuff to look at for adding new questions is diffNames, which is used to make the dropdowns
+//So, in the lesson select element, you will have an option with the value, for exampe, "maths"
+//Then, in diffNames, you would set diffNames["maths"] to ["easy maths","medium maths", "hard maths"]
+//Then, when "maths" is selected, the difficulty dropdown will switch to that list
+//But make sure that you still set newQ() to have a check of type=="maths" to call the doMaths(diff) function
+//This is so amusing to write pseduocode for.
 var response=document.getElementById("response");
 var x=0;//Used for saying 'Maybe you should go to a higher difficulty'
 var currentAns='';
