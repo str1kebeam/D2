@@ -37,6 +37,7 @@ var irTrig=['arccsc','arcsec', 'arccot'];
 var allTrig=nTrig.concat(rTrig, inTrig, irTrig);
 var diffs=[];
 diffs["derivative"]=[
+	[5,5,false],[5,5,true],[10,10,true],//Introduction Derivative questions
 	[2,1,5], [3,2,5], [4,5,10], //Polynomial difficulty levels
 	[1,1,1,sTrig], [2,2,2,sTrig], [3,3,sTrig]//The trig difficulty levels
 ];
@@ -46,7 +47,8 @@ diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole findi
 	10, [2,1,5,5,5],[3,2,5,10,10],//Left and right limits
 	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];//algebraic limmits
 var diffNames=[];
-diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
+diffNames['derivative']=["Easy Introduction Derivative","Normal Introduction Derivative","Hard Introduction Derivative",
+						"Easy Power Rule","Normal Power Rule","Hard Power Rule",
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
 						//Is it bad that I needed to look up what "Trig" was short for?
 diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
@@ -360,11 +362,15 @@ function der(diff){
 	//I fell bad hardcoding this, but I don't know how to do it in js
 	var derDiffs=diffs["derivative"];
 	var d=derDiffs[diff-1];
-	if(d.length==3){//The polynomial trig questions
+	if(diffNames['derivative'][diff-1].endsWith("Introduction Derivative")){//The trinomial questions
+		simpleDerivative(d[0],d[1],d[2]);
+		rat=true;
+	}
+	if(diffNames['derivative'][diff-1].endsWith("Power Rule")){//The polynomial trig questions
 		newDerivative(d[0],d[1],d[2]);
 		rat=true;
 	}
-	if(d.length==4){//The trig questions have 4 parts of data
+	if(diffNames['derivative'][diff-1].endsWith("Trigonometry")){//The trig questions have 4 parts of data
 		newTrigDerivative(d[0],d[1],d[2],d[3]);
 		rat=false;
 	}
@@ -428,6 +434,67 @@ function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
 	}
 	currentAns=ans;
 	ask(q,e);
+}
+function simpleDerivative(maxXCo, maxCons, squared=false){
+	var q="What is the derivative of the following?";
+	//questions in the form of (x^2?) + ax + b
+	//squared true-> x^2 can be there (probably like a 50% chance)
+	//a is in range [-maxXCo, maxXCo]
+	//b is in range [-maxCons, maxCons]
+	var e="\\frac{x}{dx}(";
+	var simple="";
+	var s=false;
+	if(squared&&Math.random()>=0.5){
+		simple+="x^2";
+		e+="x^{2}";
+		s=true;
+	}
+	var a=(Math.random()*maxXCo).toFixed(0);
+	if(Math.random()>=0.5){a=-a;}
+	var b=(Math.random()*maxCons).toFixed(0);
+	if(Math.random()>=0.5){b=-b;}
+	if(a==-1){
+		e+="-x";
+		simple+="-x";
+	}
+	else if(a==1){
+		if(s){
+			e+="+";simple+="+";
+		}
+		e+="x";
+		simple+="x";
+	}
+	else if(a!=0){
+		if(s){
+			e+="+";simple+="+";
+		}
+		e+=a+"x";
+		simple+=a+"x";
+	}
+	if(b<0){
+		e+=b; simple+=b;
+	}
+	else if(b!=0){
+		if(a!=0||s){//something before it to make the + make sense
+			e+="+"; simple+="+";
+		}
+		e+=b;
+		simple+=b;
+	}
+	else if(a==0&&!s){//At least print *something*
+		e+="0";
+		simple+="0";
+	}
+	e+=")";
+	var ans;
+	if(simple.includes("x")){
+		ans=math.derivative(simple, "x").toString();
+	}
+	else{
+		ans=0;
+	}
+	currentAns=ans;
+	ask(q, e);
 }
 function t_l(diff){
 	//makes a new tangent line problem, from just the difficulty
