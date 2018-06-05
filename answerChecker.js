@@ -563,6 +563,14 @@ function newTrigIntegral(maxTCo, maxXCo, maxXPow, trig=nTrig){
 	currentAns=ans;
 	ask("Evaluate the following integral:",latex);
 }
+function riemannSum(terms, maxPow, maxCo, maxX, maxY){
+	//Yeah, I'm not coding this now, but I will plan it out:
+	//Ok, so make a polynomial
+	//Check that over the range it stays within the y scale
+	//Then use the integrate function to find the integral of it
+	//Generate an upper and lower bound within the x range
+	//Then evaluate it for the upper and lower bounds
+}
 function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we need is integration, so this will handle the simple rule for it
 	var simple="";//This doesn't make latex right now, but I could easily edit it to do that
 	for(var i=0; i<pows.length; i++){
