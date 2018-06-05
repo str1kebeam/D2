@@ -853,6 +853,77 @@ function sidedLimitQuestionAbs(maxXCo){
 	latex+="x|}{x}";
 	ask("What is the value of the following function as x approaches 0 from the "+side+" side?",latex);
 }
+function arithmeticLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
+	var lim=makeLimitFunction(maxNum, maxDen, maxXPow, maxXCo, maxCons, neg);
+	var latex=lim[1];
+	var ns=lim[2];
+	var num=[];
+	for(var i=0; i<ns.length; i++){
+		num.push(ns[i][0]);//the normal string part of it
+	}
+	num=num.join("*");
+	var ds=lim[3];
+	var den=[];
+	for(var i=0; i<ds.length; i++){
+		den.push(ds[i][0]);
+	}
+	den=den.join("*");
+	var x;//Great, I need to make this...
+	if(math.random()<0.2){//20% chance of just some random point in the range
+							//So the range is maxXCo, because ax^b+c=x, max x at a->0 b->0 and c->infinity, so +-c
+		x=(Math.random()*maxCons).toFixed(0);
+		if(Math.random()>=0.5){x=-x;}
+	}
+	else{//Otherwise, make it so that x is where one of the denominator parts=0
+		var cont=true;
+		var dens=lim[3];
+		while(cont&&dens.length>0){
+			console.log("finding x from den");
+			var i=Math.floor(Math.random()*dens.length);
+			if(isNaN(dens[i][2][3])){
+				dens.splice(i,1);//remove that one from the list for now
+			}
+			else{
+				x=dens[i][2][3];
+				cons=false;
+			}
+		}
+		if(dens.length==0){//If it doesn't equal 0 anywhere, just pick a random point
+			x=(Math.random()*maxCons).toFixed(0);
+			if(Math.random()>=0.5){x=-x;}
+		}
+	}
+	var ans=lhopital(num, den, x);
+	currentAns=ans;
+	ask("Evaluate the following limit.<br>If the limit is undefined, just enter 'undefined'.", latex);
+}
+function lhopital(num, den, x){
+	//Evaluates a limit, which for some reason mathjs can't do...
+	console.log(num);
+	console.log(den);
+	console.log(x);
+	var n=math.eval(num, {x:x});
+	var d=math.eval(den, {x:x});
+	var a=0;
+	while(n==0&&d==0){
+		num=math.derivative(num, "x").toString();
+		den=math.derivative(den, "x").toString();
+		n=math.eval(num, {x:x});
+		d=math.eval(den, {x:x});
+		a++;
+		console.log(a);
+		console.log(n);
+		console.log(d);
+		console.log(num);
+		console.log(den);
+	}
+	if(d==0){
+		return "undefined";
+	}
+	else{
+		return n/d;
+	}
+}
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
 	//need to have it return the latex and normal text...
