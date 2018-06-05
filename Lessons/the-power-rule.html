@@ -58,18 +58,18 @@
 				</h1>
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
 					Although we can use the formula mentioned in <a href="introduction-to-derivatives.html">the previous lesson</a> to find the derivative of a function, there is a shortcut to finding the derivatives of <strong title="Polynomial: x raised to a power">polynomial functions</strong>.  Look at the graph of \(f(x)=x^3\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^3">
+					<canvas width = "800" height = "800" id = "myCanvas2"></canvas>
 					<br>
-					As shown earlier, the derivative is \(f^\prime (x)=2x^3\).  What you might notice is that the exponent decreases by one, and the derivative is multiplied by the original exponent.  In \(x^3\), the \(x^3\) is replaced with an \(x^2\) and then \(x^2\) is multiplied by \(3\) to become \(3x^2\).  This is a real pattern with derivatives, and it is called the <strong>power rule</strong> because it works for \(x\) raised to any power.  While <a href="https://www.khanacademy.org/math/ap-calculus-ab/ab-derivative-rules/ab-derivtive-rules-opt-vids/v/proof-d-dx-x-n" target="_blank">the proof</a> is somewhat complicating if you are unfamiliar with derivatives, the power rule makes sense when you look at a graph.  Look at the following graphs of \(x^2\) and its derivative, \(2x\).
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=x^2">
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=2x">
+					As shown earlier, the derivative is \(f^\prime (x)=3x^2\).  What you might notice is that the exponent decreases by one, and the derivative is multiplied by the original exponent.  In \(x^3\), the \(x^3\) is replaced with an \(x^2\) and then \(x^2\) is multiplied by \(3\) to become \(3x^2\).  This is a real pattern with derivatives, and it is called the <strong>power rule</strong> because it works for \(x\) raised to any power.  While <a href="https://www.khanacademy.org/math/ap-calculus-ab/ab-derivative-rules/ab-derivtive-rules-opt-vids/v/proof-d-dx-x-n" target="_blank">the proof</a> is somewhat complicating if you are unfamiliar with derivatives, the power rule makes sense when you look at a graph.  Look at the following graphs of \(x^2\) and its derivative, \(2x\).
+					<canvas width = "800" height = "800" id = "myCanvas"></canvas>
+					<canvas width = "800" height = "800" id = "myCanvas3"></canvas>
 					This even works for negative numbers!  Take the function
 					<latex-eqn>$$f(x)=\frac{1}{x}$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=1/x">
+					<canvas width = "800" height = "800" id = "myCanvas4"></canvas>
 					This is because \(\frac{1}{x}\) can be rewritten as \(x^{-1}\).  The \(-1\) becomes a \(-2\) to make \(x^{-2}\), and the equation is multiplied by \(-1\) because that was the original exponent.  This gives the final answer:
 					<latex-eqn>$$f^{\prime}(x)=-x^{-2}=\frac{-1}{x^2}$$</latex-eqn>
 					See for yourself!  The graph below shows the slope of \(\frac{1}{x}\) at all points.
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="f(x)=-1/x^2">
+					<canvas width = "800" height = "800" id = "myCanvas5"></canvas>
 					And that's it!
 					<br>
 					<br>
@@ -84,6 +84,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
+<script src="intro-dev2.js"></script>
+<script src="power-3.js"></script>
+<script src="power-4.js"></script>
+<script src="power-5.js"></script>
+<script src="intro-tan3.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.sidenav').sidenav();
@@ -109,6 +114,11 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
+	init2();
+	init();
+	init3();
+	init4();
+	init5();
   	$('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
