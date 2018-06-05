@@ -58,7 +58,7 @@
 				</h1>
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
 					Consider the function \(f(x)=\sin(x)\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<canvas width = "800" height = "800" id = "myCanvas"></canvas>
 					The function \(\sin(x)\) is different from polynomial functions because they are <strong title="Periodic: repeating the same values forever">periodic</strong>.  If the function repeats itself, then the derivative repeats itself as well.  Let's look at a table of slopes to find the derivative:
 					<table>
 					<thead>
@@ -80,9 +80,9 @@
 					<br>
 					Look at the graphs of \(\sin(x)\) and \(\cos(x)\) and observe this.
 					$$f(x)=\sin(x)$$
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<canvas width = "800" height = "800" id = "myCanvas2"></canvas>
 					$$f^{\prime}(x)=\cos(x)$$
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="">
+					<canvas width = "800" height = "800" id = "myCanvas3"></canvas>
 					You may notice that the derivative of \(\sin(x)\) is just the function "shifted left" by \(\frac{\pi}{2}\).  And this is correct.  This is true of both sine and cosine.  In fact, because of this, the derivative of \(\cos(x)\) is \(-\sin(x)\), the derivative of \(-\sin(x)\) is \(-\cos(x)\), and the derivative of \(-\cos(x)\) is \(\sin(x)\).  Trig really feels like a small world, sometimes.
 					<br>
 					<br>
@@ -177,6 +177,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src="trig1.js"></script>
+<script src="trig2.js"></script>
+<script src="trig3.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -203,6 +206,9 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
+	init();
+	init2();
+	init3();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
