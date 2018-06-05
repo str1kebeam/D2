@@ -75,9 +75,9 @@
 					<latex-eqn>$$\lim_{h \to 0}\frac{3x^2h+3xh^2+h^3}{h}=\lim_{h \to 0}(3x^2+3xh+h^2)=3x^2$$</latex-eqn>
 					Look at the two graphs below (the function and its derivative) and observe how the slope of the first curve (\(x^3\)) is always the value of the second curve (\(3x^2\)).
 					<latex-eqn>$$f(x)=x^3$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="show slope">
+					<canvas width="800" height="800" id="myCanvas3"></canvas>
 					<latex-eqn>$$f^\prime (x)=3x^2$$</latex-eqn>
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="show (x,y)">
+					<canvas width="800" height="800" id="myCanvas4"></canvas>
 					This means that \(3x^2\) is the <strong>derviative</strong> of \(x^3\).
 					<br>
 					<h3>Think you understand derivatives? Practice them <a href="../practice.html">here</a>.</h4>
@@ -92,6 +92,8 @@
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
 <script src="intro-dev1.js"></script>
 <script src="intro-dev2.js"></script>
+<script src="intro-dev3.js"></script>
+<script src="intro-dev4.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -120,6 +122,8 @@ $(document).ready(function(){
 	$('.tabs').tabs();
 	init();
 	init2();
+	init3();
+	init4();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);

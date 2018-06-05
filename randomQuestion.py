@@ -11,7 +11,7 @@ import random
 def askAQuestion(question, answer, simplify=True):
     '''Asks the question and gets the user's answer. Gets answerChecker.py to check the answer.
     In the final version of the website, most of this would be replaced with the webpage code.'''
-    ans=raw_input(question+" ") #ask the question 
+    ans=raw_input(question+" ") #ask the question
     return ac.printCorrectNicely(ac.checkAnswer(ans, answer, simplify)) #give the information to answerChecker
 def randomIntNo0(low, high):
     '''Repeatedly generates random numbers in range [low, high] until it isn't 0
@@ -78,7 +78,7 @@ def randomTangent(difficulty=1):
         if b!=1: #if not x^1, write something. If it is x^1, just make it x
             strb="^"+str(b)
         strd = "" #how x^d should be written. see above
-        if d!=1: 
+        if d!=1:
             strd="^"+str(d)
         question = "What is the slope of the tangent line of y = %sx%s + %sx%s + %s at x=%s?"%(a, strb, c, strd, e, x) #question
         return question, answer, False
@@ -145,7 +145,7 @@ def testLoop():
         contProblems=True
         ansProblems="" #what problem type they are doing
         while contProblems: #a loop for checking they put in a valid problem type
-            print("What question type would you like?") 
+            print("What question type would you like?")
             for problem in problemTypes.keys(): #loop through all of the problem types
                 print"\t"+problem
             problem=((raw_input(">")).strip()).lower() #have them answer the question, and format it for reading
@@ -165,7 +165,7 @@ def testLoop():
             if not ansDifficulty.isdigit(): #if they didn't give a number, continue the loop
                 pass
             else: #if they did give a number...
-                ansDifficulty=int(ansDifficulty) 
+                ansDifficulty=int(ansDifficulty)
                 if ansDifficulty in validDifficulties[ansProblems]: #check that it was a valid choice...
                     contDifficulty=False                                #and end the loop
         question, answer, simplify=problemTypes[ansProblems](ansDifficulty) #get the question, answer, and if it should be simplified from the random problem generator
@@ -179,7 +179,7 @@ def getProblem(pType, pDifficulty):
     '''Makes it so that the php doens't need to deal with all of the different Python functions.
     pType is the name of the problem type, pDifficutly is the problem difficulty'''
     worked=True #so that other stuff isn't broken if there is some error with the dropdown
-    question="" 
+    question=""
     answer=""
     pNeeded=False #if it is sympy, in case I can't keep it as an int
     simplify=False #if it should be simplified

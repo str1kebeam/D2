@@ -59,7 +59,36 @@
 					<br>
 					Take a look at the graph of \(f(x)=x^2\)
 					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph Title">
-					Lesson Image (above)
+					The first way to find the area is to fill in the area with rectangles.  To do this, we place rectangles between the x-axis and the function.  See the graph below with rectangles under the graph of \(f(x)=x^2\) over the interval \((0,4)\)
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph Title">
+					The area of all of these rectangles is shown by the following <a href="http://www.columbia.edu/itc/sipa/math/summation.html" target="_blank">summation</a>:
+					$$\sum_{n=0}^{4}(f(n) * 1)$$
+					Now what does this mean?  Here, we are making a rectangle for every integer value of \(x\) from \(0\) to \(4\).  For each of these numbers, we're adding the area of a rectangle where the height of the rectangle is \(f(x)-0\) or \(f(x)\) and the width is \(1\).
+					<br>
+					This is called a <strong>Riemann Sum</strong>, as it sums the area of many rectangles.
+					<br>
+					More specifically, it's a <strong>left Riemann Sum</strong> because the <span title="Technically, it's the left side of the rectangle, but in this case the top left corner is what touches the graph">top <i>left</i> corner</span> of the rectangles touches the graph.
+					<br>
+					<br>
+					Well, if there's a left Riemann Sum, shouldn't there be a right Riemann Sum?
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="right riemann">
+					Here is the same graph (\(f(x)=x^2\)) but with a <strong>right Riemann Sum</strong>, or sum of rectangles where the right side of the rectangle touches the graph.
+					<br>
+					This is a bit different because the rectangles now have different heights, affecting the overall sum.  Here's the summation of the right Riemann Sum:
+					$$\sum_{n=0}^{4}(f(n+1) * 1)$$
+					The rectangles now have a height of \(f(n+1)\), which represents the rightmost value of the function.
+					<br>
+					<br>
+					Using the formula for the left sided sum, we get an area of 14. However, the left sided sum yields an area of 30.  The actual answer is \(\frac{64}{3}\approx 21.3\) (which you'll find out how to calculate <a href="reverse-power-rule.html">soon</a>).  The answers are off because the rectangles are not the actual function, but with skinnier rectangles, the answer gets more accurate.
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="full area 0-4 of x^2">
+					You may be wondering, <i>how do I get a more exact answer?</i>
+					<br>
+					<br>
+					Let the amount of rectangles approach infinity using a <a href="introduction-to-limits.html">limit</a>.
+					$$\lim_{i \to \infty}\sum_{n=0}^{i}(f(\frac{4n}{i}) * \frac{1}{i})$$
+					If this limit doesn't make sense, don't worry about it.  All we're doing is making an infinite number of extremely small rectangles.  The sum of these rectangles is the area under the curve.
+
+					<h3>Think you understand Riemann Sums? Practice them on our <a href="../practice.html">practice page</a>!</h3>
 				</div>
 			</div>
 		</div>

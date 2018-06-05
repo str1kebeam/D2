@@ -25,7 +25,7 @@
 #entry-container {
   font-size: 24px;
   height: 75px;
-
+  overflow: auto;
 }
 #entry-container span {
   text-align: center;
