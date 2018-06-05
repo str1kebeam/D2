@@ -44,7 +44,7 @@ diffs["tangent"]=[[2,1,5,3],[3,2,5,10]];
 diffs["integral"]=[[2,1,5],[3,2,5]];
 diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole finding
 	10, [2,1,5,5,5],[3,2,5,10,10],//Left and right limits
-	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];//Arithmetic limmits
+	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];//algebraic limmits
 var diffNames=[];
 diffNames['derivative']=["Easy Polynomial","Normal Polynomial","Hard Polynomial",
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
@@ -53,7 +53,7 @@ diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
 diffNames['integral']=["Easy Polynomial","Hard Polynomial"];
 diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole",
 					"Easy Sided Limit","Medium Sided Limit","Hard Sided Limit",
-					"Easy Arithmetic Limit","Medium Arithmetic Limit","Hard Arithmetic Limit"];
+					"Easy Algebraic Limit","Medium Algebraic Limit","Hard Algebraic Limit"];
 //////
 //Startup stuff
 //////
@@ -539,8 +539,8 @@ function limitQ(diff){
 		sidedLimitQuestionPoly(d[0],d[1],d[2],d[3],d[4]);
 		rat=true;
 	}
-	else if(diffNames['limit'][diff-1].endsWith("Arithmetic Limit")){
-		arithmeticLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
+	else if(diffNames['limit'][diff-1].endsWith("Algebraic Limit")){
+		algebraicLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
 		rat=true;
 	}
 }
@@ -862,7 +862,7 @@ function sidedLimitQuestionAbs(maxXCo){
 	latex+="x|}{x}";
 	ask("What is the value of the following function as x approaches 0 from the "+side+" side?",latex);
 }
-function arithmeticLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
+function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	var lim=makeLimitFunction(maxNum, maxDen, maxXPow, maxXCo, maxCons, neg);
 	var latex=lim[1];
 	var ns=lim[2];
