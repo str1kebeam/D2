@@ -55,9 +55,39 @@
 					Reverse Power Rule
 				</h1>
 				<div id="lesson" class="flow-text"> <!-- The lesson text, graphs, eqns, etc -->
-					It turns out that the power 
+					An <strong>integral</strong> is the area under the curve.  It's represented by a \(\int\), and it does the exact opposite of what a derivative does.
+					<br>
+					<br>
+					In other words, the integral of a derivative is the same function.
+					<br>
+					<br>
+					Look at the function \(f(x)=3x^2\)
 					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph Title">
-					Lesson Image (above)
+					The area under the curve above can be represented by the following integral:
+					$$\int 3x^2dx$$
+					This means that we're taking the above function and making a second function that represents the area of that function from zero to the x-value.  For example, if we call the solution to the integral \(F(x)\), \(F(3)\) is the area of the graph from \(0\) to \(3\).
+					<br>
+					For example, the graphs below are of \(f(x)\) and \(F(x)\), respectively.
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="3x^2 with area">
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="x^3 with value">
+					<i>Now how do we find these integrals?</i>
+					<br>
+					<br>
+					There are many techniques to find the integral of a function, as they are usually the opposite of finding a derivative.  The first of these techniques is the <strong>reverse power rule</strong>.  The <a href="power-rule.html">power rule</a> for derivatives states that for a power \(x^n\),
+					$$f^{\prime}(x)=nx^{n-1}$$
+					Now to get the integral we must do the opposite of this.  Instead of mutiplying, we divide, and instead of reducing the power, we increase it.  This means that the <strong title="Antiderivative: The opposite of a derivative.  The derivative of an antiderivative is the original function.">antiderivative</strong> \(F(x)\) is
+					$$F(x)=\frac{x^{n+1}}{n+1}$$
+					However, there is one more step for integrals.  Because multiple functions can have the same slope (and derivative), an integral needs to represent all of these functions.  To do this, we add a \(+C\) to the end of integrals.  (See a more detailed explanation of this <a href="https://en.wikipedia.org/wiki/Constant_of_integration" target="_blank">here</a>.)  This makes the actual integral
+					$$F(x)=x^3+C$$
+					<br>
+					To further emphasize the need for the \(+C\), look at the following graphs of \(x^3\) and \(x^3+1\)
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="x^3 with slope">
+					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="x^3 + 1 with slope">
+					Both of these have the same derivative, \(3x^2\).  However, adding \(1\), or any number to \(x^3\) for that matter, doesn't affect the slope.  Because of this, the \(+C\) means that the integral can be for the functions \(x^3\), \(x^3+1\), \(x^3+2\), and any \(x^3 + C\), where \(C\) is just any number.
+					<br>
+					<br>
+					And that's it!
+					<h3>Think you understand the Reverse Power Rule? Practice it on our <a href="../practice.html">practice page</a>!</h3>
 				</div>
 			</div>
 		</div>
