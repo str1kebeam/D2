@@ -536,7 +536,7 @@ function limitQ(diff){
 	}
 }
 function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
-	var nums=[];
+	/*var nums=[];
 	var usedMaxNum=Math.floor(Math.random()*maxNum)+1;
 	//var type=Math.floor(Math.random()*3);//So, I remember 3 ways this can go:
 											//0-no place where it is undefined
@@ -563,10 +563,129 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 		else{
 			nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
 		}
-	}
+	}*/
 	/*else{
 		nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
-	}*/
+	}*//*
+	var dens=[];
+	var usedMaxDen=Math.floor(Math.random()*maxDen)+1;
+	var hole_index=Math.floor(Math.random()*usedMaxDen);
+	for(var i=0; i<usedMaxDen; i++){
+		var genning=true;
+		while(genning){
+			var den=generate_factored_part(maxXPow, maxXCo, maxCons, neg);*/
+			/*if(type==0){
+				if(!isNaN(den[2][3])){//Not 0 over all reals
+					dens.push(den);
+					genning=false;
+				}
+			}
+			else if(type==1){*//*
+				var good_nums=nums.filter(function (n){
+						return !isNaN(n[2][3]);
+					})
+				if(i==hole_index){
+					console.log(good_nums);
+					var index=Math.floor(Math.random()*good_nums.length);
+					dens.push(good_nums[index]);
+					console.log(good_nums[index]);
+					console.log(dens[i]);
+					genning=false;
+				}
+				else if(!good_nums.some(function(n){
+					return n[2][3]==den[2][3]&&!isNaN(n[2][3]);//There isn't another hole
+				})){
+					dens.push(den);
+					genning=false;
+				}*/
+			/*}
+			else if(type==2){
+				if(!nums.some(function (n){
+					return den[2][3]==n[2][3]&&!isNaN(den[2][3]);//Isn't a hole
+				})){
+					if(i+1==usedMaxDen&&!dens.some(function (d){return !isNaN(d[2][3])})){//Check that there is at least one asymptote
+						if(!isNaN(den[2][3])){
+							dens.push(den);//This one has an asymptote, push it
+							genning=false;
+						}
+					}
+					else{
+						dens.push(den);
+						genning=false;
+					}
+				}
+			}*//*
+		}
+	}
+	//console.log(nums);
+	//console.log(dens);
+	var simple="";
+	var latex="\\frac{";
+	for(var i=0; i<usedMaxNum; i++){
+		simple+=nums[i][0];
+		latex+=nums[i][1];
+		if(i+1<usedMaxNum){
+			simple+="*";
+			latex+="\\times";
+		}
+	}
+	simple+="/";
+	latex+="}{";
+	for(var i=0;i<usedMaxDen; i++){
+		simple+=dens[i][0];
+		latex+=dens[i][1];
+		if(i+1<usedMaxDen){
+			simple+="*";
+			latex+="\\times";
+		}
+	}
+	//Wait a second... I don't actually need 'simple' for this one... Sigh...
+	latex+="}";*/
+	var lim=makeLimitFunction(maxNum, maxDen, maxXPow, maxXCo, maxCons, neg, 1);
+	var dens=lim[3]
+	var latex=lim[1];
+	var hole_index=lim[4];
+	var ans=dens[hole_index][2][3];
+	//console.log(hole_index);
+	//console.log(dens);
+	currentAns=ans;
+	ask("Where is there a hole in this function?",latex);
+	//Something to graph simple
+}
+function makeLimitFunction(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false, type=-1){
+	var nums=[];
+	var usedMaxNum=Math.floor(Math.random()*maxNum)+1;
+	//var type=Math.floor(Math.random()*3);//So, I remember 3 ways this can go:
+											//0-no place where it is undefined
+											//1-hole
+											//2-jump, with an asymtote
+	if(type==-1){
+		type=Math.floor(Math.random()*3);
+	}
+	for(var i=0;i<usedMaxNum-1; i++){
+		var num=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
+		nums.push(num);
+	}
+	if(type==1){
+		if(!nums.some(function(n){
+			return !isNaN(n[2][3]);//If all of them don't have a real 0
+		})){
+			var genning=true;
+			while(genning){
+				var num=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
+				if(!isNaN(num[2][3])){
+					nums.push(num);
+					genning=false;
+				}
+			}
+		}
+		else{
+			nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
+		}
+	}
+	else{
+		nums.push(generate_factored_part(maxXPow, maxXCo, maxCons, neg));
+	}
 	var dens=[];
 	var usedMaxDen=Math.floor(Math.random()*maxDen)+1;
 	var hole_index=Math.floor(Math.random()*usedMaxDen);
@@ -574,13 +693,13 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 		var genning=true;
 		while(genning){
 			var den=generate_factored_part(maxXPow, maxXCo, maxCons, neg);
-			/*if(type==0){
+			if(type==0){
 				if(!isNaN(den[2][3])){//Not 0 over all reals
 					dens.push(den);
 					genning=false;
 				}
 			}
-			else if(type==1){*/
+			else if(type==1){
 				var good_nums=nums.filter(function (n){
 						return !isNaN(n[2][3]);
 					})
@@ -598,7 +717,7 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 					dens.push(den);
 					genning=false;
 				}
-			/*}
+			}
 			else if(type==2){
 				if(!nums.some(function (n){
 					return den[2][3]==n[2][3]&&!isNaN(den[2][3]);//Isn't a hole
@@ -614,7 +733,7 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 						genning=false;
 					}
 				}
-			}*/
+			}
 		}
 	}
 	//console.log(nums);
@@ -641,12 +760,7 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	}
 	//Wait a second... I don't actually need 'simple' for this one... Sigh...
 	latex+="}";
-	var ans=dens[hole_index][2][3];
-	console.log(hole_index);
-	console.log(dens);
-	currentAns=ans;
-	ask("Where is there a hole in this function?",latex);
-	//Something to graph simple
+	return [simple, latex, nums, dens, hole_index];
 }
 function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 	//So, it will make 2 polynomials, so the first 3 arguments make that.
