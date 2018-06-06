@@ -1,4 +1,13 @@
 //Creates random problems, checks answers to them
+/*
+
+Name: Elijah Thorpe (and Prahlad Jasti a bit at the bottom)
+Course: CSE
+Project: Software design project
+Purpose: All of the javascript for the practice page. functionthing() is the main function, being a splitter for everything.
+		Most of the other descriptions are a bit further down in the other questions
+
+*/
 ///////
 //To People coming here for minor tweaks to the interface
 ///////
