@@ -5,8 +5,11 @@
 :root {
 	--color1: green;
 	--color2: lightblue;
-	--grid-lines: #7f7fff8f;
-	--grid-back: #e0e0ff;
+	--grid-lines: #7f9fff8f;
+	--grid-back: #e0eeff;
+	--grid-spacing: 50px;
+	--grid-thickness: 1px;
+	--grid-thickness-vert: 1px;
 	--btncolor: #3399ff;
 	--calcbtncol: var(--color1);
 }
@@ -40,8 +43,8 @@ body {
 	margin: 0px;
 
 	background-color: var(--grid-back);
-    background-size: 50px 50px;
-    background-image: linear-gradient(to right, var(--grid-lines) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-lines) 1px, transparent 1px);
+    background-size: var(--grid-spacing) var(--grid-spacing);
+    background-image: linear-gradient(to right, var(--grid-lines) var(--grid-thickness-vert), transparent var(--grid-thickness-vert)), linear-gradient(to bottom, var(--grid-lines) var(--grid-thickness), transparent var(--grid-thickness));
     /* https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css#32861765 */
 	background-attachment: fixed;
 		/* https://www.w3schools.com/css/css_background.asp */
