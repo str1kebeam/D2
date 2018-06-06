@@ -3,13 +3,18 @@
  * 
 */
 
-#derive-letter { /* center align about letter */
-	text-align: center;
+
+#feedback {
+	font: 20px "Trebuchet MS";
+	color: white;
 }
-
-#body-text { /* change width of body-text and center text */
+#comments {
+	background-color: #fffb;
+	border: 2px dotted gray;
 	width: 60%;
-
-	margin-right: auto;
-	margin-left: auto;
+	margin-bottom: 30px;
+	height: 150px
+}
+#send {
+	color: white;
 }
