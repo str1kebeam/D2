@@ -341,8 +341,8 @@ function checkAns(ans){
 	if (ans==currentAns){
 		return true;
 	}
-	else if(currentAns=="undefined"){
-		return false;//math.simplify("undefined") or any othe string without numbers gives 0, so need to check for this
+	else if(currentAns=="DNE"){
+		return false;//math.simplify("DNE") or any othe string without numbers gives 0, so need to check for this
 	}
 	//else if(math.equal(math.simplify(ans),math.simplify(currentAns))){
 	//	return true;
@@ -1078,7 +1078,7 @@ function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 		px="\\frac{"+px+"}";
 	}
 	latex="\\lim_{x \\to "+px+"} "+latex;
-	ask("Evaluate the following limit.<br>If the limit is undefined, just enter 'undefined'.", latex);
+	ask("Evaluate the following limit.<br>If the limit is undefined, just enter 'DNE'.", latex);
 	console.log(lim[0]);
 }
 function lhopital(num, den, x){
@@ -1102,11 +1102,48 @@ function lhopital(num, den, x){
 		console.log(den);
 	}
 	if(d==0){
-		return "undefined";
+		return "DNE";
 	}
 	else{
 		return n/d;
 	}
+}
+function infinLimit(maxTerms, maxPow, maxCo){
+	//So, pretty much just generate something like ax^b(other unimportant stuff)/cx^d(other stuff that we don't care about)
+	//If b==d, lim->oo = a/c
+	//If b>d, lim->oo = +-infty
+	//if b<d, lim->oo = 0
+	//Also, asciimath for infinity is oo, and 'inifinity' will print weird stuff
+	var way=Math.floor(Math.random()*3);//0-Will be 0, 1-will be oo, 2-will be a/c
+	var ltext="\\frac{";
+	var a=Math.round(Math.random()*maxCo);
+	if(Math.random()>=0.5){a=-a;}
+	var c=Math.round(Math.random()*maxCo);
+	if(Math.random()>=0.5){c=-c;}
+	var b=Math.round(Math.random()*Math.pow(maxPow,2));
+	b=Math.ceil(Math.pow(b, 1/2));//Gives a much higher chance 
+	var d;
+	var ans;
+	if(way==1){
+		d=Math.round(Math.random()*Math.pow(b-1,2));
+		d=Math.ceil(Math.pow(d,1/2));
+		ans="infty";
+	}
+	else if(way==0){
+		d=b;
+		ans=a/c;
+	}
+	else{
+		d=Math.round(Math.random()*Math.pow(maxPow-b,2));
+		d=Math.ceil(Math.pow(b,1/2));
+		d+=b;
+		if(b==maxPow){
+			d=maxPow;
+			b=maxPow-1;
+		}
+		ans=0;
+	}
+	currentAns=ans;
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
@@ -1407,6 +1444,25 @@ function testRandom(max, limit=100){
 	//console.log("Times rolled: "+count);
 	//console.log(full);
 }
+function testWeight(func, times){
+	console.log("test");
+	var counts=[];
+	var occured=[];
+	for(var i=0; i<times; i++){
+		var a=func();
+		if (occured.includes(a)){
+			counts[a]=counts[a]+1;
+		}
+		else{
+			occured.push(a);
+			counts[a]=1;
+		}
+	}
+	occured.sort();
+	for(var i=0; i<occured.length; i++){
+		console.log(occured[i]+": "+counts[occured[i]]);
+	}
+}
 ///////
 //Numpad stuff (I would move this into a separate file, but they work so closely together that they might as well be in the same file)
 ///////
@@ -1423,7 +1479,7 @@ var keyWrapper=function keyGuard(event){
 			function(){
 		entry_text=event.target.value;//Update entry_text
 		update_ascii();}
-		, 1);//wait a tiny bit to let html update the inner value, and then do update everything (may break on very laggy computers or with a very fast typing bot)
+		, 10);//wait a tiny bit to let html update the inner value, and then do update everything (may break on very laggy computers or with a very fast typing bot)
 	}
 }
 var entry=document.getElementById("input-answer");
@@ -1521,6 +1577,9 @@ function numpad(key){
 	}
 	else if(key=="^(1/2)"){
 		entry_text+="^(1/2)";
+	}
+	else{
+		entry_text+=key;
 	}
 	/*if(key=="2nd"){
 		second(true);
