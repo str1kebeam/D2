@@ -54,7 +54,8 @@ diffs["integral"]=[[2,2,3,5,30],[3,2,3,5,30],[3,5,4,5,35],//Riemann sums
 				[2,1,5],[3,2,5],[4,5,10]];//reverse power rule
 diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole finding
 	10, [2,1,5,5,5],[3,2,5,10,10],//Left and right limits
-	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];//algebraic limmits
+	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//algebraic limmits
+	[2,1,1],[3,2,5],[4,5,5]];//limits at infinity
 var diffNames=[];
 diffNames['derivative']=["Easy Introduction Derivative","Normal Introduction Derivative","Hard Introduction Derivative",
 						"Easy Power Rule","Normal Power Rule","Hard Power Rule",
@@ -65,7 +66,8 @@ diffNames['integral']=["Easy Riemann Sum","Medium Riemann Sum","Hard Riemann Sum
 						"Easy Reverse Power Rule","Medium Reverse Power Rule","Hard Reverse Power Rule"];
 diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole",
 					"Easy Sided Limit","Medium Sided Limit","Hard Sided Limit",
-					"Easy Algebraic Limit","Medium Algebraic Limit","Hard Algebraic Limit"];
+					"Easy Algebraic Limit","Medium Algebraic Limit","Hard Algebraic Limit",
+					"Easy Limit At Infinity","Medium Limit At Infinity", "Hard Limit At Infinity"];
 //////
 //Startup stuff
 //////
@@ -341,8 +343,11 @@ function checkAns(ans){
 	if (ans==currentAns){
 		return true;
 	}
-	else if(currentAns=="DNE"){
+	else if(['DNE','infty','-infty'].includes(currentAns)){
 		return false;//math.simplify("DNE") or any othe string without numbers gives 0, so need to check for this
+	}
+	else if(ans.search(/[0-9x]/i)==-1){//If we are looking for something besides a string, check that it won't confuse mathjs
+		return false;
 	}
 	//else if(math.equal(math.simplify(ans),math.simplify(currentAns))){
 	//	return true;
@@ -707,6 +712,9 @@ function limitQ(diff){
 	else if(diffNames['limit'][diff-1].endsWith("Algebraic Limit")){
 		algebraicLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
 		rat=true;
+	}
+	else if(diffNames['limit'][diff-1].endsWith("At Infinity")){
+		infinLimit(d[0],d[1],d[2]);
 	}
 }
 function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
@@ -1114,7 +1122,7 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	//If b>d, lim->oo = +-infty
 	//if b<d, lim->oo = 0
 	//Also, asciimath for infinity is oo, and 'inifinity' will print weird stuff
-	var way=Math.floor(Math.random()*3);//0-Will be 0, 1-will be oo, 2-will be a/c
+	var way=Math.floor(Math.random()*3);//0-Will be a/c, 1-will be oo, 2-will be 0
 	var ltext="\\frac{";
 	var a=Math.floor(Math.random()*maxCo)+1;
 	if(Math.random()>=0.5){a=-a;}
@@ -1125,8 +1133,14 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	var d;
 	var ans;
 	if(way==1){
-		d=Math.round(Math.random()*Math.pow(b-1,2));
-		d=Math.ceil(Math.pow(d,1/2));
+		if(b==0){
+			b++;
+			d=0;
+		}
+		else{
+			d=Math.round(Math.random()*Math.pow(b-1,2));
+			d=Math.ceil(Math.pow(d,1/2));
+		}
 		ans="infty";
 		if((a<0)? (c>=0):(c<0)){//Ok, I'm not 100% certain what this does, but it is what came up when I searched 'javascript XOR'. I think it's if a<0, then c>=0, otherwise c<0
 			ans="-infty";
@@ -1135,17 +1149,24 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	else if(way==0){
 		d=b;
 		ans=a/c;
+		console.log("Should be a/c");
 	}
 	else{
 		d=Math.round(Math.random()*Math.pow(maxPow-b,2));
-		d=Math.ceil(Math.pow(b,1/2));
+		d=Math.ceil(Math.pow(d,1/2));
 		d+=b;
 		if(b==maxPow){
 			d=maxPow;
 			b=maxPow-1;
 		}
+		else if(b==d){
+			d++;
+		}
 		ans=0;
+		console.log("Should be 0");
 	}
+	console.log(a);
+	console.log(c);
 	currentAns=ans;
 	if(b==0){
 		ltext+=a;
@@ -1163,6 +1184,12 @@ function infinLimit(maxTerms, maxPow, maxCo){
 		ltext+="^{"+b+"}";
 	}
 	//Put in the other unimportant stuff after the first numerator term
+	var t=Math.round(Math.random()*maxTerms);
+	var num=makePolynomial(t, b-1, maxCo);
+	if(!num[0].startsWith("-")){
+		ltext+="+";
+	}
+	ltext+=num[0];
 	ltext+="}{";
 	if(d==0){
 		ltext+=c;
@@ -1174,14 +1201,21 @@ function infinLimit(maxTerms, maxPow, maxCo){
 		ltext+="x";
 	}
 	else{
-		ltext+="x";
+		ltext+=c+"x";
 	}
 	if(d>1){
 		ltext+="^{"+d+"}";
 	}
 	//Unimportant terms in the denominator...
+	t=Math.round(Math.random()*maxTerms);
+	var den=makePolynomial(t, d-1, maxCo);
+	if(!den[0].startsWith("-")){
+		ltext+="+";
+	}
+	ltext+=den[0];
 	ltext+="}";
 	ask("What is the value of the following function as \\(x \\to \\infty\\)? (To enter infinity, type 'infty')", ltext);
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
