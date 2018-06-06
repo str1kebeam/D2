@@ -50,7 +50,7 @@ sup {
 #calculator {
   display: inline-grid;
   grid-template-columns: repeat(11, 1fr);
-  grid-template-rows: repeat(4,1fr);
+  grid-template-rows: repeat(4,46px);
   grid-gap: 3px 5px;
   grid-template-areas:
     "b1 b2  b3  add  exp  exp  sin sin bksp bksp bksp"
@@ -58,25 +58,27 @@ sup {
     "b7 b8  b9  mult sqr  sqr  tan tan pi   e    plsc"
     "b0 b0 dec  divd lbrc rbrc clr clr entr entr entr";
   width: 80%;
-  height: 40vh;
+  height: 209px;
   background-color: #acfa;
   border: 2px solid #00fa;
-  border-radius: 10px;
+  border-radius: 0px;
   padding: 5px;
-  align-items: stretch center !important;
+  align-items: stretch !important;
 }
 
 
 #calculator * {
   background-color: var(--calcbtncol);
   margin: 5px;
-  align-content: stretch center;
+  align-content: stretch;
   text-align: center;
   text-transform: lowercase;
+  border-radius: 0px;
 }
 
 #b1 {
   grid-area: b1;
+  align-self: stretch;
 }
 #b2 {
   grid-area: b2;
