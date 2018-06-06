@@ -1116,9 +1116,9 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	//Also, asciimath for infinity is oo, and 'inifinity' will print weird stuff
 	var way=Math.floor(Math.random()*3);//0-Will be 0, 1-will be oo, 2-will be a/c
 	var ltext="\\frac{";
-	var a=Math.round(Math.random()*maxCo);
+	var a=Math.floor(Math.random()*maxCo)+1;
 	if(Math.random()>=0.5){a=-a;}
-	var c=Math.round(Math.random()*maxCo);
+	var c=Math.floor(Math.random()*maxCo)+1;
 	if(Math.random()>=0.5){c=-c;}
 	var b=Math.round(Math.random()*Math.pow(maxPow,2));
 	b=Math.ceil(Math.pow(b, 1/2));//Gives a much higher chance 
@@ -1128,6 +1128,9 @@ function infinLimit(maxTerms, maxPow, maxCo){
 		d=Math.round(Math.random()*Math.pow(b-1,2));
 		d=Math.ceil(Math.pow(d,1/2));
 		ans="infty";
+		if((a<0)? (c>=0):(c<0)){//Ok, I'm not 100% certain what this does, but it is what came up when I searched 'javascript XOR'. I think it's if a<0, then c>=0, otherwise c<0
+			ans="-infty";
+		}
 	}
 	else if(way==0){
 		d=b;
@@ -1144,6 +1147,41 @@ function infinLimit(maxTerms, maxPow, maxCo){
 		ans=0;
 	}
 	currentAns=ans;
+	if(b==0){
+		ltext+=a;
+	}
+	else if(a==-1){
+		ltext+="-x";
+	}
+	else if(a==1){
+		ltext+="x";
+	}
+	else{
+		ltext+=a+"x";
+	}
+	if(b>1){
+		ltext+="^{"+b+"}";
+	}
+	//Put in the other unimportant stuff after the first numerator term
+	ltext+="}{";
+	if(d==0){
+		ltext+=c;
+	}
+	else if(c==-1){
+		ltext+="-x";
+	}
+	else if(c==1){
+		ltext+="x";
+	}
+	else{
+		ltext+="x";
+	}
+	if(d>1){
+		ltext+="^{"+d+"}";
+	}
+	//Unimportant terms in the denominator...
+	ltext+="}";
+	ask("What is the value of the following function as `x -> oo`? (To enter infinity, type 'infty')", ltext);
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
