@@ -50,7 +50,8 @@ diffs["derivative"]=[
 	[1,1,1,sTrig], [2,2,2,sTrig], [3,3,sTrig]//The trig difficulty levels
 ];
 diffs["tangent"]=[[2,1,5,3],[3,2,5,10]]; 
-diffs["integral"]=[[2,1,5],[3,2,5],[4,5,10]];
+diffs["integral"]=[[2,2,3,5,30],[3,2,3,5,30],[3,5,4,5,35],//Riemann sums
+				[2,1,5],[3,2,5],[4,5,10]];//reverse power rule
 diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole finding
 	10, [2,1,5,5,5],[3,2,5,10,10],//Left and right limits
 	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];//algebraic limmits
@@ -60,7 +61,8 @@ diffNames['derivative']=["Easy Introduction Derivative","Normal Introduction Der
 						"Easy Trigonometry","Normal Trigonometry","Hard Trigonometry"];
 						//Is it bad that I needed to look up what "Trig" was short for?
 diffNames['tangent']=["Easy Polynomial","Hard Polynomial"];
-diffNames['integral']=["Easy Reverse Power Rule","Medium Reverse Power Rule","Hard Reverse Power Rule"];
+diffNames['integral']=["Easy Riemann Sum","Medium Riemann Sum","Hard Riemann Sum",
+						"Easy Reverse Power Rule","Medium Reverse Power Rule","Hard Reverse Power Rule"];
 diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole",
 					"Easy Sided Limit","Medium Sided Limit","Hard Sided Limit",
 					"Easy Algebraic Limit","Medium Algebraic Limit","Hard Algebraic Limit"];
@@ -457,9 +459,9 @@ function simpleDerivative(maxXCo, maxCons, squared=false){
 		e+="x^{2}";
 		s=true;
 	}
-	var a=(Math.random()*maxXCo).toFixed(0);
+	var a=Math.round(Math.random()*maxXCo);
 	if(Math.random()>=0.5){a=-a;}
-	var b=(Math.random()*maxCons).toFixed(0);
+	var b=Math.round(Math.random()*maxCons);
 	if(Math.random()>=0.5){b=-b;}
 	if(a==-1){
 		e+="-x";
@@ -518,7 +520,7 @@ function tangent_slope(terms, maxPow, maxCo, maxX){
 	poly=makePolynomial(terms, maxPow, maxCo);
 	e+=poly[0];
 	simple+=poly[1];
-	var xVal=((Math.random()*maxX*2)-maxX).toFixed(0);//If I am correct, this gives a random number [-maxX, maxX], and rounds it to an integer
+	var xVal=Math.round((Math.random()*maxX*2)-maxX);//If I am correct, this gives a random number [-maxX, maxX], and rounds it to an integer
 	//needs to be "xVal" because of how mathjs works
 	var ans;
 	if(simple.includes("x")){
@@ -535,8 +537,14 @@ function tangent_slope(terms, maxPow, maxCo, maxX){
 function intQ(diff){
 	var intDiffs=diffs["integral"];
 	var d=intDiffs[diff-1];
-	newIntegral(d[0],d[1],d[2]);
-	rat=true;
+	if(diffNames['integral'][diff-1].endsWith("Power Rule")){
+		newIntegral(d[0],d[1],d[2]);
+		rat=true;
+	}
+	else if(diffNames['integral'][diff-1].endsWith("Sum")){
+		riemannSum(d[0],d[1],d[2],d[3],d[4]);
+		rat=true;
+	}
 }
 function newIntegral(terms, maxPow, maxCo){//yeah, mathjs doesn't have a function for this
 	//Yeah, this will be pretty much the same thing...
@@ -567,9 +575,83 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	//Yeah, I'm not coding this now, but I will plan it out:
 	//Ok, so make a polynomial
 	//Check that over the range it stays within the y scale
-	//Then use the integrate function to find the integral of it
 	//Generate an upper and lower bound within the x range
-	//Then evaluate it for the upper and lower bounds
+	//Generate a number of rectangles
+	//Sum all the rectangle parts
+	var poly=makePolynomial(terms, maxPow, maxCo, true);
+	var cont=true;
+	var tries=0;
+	while(cont){//Check that the function is valid
+		console.log("y");
+		cont=false;
+		for(var x=-maxX; x<=maxX; x++){
+			if(Math.abs(math.eval(poly[1],{x:x}))>maxY){//check that the value is within the vaild range
+				cont=true;
+				console.log(x);
+			}
+		}
+		if(cont){
+			poly=makePolynomial(terms, maxPow, maxCo,true);//If it isn't, make a new polynomial
+		}
+		tries++;
+		console.log(poly[1]);
+		if(tries>1000){
+			relpy("A problem occured with the random quesion generator. If you can, please report this bug on the about page.")
+			return;
+		}
+	}
+	cont=true;
+	var left; var right;
+	while(cont){//generate the left and right bounds
+		console.log("bounds");
+		var a; var b;
+		a=Math.round(Math.random()*maxX);
+		b=Math.round(Math.random()*maxX);
+		if(Math.random()>=0.5){a=-a;}
+		if(Math.random()>=0.5){b=-b;}
+		if(a>b){
+			left=b;
+			right=a;
+			cont=false;
+		}
+		else if(a<b){
+			left=a;
+			right=b;
+			cont=false;
+		}
+	}
+	/*var rects;
+	var width;
+	cont=true;
+	while(cont){//Check that the rectangles aren't too small
+		console.log("rects")
+		rects=Math.floor(Math.random()*maxRect)+1;
+		var size=right-left;
+		width=size/rects;
+		if(width>=minSize){
+			cont=false;
+		}
+	}*/
+	var width=1;//In case I ever want to add more rectangles
+	var rects=(right-left)/width;
+	var side=Math.floor(Math.random()*2);//0-left, 1-right
+	console.log(side);
+	console.log(left);
+	var pside=['left','right'][side];
+	var ans=0;
+	for(var r=0; r<rects; r++){
+		var x=left+width*(r+side);
+		var y=math.eval(poly[1], {x:x});
+		var size=y*width;
+		ans+=size;
+		console.log(x);
+		console.log(typeof x);
+		console.log(y);
+		console.log(size);
+	}
+	currentAns=ans;
+	ask("Calcualte the "+pside+" Riemann sum of the following function from "+left+" to "+right+" with "+rects+" rectangle(s).",poly[0]);
+	//MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we need is integration, so this will handle the simple rule for it
 	var simple="";//This doesn't make latex right now, but I could easily edit it to do that
@@ -861,7 +943,7 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 	if(maxX<1){
 		reply("Sorry about this. Something broke in the question generator.<br>Please report this on the about page, saying what question you are doing.");
 	}
-	var x=(Math.random()*maxX).toFixed(0);
+	var x=Math.round(Math.random()*maxX);
 	if(Math.random()>=0.5){x=-x;}
 	var left=makePolynomial(terms, maxPow, maxCo);
 	var tries=0;
@@ -896,10 +978,10 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 	}
 	var leftVal=math.eval(left[1],{x:x});
 	var rightVal=math.eval(right[1],{x:x});
-	var middle=(Math.random()*maxY).toFixed();
+	var middle=Math.round(Math.random()*maxY);
 	if(Math.random()>=0.5){middle=-middle;}
 	while(middle==leftVal||middle==rightVal){
-		middle=(Math.random()*maxY).toFixed();
+		middle=Math.round(Math.random()*maxY);
 		if(Math.random()>=0.5){middle=-middle;}
 	}
 	var side;
@@ -963,7 +1045,7 @@ function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	var x;//Great, I need to make this...
 	if(math.random()<0.2){//20% chance of just some random point in the range
 							//So the range is maxXCo, because ax^b+c=x, max x at a->0 b->0 and c->infinity, so +-c
-		x=(Math.random()*maxCons).toFixed(0);
+		x=Math.round(Math.random()*maxCons);
 		if(Math.random()>=0.5){x=-x;}
 	}
 	else{//Otherwise, make it so that x is where one of the denominator parts=0
@@ -984,7 +1066,7 @@ function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 			}
 		}
 		if(dens.length==0){//If it doesn't equal 0 anywhere, just pick a random point
-			x=(Math.random()*maxCons).toFixed(0);
+			x=Math.round(Math.random()*maxCons);
 			if(Math.random()>=0.5){x=-x;}
 		}
 	}
@@ -1029,6 +1111,7 @@ function lhopital(num, den, x){
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
 	//need to have it return the latex and normal text...
+	//Return is: [latex, simple, [pows, cos]]
 	var latex="";
 	var simple="";
 	var raws=[[],[]];
@@ -1036,7 +1119,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 		for(var pow=maxPow; pow>=0; pow--){
 			var co=0;
 			while(co==0){
-				co=((Math.random()*maxCo*2)-maxCo).toFixed(0);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
+				co=Math.round((Math.random()*maxCo*2)-maxCo);//So that there isn't a coefficient of 0, becuase that would be annoying and would lower terms number
 			}
 			/*if(co==-1&&pow!=0){
 				simple+="-";
@@ -1106,7 +1189,7 @@ function makePolynomial(terms, maxPow, maxCo, raw=false){
 			//console.log(pi);
 			var c=0;
 			while(c==0){
-				c=((Math.random()*maxCo*2)-maxCo).toFixed(0);
+				c=Math.round((Math.random()*maxCo*2)-maxCo);
 			}
 			var p=possiblePows[pi];
 			possiblePows.splice(pi, 1);
@@ -1213,7 +1296,7 @@ function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig, raw=false){
 	//Why am I writing so many comments right now?
 	var tc=0;
 	while(tc==0){
-		tc=((Math.random()*maxTCo*2)-maxTCo).toFixed(0);
+		tc=Math.round((Math.random()*maxTCo*2)-maxTCo);
 	}
 	if(Math.abs(tc)==1){
 		if(tc==-1){
@@ -1231,7 +1314,7 @@ function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig, raw=false){
 	latex+="\\"+tr+"(";//If it was just "sin", it LaTeX would italicize it because it thinks it is a variable, so it needs to be"\sin"
 	var xc=0;
 	while(xc==0){
-		xc=((Math.random()*maxXCo*2)-maxXCo).toFixed(0);
+		xc=Math.round((Math.random()*maxXCo*2)-maxXCo);
 	}
 	if(xc==-1){
 		simple+="-";
@@ -1241,7 +1324,7 @@ function trig_term(maxTCo, maxXCo, /*maxTPow,*/ maxXPow, diff=nTrig, raw=false){
 		simple+=xc;
 		latex+=xc;
 	}
-	var xp=(Math.random()*maxXPow).toFixed(0);
+	var xp=Math.round(Math.random()*maxXPow);
 	if(xp==0){
 		if(Math.abs(xc)==1){//If it had just printed a - or nothing at all for the coefficient, print 1
 			simple+="1";
@@ -1269,7 +1352,7 @@ function generate_factored_part(maxXCo, maxXPow, maxC, neg=false){
 	//neg accounts for if the constants can be negative as well (not counting the power)
 	var xPow=Math.floor(Math.random()*maxXPow)+1;//So that it can't be 0
 	var xCo=Math.floor(Math.random()*maxXCo)+1;
-	var cons=(Math.random()*maxC).toFixed(0);
+	var cons=Math.round(Math.random()*maxC);
 	if(neg){
 		if(Math.random()>=0.5){//50% chance of making it negative (Math.random() has domain [0,1), so 0.5 is included in the upper half)
 			xCo=-xCo;
@@ -1311,7 +1394,7 @@ function testRandom(max, limit=100){
 	var count=0;
 	while(cont&&count<limit){
 		count++;
-		var a=((Math.random()*max)).toFixed(0);
+		var a=Math.round((Math.random()*max));
 		if(a>max||a<-max){
 			console.log("Problem:"+a);
 		}
