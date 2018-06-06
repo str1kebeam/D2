@@ -14,7 +14,7 @@
 	height: 400px;
 	width: auto;
 	display: block;
-	border: 5px dashed gray;
+	border: 3px dotted gray;
 	margin: 15px auto;
 }
 #lesson canvas {
