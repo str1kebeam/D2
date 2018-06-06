@@ -1655,3 +1655,38 @@ function second(state=false){//by default, it turns second off
 		tan.onclick=function(){numpad('tan(');};
 	}
 }
+/////
+//Graph functions (Prahlad please make these)
+/////
+function setPolyGraph(cos, pows){
+	//Sets the graph to be a polynomial function
+	//cos is a list of the coeficients, pows is a list of the powers
+	//So the function would look like "cos[0]*x^pows[0]+cos[1]*x^pows[1]"
+	//Please code this
+}
+function setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons){
+	//Sets the graph to a fraction
+	//n___ is for the numberator, d____ is for the denominator
+	//_Cos is the coefficients of x, _Pows is the powers of x, and _Cons is the constant added to it
+	//So it would look like "(nCos[0]*x^nPows[0]+nCons[0])*(nCos[1]*x^nPows[1]+nCons[1])*.../(dCos[0]*x^dPows[0]+dCons[0])*(dCos[1]*x^dPows[1]+dCons[1])*..."
+	//Please code this as well
+}
+function setXScale(min, max){
+	//Would set the scale of the x's to be between min and max
+	//Not as important, I can just edit the problems to not go outside the range it is stuck on
+}
+function setYScale(min, max){
+	//Similar to the above one, sets the y range
+	//Slightly more important than getting x (because now I have to put in more checks), but still can be worked around
+}
+function hideGraph(){
+	//Just hides the graph, so that non-graph problems don't have a graph
+	//Hopefully you don't need to add anything
+	var g=document.getElementById("graph");
+	g.style="visibilty: hidden";
+}
+function showGraph(){
+	//Just makes the graph visible again, you may want to call this in the make graph functions, but I can call them myself
+	var g=document.getElementById("graph");
+	g.style="visibilty: visible";
+}
