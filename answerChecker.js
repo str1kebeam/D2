@@ -164,13 +164,13 @@ function setDropdown(dropdown, val){
 		//console.log(temp);
 		temp.class="";
 		var text=inside.innerHTML;
-		console.log(temp.class);
-		console.log(text);
-		console.log(dropdown.options[index].text);
-		console.log(text==dropdown.options[index].text)
+	//console.log(temp.class);
+	//console.log(text);
+	//console.log(dropdown.options[index].text);
+	//console.log(text==dropdown.options[index].text)
 		if(text==dropdown.options[index].text){
 			temp.class="active selected";//Materialize's selected class
-			console.log(temp.class);
+		//console.log(temp.class);
 		}
 		temp=temp.nextElementSibling;
 		//console.log(temp);
@@ -185,11 +185,11 @@ function updateDropdowns(){
 	//console.log(options);
 	var diffDrop=document.getElementById("difficulty");
 	/*if(options==oldMaxDiff){//No options need to be added or removed
-		console.log("fine");
+	//console.log("fine");
 		return;
 	}*/
 	/*else if(options>oldMaxDiff){//Need to add options
-		console.log("Adding");
+	//console.log("Adding");
 	var options=diffs[type].length;
 	//console.log(options);
 	var diffDrop=document.getElementById("difficulty");
@@ -588,19 +588,19 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	var cont=true;
 	var tries=0;
 	while(cont){//Check that the function is valid
-		console.log("y");
+	//console.log("y");
 		cont=false;
 		for(var x=-maxX; x<=maxX; x++){
 			if(Math.abs(math.eval(poly[1],{x:x}))>maxY){//check that the value is within the vaild range
 				cont=true;
-				console.log(x);
+			//console.log(x);
 			}
 		}
 		if(cont){
 			poly=makePolynomial(terms, maxPow, maxCo,true);//If it isn't, make a new polynomial
 		}
 		tries++;
-		console.log(poly[1]);
+	//console.log(poly[1]);
 		if(tries>1000){
 			relpy("A problem occured with the random quesion generator. If you can, please report this bug on the about page.")
 			return;
@@ -609,7 +609,7 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	cont=true;
 	var left; var right;
 	while(cont){//generate the left and right bounds
-		console.log("bounds");
+	//console.log("bounds");
 		var a; var b;
 		a=Math.round(Math.random()*maxX);
 		b=Math.round(Math.random()*maxX);
@@ -630,7 +630,7 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	var width;
 	cont=true;
 	while(cont){//Check that the rectangles aren't too small
-		console.log("rects")
+	//console.log("rects")
 		rects=Math.floor(Math.random()*maxRect)+1;
 		var size=right-left;
 		width=size/rects;
@@ -641,8 +641,8 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	var width=1;//In case I ever want to add more rectangles
 	var rects=(right-left)/width;
 	var side=Math.floor(Math.random()*2);//0-left, 1-right
-	console.log(side);
-	console.log(left);
+//console.log(side);
+//console.log(left);
 	var pside=['left','right'][side];
 	var ans=0;
 	for(var r=0; r<rects; r++){
@@ -650,10 +650,10 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 		var y=math.eval(poly[1], {x:x});
 		var size=y*width;
 		ans+=size;
-		console.log(x);
-		console.log(typeof x);
-		console.log(y);
-		console.log(size);
+	//console.log(x);
+	//console.log(typeof x);
+	//console.log(y);
+	//console.log(size);
 	}
 	currentAns=ans;
 	ask("Calcualte the "+pside+" Riemann sum of the following function from "+left+" to "+right+" with "+rects+" rectangle(s).",poly[0]);
@@ -769,11 +769,11 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 						return !isNaN(n[2][3]);
 					})
 				if(i==hole_index){
-					console.log(good_nums);
+				//console.log(good_nums);
 					var index=Math.floor(Math.random()*good_nums.length);
 					dens.push(good_nums[index]);
-					console.log(good_nums[index]);
-					console.log(dens[i]);
+				//console.log(good_nums[index]);
+				//console.log(dens[i]);
 					genning=false;
 				}
 				else if(!good_nums.some(function(n){
@@ -902,11 +902,11 @@ function makeLimitFunction(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false, t
 						return !isNaN(n[2][3]);
 					})
 				if(i==hole_index){
-					console.log(good_nums);
+				//console.log(good_nums);
 					var index=Math.floor(Math.random()*good_nums.length);
 					dens.push(good_nums[index]);
-					console.log(good_nums[index]);
-					console.log(dens[i]);
+				//console.log(good_nums[index]);
+				//console.log(dens[i]);
 					genning=false;
 				}
 				else if(!good_nums.some(function(n){
@@ -971,7 +971,7 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 	if(Math.random()>=0.5){x=-x;}
 	var left=makePolynomial(terms, maxPow, maxCo);
 	var tries=0;
-	console.log("test");
+//console.log("test");
 	while(Math.abs(math.eval(left[1], {x:x}))>maxY){
 		left=makePolynomial(terms, maxPow, maxCo);
 		tries++;
@@ -985,7 +985,7 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 			return "";
 		}
 	}
-	console.log(left);
+//console.log(left);
 	var right=makePolynomial(terms, maxPow, maxCo);
 	tries=0;
 	while(Math.abs(math.eval(right[1],{x:x}))>maxY){
@@ -1050,6 +1050,7 @@ function sidedLimitQuestionAbs(maxXCo){
 	}
 	latex+="x|}{x}";
 	ask("What is the value of the following function as x approaches 0 from the "+side+" side?",latex);
+	setAbsGraph(xCo,1);
 }
 function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	var lim=makeLimitFunction(maxNum, maxDen, maxXPow, maxXCo, maxCons, neg);
@@ -1076,7 +1077,7 @@ function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 		var cont=true;
 		var dens=lim[3];
 		while(cont&&dens.length>0){
-			console.log("finding x from den");
+		//console.log("finding x from den");
 			var i=Math.floor(Math.random()*dens.length);
 			if(isNaN(dens[i][2][3])){
 				dens.splice(i,1);//remove that one from the list for now
@@ -1106,13 +1107,27 @@ function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	}
 	latex="\\lim_{x \\to "+px+"} "+latex;
 	ask("Evaluate the following limit.<br>If the limit is undefined, just enter 'DNE'.", latex);
-	console.log(lim[0]);
+	//console.log(lim[0]);
+	var nPows=[]; var nCons=[]; var nCos=[];
+	var dPows=[]; var dCons=[]; var dCos=[];
+	for(var i=0; i<dens.length; i++){
+		dPows.push(dens[i][0]);
+		dCos.push(dens[i][1]);
+		dCons.push(dens[i][2]);
+	}
+	var nums=lim[2];
+	for(var i=0; i<nums.length; i++){
+		nPows.push(nums[i][0]);
+		nCos.push(nums[i][1]);
+		dCons.push(nums[i][2]);
+	}
+	setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons);
 }
 function lhopital(num, den, x){
 	//Evaluates a limit, which for some reason mathjs can't do...
-	console.log(num);
-	console.log(den);
-	console.log(x);
+//console.log(num);
+//console.log(den);
+//console.log(x);
 	var n=math.eval(num, {x:x});
 	var d=math.eval(den, {x:x});
 	var a=0;
@@ -1122,11 +1137,11 @@ function lhopital(num, den, x){
 		n=math.eval(num, {x:x});
 		d=math.eval(den, {x:x});
 		a++;
-		console.log(a);
-		console.log(n);
-		console.log(d);
-		console.log(num);
-		console.log(den);
+	//console.log(a);
+	//console.log(n);
+	//console.log(d);
+	//console.log(num);
+	//console.log(den);
 	}
 	if(d==0){
 		return "DNE";
@@ -1168,7 +1183,7 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	else if(way==0){
 		d=b;
 		ans=a/c;
-		console.log("Should be a/c");
+	//console.log("Should be a/c");
 	}
 	else{
 		d=Math.round(Math.random()*Math.pow(maxPow-b,2));
@@ -1182,10 +1197,10 @@ function infinLimit(maxTerms, maxPow, maxCo){
 			d++;
 		}
 		ans=0;
-		console.log("Should be 0");
+	//console.log("Should be 0");
 	}
-	console.log(a);
-	console.log(c);
+//console.log(a);
+//console.log(c);
 	currentAns=ans;
 	if(b==0){
 		ltext+=a;
@@ -1518,7 +1533,7 @@ function generate_factored_part(maxXCo, maxXPow, maxC, neg=false){
 	return [simple, latex, [xPow, xCo, cons, zero]];
 }
 function test(){
-	console.log("test");
+//console.log("test");
 }
 function testRandom(max, limit=100){
 	//Just a check that I was doing random numbers properly
@@ -1533,7 +1548,7 @@ function testRandom(max, limit=100){
 		count++;
 		var a=Math.round((Math.random()*max));
 		if(a>max||a<-max){
-			console.log("Problem:"+a);
+		//console.log("Problem:"+a);
 		}
 		full[a]=true;
 		cont=!full.every(function (i){
@@ -1545,7 +1560,7 @@ function testRandom(max, limit=100){
 	//console.log(full);
 }
 function testWeight(func, times){
-	console.log("test");
+//console.log("test");
 	var counts=[];
 	var occured=[];
 	for(var i=0; i<times; i++){
@@ -1560,7 +1575,7 @@ function testWeight(func, times){
 	}
 	occured.sort();
 	for(var i=0; i<occured.length; i++){
-		console.log(occured[i]+": "+counts[occured[i]]);
+	//console.log(occured[i]+": "+counts[occured[i]]);
 	}
 }
 ///////
