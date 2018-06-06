@@ -80,7 +80,7 @@
 					<br>
 					<br>
 					Using the formula for the left sided sum, we get an area of 14. However, the left sided sum yields an area of 30.  The actual answer is \(\frac{64}{3}\approx 21.3\) (which you'll find out how to calculate <a href="reverse-power-rule.html">soon</a>).  The answers are off because the rectangles are not the actual function, but with skinnier rectangles, the answer gets more accurate.
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="full area 0-4 of x^2">
+					<canvas width = "800" height = "800" id = "myCanvas4"></canvas>
 					You may be wondering, <i>how do I get a more exact answer?</i>
 					<br>
 					<br>
@@ -101,6 +101,7 @@
 <script src="intro-tan1.js"></script>
 <script src="riemann-sums2.js"></script>
 <script src="riemann-sums3.js"></script>
+<script src="riemann-sums4.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -130,6 +131,7 @@ $(document).ready(function(){
 	init();
 	init2();
 	init3();
+	init4();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
