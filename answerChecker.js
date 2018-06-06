@@ -1065,6 +1065,9 @@ function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 			if(isNaN(dens[i][2][3])){
 				dens.splice(i,1);//remove that one from the list for now
 			}
+			else if(math.rationalize(dens[i][2][3]).toString().includes(".")){//If it's irrational
+				dens.splice(i,1);//Yeah, let's just ignore that...
+			}
 			else{
 				x=dens[i][2][3];
 				cont=false;
