@@ -1181,7 +1181,7 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	}
 	//Unimportant terms in the denominator...
 	ltext+="}";
-	ask("What is the value of the following function as `x -> oo`? (To enter infinity, type 'infty')", ltext);
+	ask("What is the value of the following function as \\(x \\to \\infty\\)? (To enter infinity, type 'infty')", ltext);
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
