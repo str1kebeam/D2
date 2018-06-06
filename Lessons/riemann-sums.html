@@ -58,9 +58,9 @@
 					An important quality of graphs is the area under them.  However, we need to find a way to solve for this area.
 					<br>
 					Take a look at the graph of \(f(x)=x^2\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph Title">
+					<canvas width = "800" height = "800" id = "myCanvas2"></canvas>
 					The first way to find the area is to fill in the area with rectangles.  To do this, we place rectangles between the x-axis and the function.  See the graph below with rectangles under the graph of \(f(x)=x^2\) over the interval \((0,4)\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph Title">
+					<canvas width = "800" height = "800" id = "myCanvas"></canvas>
 					The area of all of these rectangles is shown by the following <a href="http://www.columbia.edu/itc/sipa/math/summation.html" target="_blank">summation</a>:
 					$$\sum_{n=0}^{4}(f(n) * 1)$$
 					Now what does this mean?  Here, we are making a rectangle for every integer value of \(x\) from \(0\) to \(4\).  For each of these numbers, we're adding the area of a rectangle where the height of the rectangle is \(f(x)-0\) or \(f(x)\) and the width is \(1\).
@@ -71,7 +71,7 @@
 					<br>
 					<br>
 					Well, if there's a left Riemann Sum, shouldn't there be a right Riemann Sum?
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="right riemann">
+					<canvas width = "800" height = "800" id = "myCanvas3"></canvas>
 					Here is the same graph (\(f(x)=x^2\)) but with a <strong>right Riemann Sum</strong>, or sum of rectangles where the right side of the rectangle touches the graph.
 					<br>
 					This is a bit different because the rectangles now have different heights, affecting the overall sum.  Here's the summation of the right Riemann Sum:
@@ -98,6 +98,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src="intro-tan1.js"></script>
+<script src="riemann-sums2.js"></script>
+<script src="riemann-sums3.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -124,6 +127,9 @@ $(document).ready(function(){
 		offset: 50
 	});
 	$('.tabs').tabs();
+	init();
+	init2();
+	init3();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
