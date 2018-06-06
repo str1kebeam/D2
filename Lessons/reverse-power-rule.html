@@ -61,15 +61,15 @@
 					In other words, the integral of a derivative is the same function.
 					<br>
 					<br>
-					Look at the function \(f(x)=3x^2\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="Graph Title">
+					Look at the function \(f(x)=3x^2\)	
+					<canvas width = "800" height = "800" id = "myCanvas4"></canvas>
 					The area under the curve above can be represented by the following integral:
 					$$\int 3x^2dx$$
 					This means that we're taking the above function and making a second function that represents the area of that function from zero to the x-value.  For example, if we call the solution to the integral \(F(x)\), \(F(3)\) is the area of the graph from \(0\) to \(3\).
 					<br>
 					For example, the graphs below are of \(f(x)\) and \(F(x)\), respectively.
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="3x^2 with area">
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="x^3 with value">
+					<canvas width = "800" height = "800" id = "myCanvas"></canvas>
+					<canvas width = "800" height = "800" id = "myCanvas3"></canvas>
 					<i>Now how do we find these integrals?</i>
 					<br>
 					<br>
@@ -81,8 +81,8 @@
 					$$F(x)=x^3+C$$
 					<br>
 					To further emphasize the need for the \(+C\), look at the following graphs of \(x^3\) and \(x^3+1\)
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="x^3 with slope">
-					<img src="http://viterbivoices.usc.edu/wp-content/uploads/2013/05/placeholder.png" title="x^3 + 1 with slope">
+					<canvas width = "800" height = "800" id = "myCanvas5"></canvas>
+					<canvas width = "800" height = "800" id = "myCanvas6"></canvas>
 					Both of these have the same derivative, \(3x^2\).  However, adding \(1\), or any number to \(x^3\) for that matter, doesn't affect the slope.  Because of this, the \(+C\) means that the integral can be for the functions \(x^3\), \(x^3+1\), \(x^3+2\), and any \(x^3 + C\), where \(C\) is just any number.
 					<br>
 					<br>
@@ -97,6 +97,11 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="../Imports/materialize/js/materialize.min.js"></script>
+<script src="intro-dev4.js"></script>
+<script src="reverse.js"></script>
+<script src="reverse3.js"></script>
+<script src="intro-dev5.js"></script>
+<script src="reverse6.js"></script>
 <script src="../default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
@@ -121,8 +126,14 @@ $(document).ready(function(){
 	$('.carousel-slider').slider();
 	$('.pushpin').pushpin({
 		offset: 50
+	
 	});
 	$('.tabs').tabs();
+	init();
+	init3();
+	init4();
+	init5();
+	init6();
   $('.materialboxed').materialbox();
 
 	setInterval(autoplay, 5000);
