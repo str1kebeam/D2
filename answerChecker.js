@@ -328,6 +328,7 @@ function ask(question, expression){
 	entry_text="";
 	var l=MathJax.Hub.getAllJax("final-entry")[0];
 	MathJax.Hub.Queue(['Text',l,entry_text]);
+	hideGraph();
 }
 function reply(text){
 	if(text==""){
@@ -1740,6 +1741,7 @@ function setPolyGraph(cos, pows){
 	//cos is a list of the coeficients, pows is a list of the powers
 	//So the function would look like "cos[0]*x^pows[0]+cos[1]*x^pows[1]"
 	//Please code this
+	showGraph();
 }
 function setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons){
 	//Sets the graph to a fraction
@@ -1747,9 +1749,11 @@ function setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons){
 	//_Cos is the coefficients of x, _Pows is the powers of x, and _Cons is the constant added to it
 	//So it would look like "(nCos[0]*x^nPows[0]+nCons[0])*(nCos[1]*x^nPows[1]+nCons[1])*.../(dCos[0]*x^dPows[0]+dCons[0])*(dCos[1]*x^dPows[1]+dCons[1])*..."
 	//Please code this as well
+	showGraph();
 }
 function setAbsGraph(a, b){
 	//Function in the form |ax|/bx
+	showGraph();
 }
 function setXScale(min, max){
 	//Would set the scale of the x's to be between min and max
