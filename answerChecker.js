@@ -522,7 +522,7 @@ function tangent_slope(terms, maxPow, maxCo, maxX){
 	var q="What is the slope of the following equation at x=";
 	var e="f(x)=";
 	var simple="";
-	poly=makePolynomial(terms, maxPow, maxCo);
+	poly=makePolynomial(terms, maxPow, maxCo, true);
 	e+=poly[0];
 	simple+=poly[1];
 	var xVal=Math.round((Math.random()*maxX*2)-maxX);//If I am correct, this gives a random number [-maxX, maxX], and rounds it to an integer
@@ -538,6 +538,7 @@ function tangent_slope(terms, maxPow, maxCo, maxX){
 	q+=xVal+"?";
 	ask(q,e);
 	currentAns=ans;
+	setPolyGraph(poly[2][1],poly[2][0]);
 }
 function intQ(diff){
 	var intDiffs=diffs["integral"];
@@ -657,6 +658,7 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	currentAns=ans;
 	ask("Calcualte the "+pside+" Riemann sum of the following function from "+left+" to "+right+" with "+rects+" rectangle(s).",poly[0]);
 	//MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	setPolyGraph(poly[2][1],poly[2][0]);
 }
 function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we need is integration, so this will handle the simple rule for it
 	var simple="";//This doesn't make latex right now, but I could easily edit it to do that
@@ -832,7 +834,21 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	//console.log(dens);
 	currentAns=ans;
 	ask("Where is there a hole in this function?",latex);
+	var nPows; var nCons; var nCos;
+	var dPows; var dCons; var dCos;
+	for(var i=0; i<dens.length; i++){
+		dPows.push(dens[i][0]);
+		dCos.push(dens[i][1]);
+		dCons.push(dens[i][2]);
+	}
+	var nums=lim[2];
+	for(var i=0; i<nums.length; i++){
+		nPows.push(nums[i][0]);
+		nCos.push(nums[i][1]);
+		dCons.push(nums[i][2]);
+	}
 	//Something to graph simple
+	setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons);
 }
 function makeLimitFunction(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false, type=-1){
 	var nums=[];
@@ -1474,7 +1490,16 @@ function generate_factored_part(maxXCo, maxXPow, maxC, neg=false){
 		}
 	}
 	var simple="("+xCo+"x";
-	var latex="("+xCo+"x";
+	var latex="(";
+	if(xCo==-1){
+		latex+="-x";
+	}
+	else if(xCo==1){
+		latex+="x";
+	}
+	else{
+		latex+=xCo+"x";
+	}
 	if(xPow>1){
 		simple+="^("+xPow+")";
 		latex+="^{"+xPow+"}";
