@@ -834,8 +834,8 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	//console.log(dens);
 	currentAns=ans;
 	ask("Where is there a hole in this function?",latex);
-	var nPows; var nCons; var nCos;
-	var dPows; var dCons; var dCos;
+	var nPows=[]; var nCons=[]; var nCos=[];
+	var dPows=[]; var dCons=[]; var dCos=[];
 	for(var i=0; i<dens.length; i++){
 		dPows.push(dens[i][0]);
 		dCos.push(dens[i][1]);
