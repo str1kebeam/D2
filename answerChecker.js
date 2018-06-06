@@ -1733,6 +1733,9 @@ function setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons){
 	//So it would look like "(nCos[0]*x^nPows[0]+nCons[0])*(nCos[1]*x^nPows[1]+nCons[1])*.../(dCos[0]*x^dPows[0]+dCons[0])*(dCos[1]*x^dPows[1]+dCons[1])*..."
 	//Please code this as well
 }
+function setAbsGraph(a, b){
+	//Function in the form |ax|/bx
+}
 function setXScale(min, max){
 	//Would set the scale of the x's to be between min and max
 	//Not as important, I can just edit the problems to not go outside the range it is stuck on
