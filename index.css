@@ -1,43 +1,14 @@
 @import url(default.css);
 
-#images {
+#images { /* Image Formatting */
   width: 70%;
   height: auto;
 }
 #biglogo {
   margin: 25px auto;
 }
-/*
-.carousel .carousel-item {
-  display: block;
-  width: 300px;
-  height: auto;
-  max-height: 300px;
-  width: auto;
-  margin: 0;
-  top: 0;
-  border: 1px solid black;
-} /* https://stackoverflow.com/questions/37762139/how-to-increase-the-size-of-carousel-in-materialize-css#37898005 */
-/*
-.carousel .carousel-item *:not(p) {
-  max-height: 225px;
-  width: auto;
-  margin: auto;
-}*/
 
-.carousel {
-  height: 500px;
-  width: 500px;
-  margin: auto;
-  text-align: center;
-  overflow: hidden;
-  padding: auto;
-}
-.carousel .carousel-item {
-  height: 475px;
-}
-
-.img-examples .card-panel {
+.img-examples .card-panel { /* Card Formatting */
   color: gray;
   height: 425px !important;
 }

@@ -67,10 +67,10 @@ $(document).ready(function(){
 });
 
 t = document.getElementById("t");
-window.onload = function() {
+window.onload = function() { // Decrease Time every second
 	setInterval(timerDown, 1000);
 }
-timerDown = function() {
+timerDown = function() { // Decrease Time before redirect
 	if(t.innerHTML > 0) {
 		t.innerHTML = parseInt(t.innerHTML)-1;
 	} else {

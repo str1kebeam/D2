@@ -17,7 +17,7 @@
 	border: 3px dotted gray;
 	margin: 15px auto;
 }
-#lesson canvas {
+#lesson canvas { /* Graphs */
 	background-color: #fff3;
 	height: 400px;
 	width: auto;
@@ -25,7 +25,7 @@
 	margin: 15px auto;
 	border: 3px dotted orange;
 }
-#lesson table {
+#lesson table { /* Tables */
 	margin: 15px auto;
 	background-color: #fff4;
 	border: 3px dotted var(--color1);
@@ -37,7 +37,7 @@
 	border: 1px solid darkgreen;
 	text-align: center;
 }
-#lesson strong {
+#lesson strong { /* Bold */
 	font-style: bold !important;
 	color: darkgreen;
 }

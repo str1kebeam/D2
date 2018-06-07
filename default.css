@@ -5,11 +5,8 @@
 :root {
 	--color1: green;
 	--color2: lightblue;
-	--grid-lines: #7f9fff8f;
-	--grid-back: #e0eeff;
-	--grid-spacing: 50px;
-	--grid-thickness: 1px;
-	--grid-thickness-vert: 1px;
+	--grid-lines: #7f7fff8f;
+	--grid-back: #e0e0ff;
 	--btncolor: #3399ff;
 	--calcbtncol: var(--color1);
 }
@@ -25,7 +22,7 @@
 	margin-top: 5px;
 }
 
-.color1 {
+.color1 { /* Set colors */
 	background-color: var(--color1);
 }
 
@@ -43,8 +40,8 @@ body {
 	margin: 0px;
 
 	background-color: var(--grid-back);
-    background-size: var(--grid-spacing) var(--grid-spacing);
-    background-image: linear-gradient(to right, var(--grid-lines) var(--grid-thickness-vert), transparent var(--grid-thickness-vert)), linear-gradient(to bottom, var(--grid-lines) var(--grid-thickness), transparent var(--grid-thickness));
+    background-size: 50px 50px;
+    background-image: linear-gradient(to right, var(--grid-lines) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-lines) 1px, transparent 1px);
     /* https://stackoverflow.com/questions/3540194/how-to-make-a-grid-like-graph-paper-grid-with-just-css#32861765 */
 	background-attachment: fixed;
 		/* https://www.w3schools.com/css/css_background.asp */
@@ -71,7 +68,7 @@ a[target="_blank"] {
 	color: indigo;
 }
 
-#main-content {
+#main-content { /* Main part of the page */
 	padding-left: 75px;
 	padding-right: 75px;
 }
@@ -144,12 +141,12 @@ p span{ /* default paragraph font and color */
 	color: rgb(4,48,34); /* Blue 6 */
 	font: 14px "Cambria", sans-serif;
 }
-
-.carousel-item p { /* caption */
+/*
+.carousel-item p { /* caption *
 	text-align: center;
-}
+} */
 
-#side-content {
+#side-content { /* sidebar */
 	height: 100vh;
 }
 
@@ -160,18 +157,4 @@ p span{ /* default paragraph font and color */
 #small {
 	color: gray;
 	font: 12px "Trebuchet MS";
-}
-/*
-#sitemap * {
-	background: transparent;
-}
-#sitemap, #sitemap .collection-item, #sitemap .collection-header {
-	border-color: black;
-}
-#sitemap {
-	border-color: transparent;
-}
-#sitemap a {
-	color: black;
-	text-decoration: none;
 }

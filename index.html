@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div id="container">
-		<div class="navbar-fixed">
+		<div class="navbar-fixed"> <!-- Top Navbar -->
 		<nav class="color1" id="topbar">
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo center"><img src="Derive.png"></a>
@@ -38,7 +38,7 @@
 	  </ul>
 
 		<div class="row">
-			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content">
+			<div class="col s12 m4 l3 z-depth-1 pushpin" id="side-content"> <!-- Sidebar -->
 				<h3>Options</h3>
 				<ul class="collection with-header">
 					<a href="index.html" class="collection-item active">Home</a>
@@ -47,13 +47,12 @@
 					<a href="about.html" class="collection-item">About</a>
 				</ul>
 			</div>
-			<div class="col s12 m8 push-m4 l9 push-l3 t-cen" id="main-content">
+			<div class="col s12 m8 push-m4 l9 push-l3 t-cen" id="main-content"> <!-- Main Content -->
 				<h1 id="body-title">Welcome to Derive!</h1>
 				<p>Changing The Way You Learn Math</p>
 				<img src="Derive-Large.png" id="biglogo" class="responsive-img">
-				<!--  HERE  -->
 				<div class="row img-examples">
-					<div class="col s12 m6 t-cen">
+					<div class="col s12 m6 t-cen"> <!-- 4 Icons -->
 					<a href="./Lessons/index.html">
 						<div class="card-panel hoverable color2">
 							<i class="mdi mdi-laptop mdi-dark mdi-196px"></i>
@@ -92,6 +91,7 @@
 						</div>
 					</a>
 				</div>
+			<!-- Footer -->
 			<p class="body-description">Start your first <i>Derive</i> lesson <a href="./Lessons/index.html" class="inline-link">here</a>!</p>
 			<div id="small">Font made from <a href="http://www.onlinewebfonts.com" target="_blank">oNline Web Fonts</a> is licensed by CC BY 3.0</div>
 			</div>
@@ -111,7 +111,7 @@
 <script type="text/javascript" src="Imports/materialize/js/materialize.min.js"></script>
 <script src="default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(function(){ //Imports for Materialize
 	$('.sidenav').sidenav();
 	$('select').formSelect();
 	$(".dropdown-trigger").dropdown({
