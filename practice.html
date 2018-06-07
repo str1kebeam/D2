@@ -50,24 +50,6 @@
 					<a href="practice.html" class="collection-item active">Practice</a>
 					<a href="about.html" class="collection-item">About</a>
 				</ul>
-				<h3>Practice Settings</h3>
-				<p>Select a Lesson</p>
-				<div>
-				<select id="type" style="visibility: visible">
-					<option value="derivative">Derivative</option>
-					<option value="integral">Integral</option>
-					<option value="tangent">Tangent Line</option>
-					<option value="limit">Limit</option>
-				</select>
-				<p>Select a Difficulty</p>
-				<select id="difficulty" style="visibility: visible">
-					<option value=1>1</option>
-					<option value=2>2</option>
-				</select>
-				</div>
-				<div class="t-cen">
-					<button class="btn" id="new-question" onclick="newQ();">New Question</button>
-				</div>
 			</div>
 			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content"> <!-- Main Content -->
 				<h1 id="body-title"> <!-- Title -->
@@ -79,7 +61,7 @@
 				<div id="problem">
 					<p class="body-description" id="question">Chose a problem type and difficulty from the menu below</p>
 					<latex-eqn class="body-description" id="expression">$$$$</latex-eqn>
-					<div id="graph" style="visibility: hidden"><p>Graph-filler</p></div>
+					<div id="graph" style="visibility: hidden"><!--<p>Graph-filler</p>--></div>
 					<div class="input-field">
 						<input placeholder="Your Answer Here" type="text" name="" id="input-answer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
 					</div>
