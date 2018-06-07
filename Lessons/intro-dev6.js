@@ -46,11 +46,11 @@
         }
 
         function graph_function6(x) {
-            return Math.pow(x,3);
+            return 2 * Math.pow(x,3);
         }
 
         function graph_function_derivative6(x) {
-            return 3 * x * x;
+            return 6 * x * x;
         }
 
         function build_tangent_line6() {
