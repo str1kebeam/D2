@@ -4,7 +4,7 @@
   overflow-y: auto;
 }
 
-#tabs {
+#tabs { /* Tabs for Lesson Selection */
   display: flex;
   margin-botton: 25px;
 }
