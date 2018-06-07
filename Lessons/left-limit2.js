@@ -131,11 +131,17 @@ var canvas_minx2 = 0;
 			ctx2.lineWidth = 2.0;
             ctx2.beginPath();
             ctx2.moveTo(graph_coords2[0].x,graph_coords2[0].y);
-            for (i=0; i<n; i++) {
-                ctx2.lineTo(graph_coords2[i].x,graph_coords2[i].y);
-            }
+            while (i < n){
+		ctx2.lineTo(graph_coords2[i].x,graph_coords2[i].y);
+		i += 1
+		if (i < 1502 && i > 1498){
+			ctx2.stroke();
+			i = 1503;
+			ctx2.beginPath();
+		}
+	     }
             ctx2.stroke();
-			ctx2.lineWidth = 1.0;
+	    ctx2.lineWidth = 1.0;
             // draw tangent line
             ctx2.fillStyle = "black";
             ctx2.font = f;
