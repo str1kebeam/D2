@@ -1,4 +1,13 @@
 //Creates random problems, checks answers to them
+/*
+
+Name: Elijah Thorpe (and Prahlad Jasti a bit at the bottom)
+Course: CSE
+Project: Software design project
+Purpose: All of the javascript for the practice page. functionthing() is the main function, being a splitter for everything.
+		Most of the other descriptions are a bit further down in the other questions
+
+*/
 ///////
 //To People coming here for minor tweaks to the interface
 ///////
@@ -54,7 +63,8 @@ diffs["integral"]=[[2,2,3,5,30],[3,2,3,5,30],[3,5,4,5,35],//Riemann sums
 				[2,1,5],[3,2,5],[4,5,10]];//reverse power rule
 diffs["limit"]=[[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//hole finding
 	10, [2,1,5,5,5],[3,2,5,10,10],//Left and right limits
-	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true]];//algebraic limmits
+	[2,2,5,5,5,false],[3,3,5,5,5,true],[4,4,5,5,5,true],//algebraic limmits
+	[2,1,1],[3,2,5],[4,5,5]];//limits at infinity
 var diffNames=[];
 diffNames['derivative']=["Easy Introduction Derivative","Normal Introduction Derivative","Hard Introduction Derivative",
 						"Easy Power Rule","Normal Power Rule","Hard Power Rule",
@@ -65,7 +75,8 @@ diffNames['integral']=["Easy Riemann Sum","Medium Riemann Sum","Hard Riemann Sum
 						"Easy Reverse Power Rule","Medium Reverse Power Rule","Hard Reverse Power Rule"];
 diffNames['limit']=["Easy Hole","Medium Hole","Hard Hole",
 					"Easy Sided Limit","Medium Sided Limit","Hard Sided Limit",
-					"Easy Algebraic Limit","Medium Algebraic Limit","Hard Algebraic Limit"];
+					"Easy Algebraic Limit","Medium Algebraic Limit","Hard Algebraic Limit",
+					"Easy Limit At Infinity","Medium Limit At Infinity", "Hard Limit At Infinity"];
 //////
 //Startup stuff
 //////
@@ -162,13 +173,13 @@ function setDropdown(dropdown, val){
 		//console.log(temp);
 		temp.class="";
 		var text=inside.innerHTML;
-		console.log(temp.class);
-		console.log(text);
-		console.log(dropdown.options[index].text);
-		console.log(text==dropdown.options[index].text)
+	//console.log(temp.class);
+	//console.log(text);
+	//console.log(dropdown.options[index].text);
+	//console.log(text==dropdown.options[index].text)
 		if(text==dropdown.options[index].text){
 			temp.class="active selected";//Materialize's selected class
-			console.log(temp.class);
+		//console.log(temp.class);
 		}
 		temp=temp.nextElementSibling;
 		//console.log(temp);
@@ -183,11 +194,11 @@ function updateDropdowns(){
 	//console.log(options);
 	var diffDrop=document.getElementById("difficulty");
 	/*if(options==oldMaxDiff){//No options need to be added or removed
-		console.log("fine");
+	//console.log("fine");
 		return;
 	}*/
 	/*else if(options>oldMaxDiff){//Need to add options
-		console.log("Adding");
+	//console.log("Adding");
 	var options=diffs[type].length;
 	//console.log(options);
 	var diffDrop=document.getElementById("difficulty");
@@ -326,6 +337,7 @@ function ask(question, expression){
 	entry_text="";
 	var l=MathJax.Hub.getAllJax("final-entry")[0];
 	MathJax.Hub.Queue(['Text',l,entry_text]);
+	hideGraph();
 }
 function reply(text){
 	if(text==""){
@@ -341,8 +353,11 @@ function checkAns(ans){
 	if (ans==currentAns){
 		return true;
 	}
-	else if(currentAns=="DNE"){
+	else if(['DNE','infty','-infty'].includes(currentAns)){
 		return false;//math.simplify("DNE") or any othe string without numbers gives 0, so need to check for this
+	}
+	else if(ans.search(/[0-9x]/i)==-1){//If we are looking for something besides a string, check that it won't confuse mathjs
+		return false;
 	}
 	//else if(math.equal(math.simplify(ans),math.simplify(currentAns))){
 	//	return true;
@@ -431,7 +446,7 @@ function newDerivative(terms, maxPow, maxCo, test=false){
 }
 function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
 	var q="What is the derivative of the following?";
-	var e="\\frac{x}{dx}(";
+	var e="\\frac{d}{dx}(";
 	var simple="";
 	var trig=trig_term(maxTCo, maxXCo, maxXPow, diff);
 	e+=trig[1];
@@ -451,7 +466,7 @@ function simpleDerivative(maxXCo, maxCons, squared=false){
 	//squared true-> x^2 can be there (probably like a 50% chance)
 	//a is in range [-maxXCo, maxXCo]
 	//b is in range [-maxCons, maxCons]
-	var e="\\frac{x}{dx}(";
+	var e="\\frac{d}{dx}(";
 	var simple="";
 	var s=false;
 	if(squared&&Math.random()>=0.5){
@@ -517,7 +532,7 @@ function tangent_slope(terms, maxPow, maxCo, maxX){
 	var q="What is the slope of the following equation at x=";
 	var e="f(x)=";
 	var simple="";
-	poly=makePolynomial(terms, maxPow, maxCo);
+	poly=makePolynomial(terms, maxPow, maxCo, true);
 	e+=poly[0];
 	simple+=poly[1];
 	var xVal=Math.round((Math.random()*maxX*2)-maxX);//If I am correct, this gives a random number [-maxX, maxX], and rounds it to an integer
@@ -533,6 +548,7 @@ function tangent_slope(terms, maxPow, maxCo, maxX){
 	q+=xVal+"?";
 	ask(q,e);
 	currentAns=ans;
+	setPolyGraph(poly[2][1],poly[2][0]);
 }
 function intQ(diff){
 	var intDiffs=diffs["integral"];
@@ -582,19 +598,19 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	var cont=true;
 	var tries=0;
 	while(cont){//Check that the function is valid
-		console.log("y");
+	//console.log("y");
 		cont=false;
 		for(var x=-maxX; x<=maxX; x++){
 			if(Math.abs(math.eval(poly[1],{x:x}))>maxY){//check that the value is within the vaild range
 				cont=true;
-				console.log(x);
+			//console.log(x);
 			}
 		}
 		if(cont){
 			poly=makePolynomial(terms, maxPow, maxCo,true);//If it isn't, make a new polynomial
 		}
 		tries++;
-		console.log(poly[1]);
+	//console.log(poly[1]);
 		if(tries>1000){
 			relpy("A problem occured with the random quesion generator. If you can, please report this bug on the about page.")
 			return;
@@ -603,7 +619,7 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	cont=true;
 	var left; var right;
 	while(cont){//generate the left and right bounds
-		console.log("bounds");
+	//console.log("bounds");
 		var a; var b;
 		a=Math.round(Math.random()*maxX);
 		b=Math.round(Math.random()*maxX);
@@ -624,7 +640,7 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	var width;
 	cont=true;
 	while(cont){//Check that the rectangles aren't too small
-		console.log("rects")
+	//console.log("rects")
 		rects=Math.floor(Math.random()*maxRect)+1;
 		var size=right-left;
 		width=size/rects;
@@ -635,8 +651,8 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 	var width=1;//In case I ever want to add more rectangles
 	var rects=(right-left)/width;
 	var side=Math.floor(Math.random()*2);//0-left, 1-right
-	console.log(side);
-	console.log(left);
+//console.log(side);
+//console.log(left);
 	var pside=['left','right'][side];
 	var ans=0;
 	for(var r=0; r<rects; r++){
@@ -644,14 +660,15 @@ function riemannSum(terms, maxPow, maxCo, maxX, maxY){
 		var y=math.eval(poly[1], {x:x});
 		var size=y*width;
 		ans+=size;
-		console.log(x);
-		console.log(typeof x);
-		console.log(y);
-		console.log(size);
+	//console.log(x);
+	//console.log(typeof x);
+	//console.log(y);
+	//console.log(size);
 	}
 	currentAns=ans;
 	ask("Calcualte the "+pside+" Riemann sum of the following function from "+left+" to "+right+" with "+rects+" rectangle(s).",poly[0]);
 	//MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	setPolyGraph(poly[2][1],poly[2][0]);
 }
 function integrate(pows, cos, con=false){//one thing mathjs doesn't have that we need is integration, so this will handle the simple rule for it
 	var simple="";//This doesn't make latex right now, but I could easily edit it to do that
@@ -708,6 +725,9 @@ function limitQ(diff){
 		algebraicLimit(d[0],d[1],d[2],d[3],d[4],d[5]);
 		rat=true;
 	}
+	else if(diffNames['limit'][diff-1].endsWith("At Infinity")){
+		infinLimit(d[0],d[1],d[2]);
+	}
 }
 function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	/*var nums=[];
@@ -759,11 +779,11 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 						return !isNaN(n[2][3]);
 					})
 				if(i==hole_index){
-					console.log(good_nums);
+				//console.log(good_nums);
 					var index=Math.floor(Math.random()*good_nums.length);
 					dens.push(good_nums[index]);
-					console.log(good_nums[index]);
-					console.log(dens[i]);
+				//console.log(good_nums[index]);
+				//console.log(dens[i]);
 					genning=false;
 				}
 				else if(!good_nums.some(function(n){
@@ -824,7 +844,21 @@ function simpleVisualLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	//console.log(dens);
 	currentAns=ans;
 	ask("Where is there a hole in this function?",latex);
+	var nPows=[]; var nCons=[]; var nCos=[];
+	var dPows=[]; var dCons=[]; var dCos=[];
+	for(var i=0; i<dens.length; i++){
+		dPows.push(dens[i][0]);
+		dCos.push(dens[i][1]);
+		dCons.push(dens[i][2]);
+	}
+	var nums=lim[2];
+	for(var i=0; i<nums.length; i++){
+		nPows.push(nums[i][0]);
+		nCos.push(nums[i][1]);
+		dCons.push(nums[i][2]);
+	}
 	//Something to graph simple
+	setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons);
 }
 function makeLimitFunction(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false, type=-1){
 	var nums=[];
@@ -878,11 +912,11 @@ function makeLimitFunction(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false, t
 						return !isNaN(n[2][3]);
 					})
 				if(i==hole_index){
-					console.log(good_nums);
+				//console.log(good_nums);
 					var index=Math.floor(Math.random()*good_nums.length);
 					dens.push(good_nums[index]);
-					console.log(good_nums[index]);
-					console.log(dens[i]);
+				//console.log(good_nums[index]);
+				//console.log(dens[i]);
 					genning=false;
 				}
 				else if(!good_nums.some(function(n){
@@ -947,7 +981,7 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 	if(Math.random()>=0.5){x=-x;}
 	var left=makePolynomial(terms, maxPow, maxCo);
 	var tries=0;
-	console.log("test");
+//console.log("test");
 	while(Math.abs(math.eval(left[1], {x:x}))>maxY){
 		left=makePolynomial(terms, maxPow, maxCo);
 		tries++;
@@ -961,7 +995,7 @@ function sidedLimitQuestionPoly(terms, maxPow, maxCo,maxX, maxY){
 			return "";
 		}
 	}
-	console.log(left);
+//console.log(left);
 	var right=makePolynomial(terms, maxPow, maxCo);
 	tries=0;
 	while(Math.abs(math.eval(right[1],{x:x}))>maxY){
@@ -1026,6 +1060,7 @@ function sidedLimitQuestionAbs(maxXCo){
 	}
 	latex+="x|}{x}";
 	ask("What is the value of the following function as x approaches 0 from the "+side+" side?",latex);
+	setAbsGraph(xCo,1);
 }
 function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	var lim=makeLimitFunction(maxNum, maxDen, maxXPow, maxXCo, maxCons, neg);
@@ -1052,10 +1087,13 @@ function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 		var cont=true;
 		var dens=lim[3];
 		while(cont&&dens.length>0){
-			console.log("finding x from den");
+		//console.log("finding x from den");
 			var i=Math.floor(Math.random()*dens.length);
 			if(isNaN(dens[i][2][3])){
 				dens.splice(i,1);//remove that one from the list for now
+			}
+			else if(math.rationalize(dens[i][2][3]).toString().includes(".")){//If it's irrational
+				dens.splice(i,1);//Yeah, let's just ignore that...
 			}
 			else{
 				x=dens[i][2][3];
@@ -1079,13 +1117,27 @@ function algebraicLimit(maxNum,maxDen, maxXPow, maxXCo, maxCons, neg=false){
 	}
 	latex="\\lim_{x \\to "+px+"} "+latex;
 	ask("Evaluate the following limit.<br>If the limit is undefined, just enter 'DNE'.", latex);
-	console.log(lim[0]);
+	//console.log(lim[0]);
+	var nPows=[]; var nCons=[]; var nCos=[];
+	var dPows=[]; var dCons=[]; var dCos=[];
+	for(var i=0; i<dens.length; i++){
+		dPows.push(dens[i][0]);
+		dCos.push(dens[i][1]);
+		dCons.push(dens[i][2]);
+	}
+	var nums=lim[2];
+	for(var i=0; i<nums.length; i++){
+		nPows.push(nums[i][0]);
+		nCos.push(nums[i][1]);
+		dCons.push(nums[i][2]);
+	}
+	setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons);
 }
 function lhopital(num, den, x){
 	//Evaluates a limit, which for some reason mathjs can't do...
-	console.log(num);
-	console.log(den);
-	console.log(x);
+//console.log(num);
+//console.log(den);
+//console.log(x);
 	var n=math.eval(num, {x:x});
 	var d=math.eval(den, {x:x});
 	var a=0;
@@ -1095,11 +1147,11 @@ function lhopital(num, den, x){
 		n=math.eval(num, {x:x});
 		d=math.eval(den, {x:x});
 		a++;
-		console.log(a);
-		console.log(n);
-		console.log(d);
-		console.log(num);
-		console.log(den);
+	//console.log(a);
+	//console.log(n);
+	//console.log(d);
+	//console.log(num);
+	//console.log(den);
 	}
 	if(d==0){
 		return "DNE";
@@ -1114,7 +1166,7 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	//If b>d, lim->oo = +-infty
 	//if b<d, lim->oo = 0
 	//Also, asciimath for infinity is oo, and 'inifinity' will print weird stuff
-	var way=Math.floor(Math.random()*3);//0-Will be 0, 1-will be oo, 2-will be a/c
+	var way=Math.floor(Math.random()*3);//0-Will be a/c, 1-will be oo, 2-will be 0
 	var ltext="\\frac{";
 	var a=Math.floor(Math.random()*maxCo)+1;
 	if(Math.random()>=0.5){a=-a;}
@@ -1125,8 +1177,14 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	var d;
 	var ans;
 	if(way==1){
-		d=Math.round(Math.random()*Math.pow(b-1,2));
-		d=Math.ceil(Math.pow(d,1/2));
+		if(b==0){
+			b++;
+			d=0;
+		}
+		else{
+			d=Math.round(Math.random()*Math.pow(b-1,2));
+			d=Math.ceil(Math.pow(d,1/2));
+		}
 		ans="infty";
 		if((a<0)? (c>=0):(c<0)){//Ok, I'm not 100% certain what this does, but it is what came up when I searched 'javascript XOR'. I think it's if a<0, then c>=0, otherwise c<0
 			ans="-infty";
@@ -1135,17 +1193,24 @@ function infinLimit(maxTerms, maxPow, maxCo){
 	else if(way==0){
 		d=b;
 		ans=a/c;
+	//console.log("Should be a/c");
 	}
 	else{
 		d=Math.round(Math.random()*Math.pow(maxPow-b,2));
-		d=Math.ceil(Math.pow(b,1/2));
+		d=Math.ceil(Math.pow(d,1/2));
 		d+=b;
 		if(b==maxPow){
 			d=maxPow;
 			b=maxPow-1;
 		}
+		else if(b==d){
+			d++;
+		}
 		ans=0;
+	//console.log("Should be 0");
 	}
+//console.log(a);
+//console.log(c);
 	currentAns=ans;
 	if(b==0){
 		ltext+=a;
@@ -1163,6 +1228,12 @@ function infinLimit(maxTerms, maxPow, maxCo){
 		ltext+="^{"+b+"}";
 	}
 	//Put in the other unimportant stuff after the first numerator term
+	var t=Math.round(Math.random()*maxTerms);
+	var num=makePolynomial(t, b-1, maxCo);
+	if(!num[0].startsWith("-")){
+		ltext+="+";
+	}
+	ltext+=num[0];
 	ltext+="}{";
 	if(d==0){
 		ltext+=c;
@@ -1174,14 +1245,21 @@ function infinLimit(maxTerms, maxPow, maxCo){
 		ltext+="x";
 	}
 	else{
-		ltext+="x";
+		ltext+=c+"x";
 	}
 	if(d>1){
 		ltext+="^{"+d+"}";
 	}
 	//Unimportant terms in the denominator...
+	t=Math.round(Math.random()*maxTerms);
+	var den=makePolynomial(t, d-1, maxCo);
+	if(!den[0].startsWith("-")){
+		ltext+="+";
+	}
+	ltext+=den[0];
 	ltext+="}";
 	ask("What is the value of the following function as \\(x \\to \\infty\\)? (To enter infinity, type 'infty')", ltext);
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 function makePolynomial(terms, maxPow, maxCo, raw=false){
 	//So, this entire thing is just going to be the derivative's polynomial maker
@@ -1437,7 +1515,16 @@ function generate_factored_part(maxXCo, maxXPow, maxC, neg=false){
 		}
 	}
 	var simple="("+xCo+"x";
-	var latex="("+xCo+"x";
+	var latex="(";
+	if(xCo==-1){
+		latex+="-x";
+	}
+	else if(xCo==1){
+		latex+="x";
+	}
+	else{
+		latex+=xCo+"x";
+	}
 	if(xPow>1){
 		simple+="^("+xPow+")";
 		latex+="^{"+xPow+"}";
@@ -1456,7 +1543,7 @@ function generate_factored_part(maxXCo, maxXPow, maxC, neg=false){
 	return [simple, latex, [xPow, xCo, cons, zero]];
 }
 function test(){
-	console.log("test");
+//console.log("test");
 }
 function testRandom(max, limit=100){
 	//Just a check that I was doing random numbers properly
@@ -1471,7 +1558,7 @@ function testRandom(max, limit=100){
 		count++;
 		var a=Math.round((Math.random()*max));
 		if(a>max||a<-max){
-			console.log("Problem:"+a);
+		//console.log("Problem:"+a);
 		}
 		full[a]=true;
 		cont=!full.every(function (i){
@@ -1483,7 +1570,7 @@ function testRandom(max, limit=100){
 	//console.log(full);
 }
 function testWeight(func, times){
-	console.log("test");
+//console.log("test");
 	var counts=[];
 	var occured=[];
 	for(var i=0; i<times; i++){
@@ -1498,7 +1585,7 @@ function testWeight(func, times){
 	}
 	occured.sort();
 	for(var i=0; i<occured.length; i++){
-		console.log(occured[i]+": "+counts[occured[i]]);
+	//console.log(occured[i]+": "+counts[occured[i]]);
 	}
 }
 ///////
@@ -1663,6 +1750,7 @@ function setPolyGraph(cos, pows){
 	//cos is a list of the coeficients, pows is a list of the powers
 	//So the function would look like "cos[0]*x^pows[0]+cos[1]*x^pows[1]"
 	//Please code this
+	showGraph();
 }
 function setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons){
 	//Sets the graph to a fraction
@@ -1670,6 +1758,11 @@ function setFracGraph(nCos, nPows, nCons, dCos, dPows, dCons){
 	//_Cos is the coefficients of x, _Pows is the powers of x, and _Cons is the constant added to it
 	//So it would look like "(nCos[0]*x^nPows[0]+nCons[0])*(nCos[1]*x^nPows[1]+nCons[1])*.../(dCos[0]*x^dPows[0]+dCons[0])*(dCos[1]*x^dPows[1]+dCons[1])*..."
 	//Please code this as well
+	showGraph();
+}
+function setAbsGraph(a, b){
+	//Function in the form |ax|/bx
+	showGraph();
 }
 function setXScale(min, max){
 	//Would set the scale of the x's to be between min and max

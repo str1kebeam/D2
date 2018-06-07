@@ -68,13 +68,6 @@
 				<div class="t-cen">
 					<button class="btn" id="new-question" onclick="newQ();">New Question</button>
 				</div>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				hi
 			</div>
 			<div class="col s12 m8 push-m4 l9 push-l3" id="main-content"> <!-- Main Content -->
 				<h1 id="body-title"> <!-- Title -->
@@ -84,9 +77,9 @@
 			<div id="body-text"> <!-- The body text: problem, answer input -->
 				<p class="body-description" id="welcome-text">Practice your skills with these problems</p>
 				<div id="problem">
-					<p class="body-description" id="question">Chose a problem type and difficulty from the menu on the left</p>
+					<p class="body-description" id="question">Chose a problem type and difficulty from the menu below</p>
 					<latex-eqn class="body-description" id="expression">$$$$</latex-eqn>
-					<div id="graph"></div>
+					<div id="graph" style="visibility: hidden"><p>Graph-filler</p></div>
 					<div class="input-field">
 						<input placeholder="Your Answer Here" type="text" name="" id="input-answer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
 					</div>
@@ -131,6 +124,25 @@
 						<button id="benter" class="body-description btn waves-effect waves-light" id="check-answer" onclick="functionthing();">Enter</button>
 					</div>
 				</div>
+				<div class="divider"></div>
+				<h3>Practice Settings</h3>
+				<p>Select a Lesson</p>
+				<div>
+				<select id="type" style="visibility: visible">
+					<option value="derivative">Derivative</option>
+					<option value="integral">Integral</option>
+					<option value="tangent">Tangent Line</option>
+					<option value="limit">Limit</option>
+				</select>
+				<p>Select a Difficulty</p>
+				<select id="difficulty" isScrollable="false" style="visibility: visible">
+					<option value=1>1</option>
+					<option value=2>2</option>
+				</select>
+				</div>
+				<div class="t-cen">
+					<button class="btn" id="new-question" onclick="newQ();">New Question</button>
+				</div>
 			</div>
 			</div>
 		</div>
@@ -141,7 +153,7 @@
 <script src="default.js"></script> <!-- import default JS for the webpage -->
 <script type="text/javascript">
 $(document).ready(function(){
-	$('.sidenav').sidenav();
+	//$('.sidenav').sidenav();
 	$('select').formSelect();
 	$("nav .dropdown-trigger").dropdown({
 		hover: true,
