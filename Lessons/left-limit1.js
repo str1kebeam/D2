@@ -128,9 +128,16 @@
 			ctx.lineWidth = 2.0;
             ctx.beginPath();
             ctx.moveTo(graph_coords[0].x,graph_coords[0].y);
-            for (i=0; i<n; i++) {
-                ctx.lineTo(graph_coords[i].x,graph_coords[i].y);
-            }
+		//Skips a small portion of the graph in order to not produce a long segment where a jump is supposed to be.
+            while (i < n){
+		ctx.lineTo(graph_coords[i].x,graph_coords[i].y);
+		i += 1
+	    if (i < 1502 && i > 1498){
+		ctx.stroke();
+		i = 1503;
+		ctx.beginPath();
+		}
+	   }
             ctx.stroke();
 			ctx.lineWidth = 1.0;
             // draw tangent line
