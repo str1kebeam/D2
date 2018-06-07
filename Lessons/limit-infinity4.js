@@ -78,7 +78,7 @@ var canvas_minx4 = 0;
             var i=0;
             var offsetx = 0;
             var offsety = 0;
-            var f = "22px Trebuchet MS";
+            var f = "26px Trebuchet MS";
             var canvas4 = document.getElementById("myCanvas4");
             var ctx4 = canvas4.getContext("2d");
             ctx4.clearRect(canvas_minx4,canvas_miny4, canvas_maxx4-canvas_minx4, canvas_maxy4-canvas_miny4);
@@ -119,9 +119,15 @@ var canvas_minx4 = 0;
 			ctx4.lineWidth = 2.0;
             ctx4.beginPath();
             ctx4.moveTo(graph_coords4[0].x,graph_coords4[0].y);
-            for (i=0; i<n; i++) {
-                ctx4.lineTo(graph_coords4[i].x,graph_coords4[i].y);
-            }
+            while (i < n){
+				ctx4.lineTo(graph_coords4[i].x,graph_coords4[i].y);
+				i += 1
+			if (i < 1355 && i > 1345){
+				ctx4.stroke();
+				i = 1355;
+				ctx4.beginPath();
+			}
+			}
             ctx4.stroke();
             // draw tangent line
             ctx4.strokeStyle = "blue";
