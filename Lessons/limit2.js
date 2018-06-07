@@ -1,3 +1,4 @@
+//Need to change variable names so that no collisions occur with the other graphs on the page
 var canvas_minx2 = 0;
             var canvas_maxx2 = 800;
             var canvas_miny2 = 0;
