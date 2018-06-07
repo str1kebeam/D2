@@ -446,7 +446,7 @@ function newDerivative(terms, maxPow, maxCo, test=false){
 }
 function newTrigDerivative(maxTCo, maxXCo, maxXPow, diff){
 	var q="What is the derivative of the following?";
-	var e="\\frac{x}{dx}(";
+	var e="\\frac{d}{dx}(";
 	var simple="";
 	var trig=trig_term(maxTCo, maxXCo, maxXPow, diff);
 	e+=trig[1];
@@ -466,7 +466,7 @@ function simpleDerivative(maxXCo, maxCons, squared=false){
 	//squared true-> x^2 can be there (probably like a 50% chance)
 	//a is in range [-maxXCo, maxXCo]
 	//b is in range [-maxCons, maxCons]
-	var e="\\frac{x}{dx}(";
+	var e="\\frac{d}{dx}(";
 	var simple="";
 	var s=false;
 	if(squared&&Math.random()>=0.5){
