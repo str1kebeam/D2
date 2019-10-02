@@ -1,2 +1,2 @@
 # 1718_Derive
-Repo for Prahlad, Andrew and Eli
+I lost access to my prjasti account so I transferred it over here via forking. 
